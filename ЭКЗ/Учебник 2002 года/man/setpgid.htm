@@ -1,0 +1,87 @@
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1251">
+<title>setpgid</title>
+</head>
+
+
+<BODY bgcolor="#FFFFFF">
+  <basefont face="Times New Roman, sans-serif, Courier, mono" size="3">
+
+
+<h1 align="center"><FONT face="Times New Roman, sans-serif, Courier, mono">Системный 
+  вызов setpgid()</font></h1>
+
+  <P ><B><FONT face="Times New Roman, sans-serif, Courier, mono" SIZE = 5>Прототип системного вызова</font></b></p>
+
+<DIR><b><FONT   face="Times New Roman, sans-serif, Courier, mono" SIZE = "3" COLOR="#008000">
+  <BLOCKQUOTE>#include
+&lt;sys/types.h&gt;<br>
+#include &lt;unistd.h&gt;<br>
+&nbsp;<br>
+int setpgid(pid_t pid, pid_t pgid);</blockquote></font></b></dir>
+
+  <P ><B><FONT face="Times New Roman, sans-serif, Courier, mono" SIZE = 5>Описание системных вызовов</font></b></p>
+
+<DIR> 
+  <BLOCKQUOTE> 
+    <p align="justify"><font face="Times New Roman, Times, serif" size="3">Системный 
+      вызов <b><font color="#008000">setpgid </font></b>служит для перевода процесса 
+      из одной группы процессов в другую, а также для создания новой группы процессов. 
+      <br>
+      <br>
+      Параметр <b><font color="#008000">pid</font></b> является идентификатором 
+      процесса, который мы собираемся перевести в другую группу, а параметр <b><font color="#008000">pgid</font></b> 
+      - идентификатором группы процессов, в которую мы хотим перевести этот процесс. 
+      <br>
+      <br>
+      Не все комбинации этих параметров разрешены. Перевести в другую группу процесс 
+      может либо самого себя (и то не во всякую, и не всегда), либо свой процесс-ребенок, 
+      который не выполнял системный вызов <a href="exec.htm">exec()</a>, т.е. 
+      не запускал на выполнение другую программу. <br>
+      <br>
+      </font> 
+    <dir> 
+      <ul type="square">
+        <li> 
+          <p align="justify"><font face="Times New Roman, Times, serif" size="3"> 
+            Если параметр <b><font color="#008000">pid</font></b> равен 0, то 
+            считается, что процесс переводит в другую группу сам себя. </font> 
+        </li>
+        <li> 
+          <p align="justify"><font face="Times New Roman, Times, serif" size="3"> 
+            Если параметр <b><font color="#008000">pgid</font></b> равен 0, то 
+            в Linux считается, что процесс переводится в группу с идентификатором, 
+            совпадающим с идентификатором процесса, определяемого первым параметром. 
+            </font> 
+        </li>
+        <li> 
+          <p align="justify"><font face="Times New Roman, Times, serif" size="3"> 
+            Если значения, определяемые параметрами <b><font color="#008000">pid</font></b> 
+            и <b><font color="#008000">pgid</font></b>, равны, то создается новая 
+            группа с идентификатором, совпадающим с идентификатором переводимого 
+            процесса, состоящая первоначально только из этого процесса. <b><u>Переход 
+            в другую группу без создания новой группы возможен только в пределах 
+            одного сеанса.</u></b> </font><br>
+            <br>
+        </li>
+      </ul>
+    </dir>
+    <p align="justify"><b><u><font face="Times New Roman, Times, serif" size="3"> 
+      В новую группу не может перейти процесс, являющийся лидером группы, т.е. 
+      процесс, идентификатор которого совпадает с идентификатором его группы.</font></u></b><font face="Times New Roman, Times, serif" size="3"> 
+      <br>
+      <br>
+      Системный вызов возвращает значение 0 при нормальном завершении и значение 
+      -1 при возникновении ошибки. <br>
+      <br>
+      Тип данных <b><FONT COLOR="#008000">pid_t</font></b> является синонимом 
+      для одного из целочисленных типов языка C. </font> 
+  </blockquote>
+</dir>
+
+
+
+
+</body>
+
+</html>

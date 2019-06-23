@@ -1,0 +1,229 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Read&Write</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системные вызовы </font>read<FONT FACE="Times New Roman"> 
+  и </FONT>write</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототипы системных вызовов</P></FONT></B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<BR>
+    #include &lt;unistd.h&gt; </b></BLOCKQUOTE>
+  </font> 
+  <BLOCKQUOTE><FONT COLOR="#008000"><B>size_t read(int fd, void *addr,</b></font><B><FONT COLOR="#008000"> 
+    size_t nbytes);<BR>
+    size_t write(int fd, void *addr, size_t nbytes);</font></B></BLOCKQUOTE>
+</DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системных вызовов</P></font></B>
+<DIR>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Системные вызовы </FONT><B><font color="#008000">read</font></B><FONT FACE="Times New Roman">
+	 и 	</FONT><B><font color="#008000">write </font></B><FONT FACE="Times New Roman">
+      предназначены для осуществления потоковых операций ввода (чтения) и вывода 
+      (записи) информации над каналами связи, описываемыми файловыми дескрипторами, 
+      т.е. для файлов, pipe'ов, FIFO и socket'ов. <br>
+      <br>
+      Параметр </font><B><font color="#008000">fd </font></B><FONT FACE="Times New Roman">является 
+      файловым дескриптором созданного ранее потокового канала связи через который 
+      будет отсылаться или получаться информация, т.&nbsp;е. значением, которое 
+      вернул один из системных вызовов <a href="open.htm">open()</a>, <a href="pipe.htm">pipe()</a> 
+      или <a href="socket.htm">socket()</a>.<br>
+      Параметр </FONT><B><font color="#008000">addr</font></B><FONT FACE="Times New Roman"> 
+      представляет собой адрес области памяти, начиная с которого будет браться 
+      информация для передачи или размещаться принятая информация.<br>
+      Параметр </font><B><font color="#008000">nbytes</font></B><FONT FACE="Times New Roman"> 
+      для системного вызова </FONT><B><font color="#008000">write</font></B><FONT FACE="Times New Roman"> 
+      определяет количество байт, которое должно быть передано, начиная с адреса 
+      памяти </FONT><B><font color="#008000">addr</font></B><FONT FACE="Times New Roman">. 
+      Параметр </FONT><B><FONT COLOR="#008000">nbytes</font></B><FONT FACE="Times New Roman"> 
+      для системного вызова </FONT><B><font color="#008000">read</font></B><FONT FACE="Times New Roman"> 
+      определяет количество байт, которое мы хотим получить из канала связи и 
+      разместить в памяти, начиная с адреса </FONT><B><font color="#008000">addr</font></B>. <br>
+	
+	  </BLOCKQUOTE></dir>
+  <b><FONT FACE="Times New Roman" SIZE=5><P>Возвращаемые значения</P></font></B>
+<DIR> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">В случае успешного завершения 
+      системный вызов возвращает количество реально отосланных или принятых байт. 
+      Заметим, что это значение (большее или равное 0) может не совпадать с заданным 
+      значенем параметра </font><b><font color="#008000">nbytes</font></b><font face="Times New Roman">, 
+      а быть меньше, чем оно, в силу отсутствия места на диске или в линии связи 
+      при передаче данных или отсутствия информации при ее приеме. При возникновении 
+      какой-либо ошибки возвращается отрицательное значение. </font> 
+  </BLOCKQUOTE>
+</dir>
+  
+<b><FONT FACE="Times New Roman" SIZE=5>
+<P><a name="read0"></a>Особенности поведения при работе с файлами</P>
+</font></B> 
+<DIR> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman"> При работе с файлами информация 
+      записывается в файл или читается из файла, начиная с места, определяемого 
+      указателем текущей позиции в файле. Значение указателя увеличивается на 
+      количество реально прочитанных или записанных байт. При чтении информации 
+      из файла она не пропадает из него. Если системный вызов</font><b><font color="#008000"> 
+      read</font></b><font face="Times New Roman"> возврашает значение 0, то это 
+      означает, что достигнут конец файла.</font> 
+  </BLOCKQUOTE>
+</DIR>
+  <b><FONT FACE="Times New Roman" SIZE=5><P><a name="read1"></a>Особенности поведения при работе с pipe'ами, FIFO и  socket'ами</P></font></B>
+<DIR> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman" SIZE=4> <b>Системный вызов 
+      read</b><br>
+      <br>
+      </font>
+    <font face="Times New Roman"> 
+    <dir> 
+      <table width="75%" border="1" cellspacing="1" cellpadding="1">
+        <tr> 
+          <td  align="center" width="35%">Ситуация</td>
+          <td align="center" width="65%">Поведение</td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка прочитать меньше байт чем есть в наличии 
+              в канале связи 
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY">Читает требуемое количество байт и возвращает значение, 
+              соответствующее прочитанному количеству. Прочитанная информация 
+              удаляется из канала связи. 
+          </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">В канале связи находится меньше байт, чем затребовано, 
+              но не нулевое количество. 
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY">Читает все, что есть в канале связи, и возвращает 
+              значение, соответствующее прочитанному количеству. Прочитанная информация 
+              удаляется из канала связи.<br>
+          </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка читать из канала связи, в котором нет информации. 
+              Блокировка вызова разрешена. <br>
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY">Вызов блокируется до тех пор, пока не появится 
+              информация в канале связи и пока существует процесс, который может 
+              передать в него информацию. Если информация появилась, то процесс 
+              разблокируется и поведение вызова определяется двумя предыдущими 
+              строками таблицы. Если в канал некому передать данные (нет ни одного 
+              процесса, у которого этот канал связи открыт для записи), то вызов 
+              возвращает значение&nbsp;0. Если канал связи полностью закрывается 
+              для записи во время блокировки читающего процесса, то процесс разблокируется, 
+              и системный вызов возвращает значение 0.<br>
+          </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка читать из канала связи, в котором нет информации. 
+              Блокировка вызова не разрешена. <br>
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY">Если есть процессы, у которых канал связи открыт 
+              для записи, системный вызов возвращает значение -1 и устанавливает 
+              переменную <font color="#008000"><b>errno</b></font> в значение 
+              <font color="#008000"><b>EAGAIN</b></font>. Если таких процессов 
+              нет, системный вызов возвращает значение 0.
+          </td>
+        </tr>
+      </table>
+    </dir>
+    </font> <br>
+    <p align="JUSTIFY"><font face="Times New Roman" SIZE=4> <b>Системный вызов 
+      write </b><br>
+      <br>
+      </font>
+    <font face="Times New Roman"> 
+    <dir> 
+      <table width="75%" border="1" cellspacing="1" cellpadding="1">
+        <tr> 
+          <td  align="center" width="35%">Ситуация</td>
+          <td align="center" width="65%">Поведение</td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка записать в канал связи меньше байт, чем 
+              осталось до его заполнения.<br>
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY">Требуемое количество байт помещается в канал связи, 
+              возвращается записанное количество байт. <br>
+          </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка записать в канал связи больше байт, чем 
+              осталось до его заполнения. Блокировка вызова разрешена. 
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY">Вызов блокируется до тех пор, пока все данные не 
+              будут помещены в канал связи. Если размер буфера канала связи меньше, 
+              чем передаваемое количество информации, то вызов тем самым будет 
+              ждать, пока часть информации не будет отчитана из канала связи. 
+              Возвращается записанное количество байт. 
+          </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка записать в канал связи больше байт, чем 
+              осталось до его заполнения, но меньше, чем размер буфера канала 
+              связи. Блокировка вызова запрещена. 
+          </td>
+          <td valign="top" width="65%"> Системный вызов возвращает значение -1 
+            и устанавливает переменную <font color="#008000"><b>errno</b></font> 
+            в значение <font color="#008000"><b>EAGAIN</b></font>.</td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY"> В канале связи есть место. Попытка записать в 
+              канал связи больше байт, чем осталось до его заполнения, и больше, 
+              чем размер буфера канала связи. Блокировка вызова запрещена. 
+          </td>
+          <td valign="top" width="65%"> Записывается столько байт, сколько осталось 
+            до заполнения канала. Системный вызов возвращает количество записанных 
+            байт. </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка записи в канал связи, в котором нет места. 
+              Блокировка вызова не разрешена. <br>
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY"> Системный вызов возвращает значение -1 и устанавливает 
+              переменную <font color="#008000"><b>errno</b></font> в значение 
+              <font color="#008000"><b>EAGAIN</b></font>.<br>
+          </td>
+        </tr>
+        <tr> 
+          <td valign="top" width="35%"> 
+            <p align="JUSTIFY">Попытка записи в канал связи, из которого некому 
+              больше читать, или полное закрытие канала на чтение во время блокировки 
+              системного вызова. 
+          </td>
+          <td valign="top" width="65%"> 
+            <p align="JUSTIFY"> Если вызов был заблокирован, то он разблокируется. 
+              Процесс получает сигнал <b><font color="#008000">SIGPIPE</font></b>. 
+              Если этот сигнал обрабатывается пользователем, то системный вызов 
+              вернет значение -1 и установит переменную <font color="#008000"><b>errno</b></font> 
+              в значение <font color="#008000"><b>EPIPE</b></font>.<br>
+            
+          </td>
+        </tr>
+      </table>
+    </dir>
+    </font> </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

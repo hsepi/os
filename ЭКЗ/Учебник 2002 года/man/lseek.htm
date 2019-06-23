@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>lseek</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов lseek</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include  &lt;sys/types.h&gt;<br>
+#include &lt;unistd.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>off_t lseek(int fd,  off_t offset, int whence);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><FONT COLOR="#008000">lseek</font></B> 
+    <FONT FACE="Times New Roman">предназначен для изменения положения указателя текущей позиции в открытом
+	 регулярном 
+    файле. </FONT> </BLOCKQUOTE>
+  <BLOCKQUOTE><p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">fd</font></B><FONT FACE="Times New Roman"> 
+    является дескриптором соответствующего файла, т.&nbsp;е. значением, которое 
+    вернул системный вызов <a href="open.htm">open()</a>.<br>
+    Параметр <b><font color="#008000"> offset</font></b> совместно с параметром 
+	 <b><font color="#008000"> whence</font></b> определяют новое положение указателя текущей позиции
+	 следующим образом:</FONT></BLOCKQUOTE>
+	 
+  <BLOCKQUOTE> 
+    <ul type ="square">
+      <LI> 
+        <p align="JUSTIFY"><FONT FACE="Times New Roman"> Если значение параметра 
+          <b> <font color="#008000">whence</font></b> равно <b><font color="#008000">SEEK_SET</font></b>, 
+          то новое значение указателя будет составлять <b><font color="#008000">offset</font></b> 
+          байт от начала файла. Естественно, что значение <b><font color="#008000">offset</font></b> 
+          в этом случае должно быть не отрицательным. </font> 
+      </LI>
+      <LI> 
+        <p align="JUSTIFY"><FONT FACE="Times New Roman"> Если значение параметра 
+          <b> <font color="#008000">whence</font></b> равно <b><font color="#008000">SEEK_CUR</font></b>, 
+          то новое значение указателя будет составлять старое значение указателя 
+          <b> <font color="#008000">+&nbsp;offset</font></b> байт. При этом новое 
+          значение указателя не должно стать отрицательным. </font> 
+      </LI>
+      <LI> 
+        <p align="JUSTIFY"><FONT FACE="Times New Roman"> </font>
+      </LI>
+      <font face="Times New Roman">Если значение параметра <b> <font color="#008000">whence</font></b> 
+      равно <b><font color="#008000">SEEK_END</font></b>, то новое значение указателя 
+      будет составлять длина файла<b> <font color="#008000">+&nbsp;offset</font></b> 
+      байт. При этом новое значение указателя не должно стать отрицательным.</font><br>
+      <br>
+    </ul>
+  </BLOCKQUOTE>
+	 
+  <BLOCKQUOTE>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman"> Системный вызов<b><font color="#008000"> 
+      lseek </font></b>позволяет выставить текущее значение указателя за конец 
+      файла (т.е. сделать его большим размера файла). При любой последующей операции 
+      записи в этом положении указателя файл будет выглядеть так, как будто возникший 
+      промежуток был заполнен нулевыми битами. <br>
+      <br>
+      Тип данных <b><font color="#008000">off_t </font></b>обычно является синонимом 
+      типа <b><font color="#008000">long int</font></b>.<br><br> Системный вызов возвращает 
+      новое положение указателя текущей позиции в байтах от начала файла при нормальном 
+      завершении и значение -1 при возникновении ошибки</font>.
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

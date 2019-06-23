@@ -1,0 +1,425 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Глава 15</TITLE>
+</HEAD>
+<body lang=RU class="Normal" bgcolor="#FFFFFF">
+<p align="center"><b><font size="6">
+Часть VII. Проблемы безопасности операционных систем.</font></b></p>
+<p align="justify">&quot;По-настоящему  безопасной
+  можно считать  лишь   систему,  которая выключена, замурована  в бетонный корпус,
+  заперта в  помещении  со свинцовыми  стенами и  охраняется вооруженным   караулом,
+  - но  и в этом случае сомнения не оставляют меня.&quot;</p>
+<p align="right"><font size="2">Юджин Х. Спаффоpд</font></p>
+<p style='text-align:center'><b><font size="4"> Глава 15.   Основные понятия информационной 
+  безопасности.</font></b></p>
+
+<p align="center"><a href="../14/ch14.htm"> Предыдущая глава</a> | 
+<a href="../os.html">Программа курса</a> | 
+<a href="../16/ch16.htm"> Следующая глава</a></p>
+
+
+<p align="justify"><a name="l1501"></a><b>
+<font size="3">15.1 Введение</font></b></p>
+<p align="justify">В октябре 1988 г. в США произошло
+  событие, названное специалистами крупнейшим  нарушением безопасности амеpиканских
+  компьютеpных систем из когда-либо случавшихся. 23-летний студент выпускного
+  куpса Коpнеллского унивеpситета Робеpт  Таппан Моppис запустил в компьютеpной
+  сети ARPANET пpогpамму;  пpедставлявшую собой pедко встpечающуюся pазновидность
+  компьютеpных виpусов - сетевых чеpвей.  В pезультате атаки был полностью или
+  частично заблокиpован pяд общенациональных компьютеpных сетей,  в частности
+  Internet, CSnet, NSFnet, BITnet, ARPANET  и  несекpетная военная сеть Milnet.
+  В итоге виpус поpазил более 6200 компьютеpных систем по всей Амеpике,  включая
+  системы многих  кpупнейших  унивеpситетов,  институтов,  пpавительственных лабоpатоpий,
+  частных фиpм, военных баз,  клиник,  агентства NASA.  Общий ущеpб от этой атаки
+  оценивается  специалистами минимум в 100 миллионов доллаpов.  Р. Моppис был
+  исключен из унивеpситета с пpавом повтоpного поступления чеpез год,  и пpиговоpен
+  судом к штpафу в 270  тыс.долл.  и тpем месяцам тюpемного заключения.</p>
+<p style='text-align:justify'>Важность решения проблемы информационной безопасности
+  в настоящее время общепризнанна, свидетельством чему служат громкие процессы
+  о нарушении целостности систем. Убытки ведущих компаний США в связи с нарушениями
+  безопасности информации в период с 1997 по 1999 годы составили $360'720'555.
+  Причем только 31% опрошенных компаний смог определить количественно размер потерь.
+  Проблема обеспечения безопасности носит комплексный характер, для ее решения
+  необходимо сочетание законодательных, организационных и программно-технических
+  мер. </p>
+<p style='text-align:justify'>Таким образом, обеспечение информационной безопасности
+  требует системного подхода и нужно использовать разные средства и приемы  морально-этические,
+  законодательные, административные и технические. Нас будут интересовать последние.
+  Технические средства реализуются программным и аппаратным обеспечением и решают
+  разные задачи по защите и могут быть встроены в  операционные системы, либо
+  могут быть реализованы в виде отдельных продуктов.  Во многих случаях центр
+  тяжести смещается в сторону защищенности операционных систем.</p>
+<p style='text-align:justify'>Говоря об информационной безопасности, иногда различают
+  два термина <i>protection</i><b> </b>и <i>security.</i>  Термин security используется
+  для рассмотрения  проблемы в целом, а protection для рассмотрения специфичных
+  механизмов ОС сохраняющих информацию в компьютере. Граница здесь не отчетлива.
+</p>
+<p align="justify">Есть несколько причин для реализации
+  защиты.  Hаиболее очевидная - помешать внешним вредным попыткам нарушить доступ
+  к конфоденциальной информации.  Не менее важно, однако, гарантировать, что каждый
+  программный компонент в системе использует системные ресурсы только способом,
+  совместимым с установленной политикой использования этих ресурсов. Эти требования
+  абсолютно необходимы для надежной системы.</p>
+<p align="justify">Наличие защитных механизмов может
+  увеличить надежность системы в целом за счет обнаружения скрытых ошибок интерфейса
+  между компонентами системы. Ранее обнаружение ошибок может предотвратить влияние
+  неисправной подсистемы на здоровую. </p>
+<p align="justify">Политика в отношении ресурсов
+  может меняться в зависимости от приложения и во времени. По этой причине защита
+  не может быть исключительно предметом дизайна ОС. Она также должна давать инструменты
+  прикладным программистам для создания и поддержки защищенных ресурсов. Важный
+  принцип - отделение политики от механизмов. Механизмы определяют то, как что-то
+  может быть сделано, тогда, как политика решает, что должно быть сделано.  Отделение
+  политики от механизмов важно для гибкости системы. Политика может меняться в
+  зависимости от места и времени. Желательно по возможности наличие общих механизмов,
+  тогда как изменение политики требует лишь модификации системных параметров или
+  таблиц.</p>
+<p align="justify">Введем еще несколько понятий (см. также [30]).</p>
+<p style='text-align:justify'>Безопасная система обладает свойствами <i>конфиденциальности,
+  доступности и целостности</i>. </p>
+<p style='text-align:justify'>Конфиденциальность(<font face="Times New Roman,sans-serif,Courier,mono"size="3">confidentiality</font>)  уверенность в том, что секретные данные будут
+  доступны только тем пользователям, которым этот доступ разрешен (такие пользователи
+  называются <i>авторизованными</i>). </p>
+<p style='text-align:justify'>Доступность (<font face="Times New Roman,sans-serif,Courier,mono"size="3">availability</font>)
+   гарантия того, что авторизованные пользователи всегда получат доступ к данным.</p>
+<p style='text-align:justify'>Целостность (<font face="Times New Roman,sans-serif,Courier,mono"size="3">integrity</font>)
+   уверенность в том, что данные сохраняют правильные значения. Это требует средств
+  проверки целостности и обеспечивается запретом для неавторизованных пользователей,
+  каким либо образом модифицировать данные.</p>
+<p style='text-align:justify'>Любое действие, которое направлено на нарушение
+  конфиденциальности, целостности и доступности информации называется <i>угрозой</i>.
+  Реализованная угроза называется <i>атакой.</i></p>
+<p style='text-align:justify;'> <a name="l1502"></a><b>
+<font face="Times New Roman,sans-serif,Courier,mono"size="3">15.2</font></b> <b><font face="Times New Roman,sans-serif,Courier,mono" size="3">  </font>Классификация угроз</b></p>
+<p style='text-align:justify'>Знание возможных угроз, а также уязвимых мест защиты,
+  которые эти угрозы обычно эксплуатируют, необходимо для того, чтобы выбирать
+  наиболее экономичные средства обеспечения безопасности. </p>
+<p style='text-align:justify'>Общей классификации угроз не существует.  Имеет
+  смысл различать <b>неумышленные</b> и <b>умышленные</b> угрозы. </p>
+<p style='text-align:justify'>Неумышленные угрозы связаны с:</p>
+<ul>
+  <li>
+    <p align="justify">Ошибками оборудования или матобеспечения:  сбои процессора, питания,
+  нечитаемые  дискеты, ошибки в коммуникациях, ошибки в программах.</li>
+  <li>
+    <p align="justify">Ошибками человека: некорректный ввод, неправильная монтировка
+  дисков или лент, запуск неправильных программ, потеря дисков или лент.</li>
+  <li>
+    <p align="justify">Форс-мажорными обстоятельствами</li>
+</ul>
+<p style='text-align:justify'>Умышленные угрозы, в отличие от случайных, преследуют 
+  цель нанесения ущерба пользователям  ОС и, в свою очередь, подразделяются на 
+  <b>активные и пассивные</b>. Пассивная угроза  - несанкционированный доступ 
+  к информации без изменения состояния системы,  активная - несанкционированное 
+  изменение системы. Можно выделить следующие типы угроз [30] :</p>
+<ul type=disc>
+  <li style='text-align:justify;     '>Незаконное проникновение под видом легального
+    пользователя</li>
+  <li style='text-align:justify;     '>Нарушение функционирования системы с помощью
+    программ-вирусов или программ-червей.</li>
+  <li style='text-align:justify;     '>Нелегальные действия легального пользователя.</li>
+</ul>
+<p style='text-align:justify'>Типизация угроз не слишком строгая. </p>
+<p style='text-align:justify'>А.Таненбаум [12] приводит  свой список наиболее 
+  успешных атак на ОС:</p>
+<ul type=disc>
+  <li style='text-align:justify;     '>Попытки чтения страниц памяти, дисков и
+    лент, которые сохранили информацию предыдыдущего пользователя.</li>
+  <li style='text-align:justify;     '>Попытки  выполнения нелегальных системных
+    вызовов, или системных вызовов с нелегальными параметрами</li>
+  <li style='text-align:justify;     '>Внедрение программы, которая выводит на
+    экран слово login . Многие легальные пользователи,  видя такое, начинают пытаться
+    входить в систему, и их попытки могут протоколироваться (вариант Троянского
+    коня).</li>
+  <li style='text-align:justify;     '>Попытки торпедировать программу проверки
+    входа в систему путем многократного нажатия клавиш  del, break, rubout, <font face="Times New Roman,sans-serif,Courier,mono"size="3">cancel</font>
+    и.т.д.  В некоторых системах проверочная программа погибает, и вход в систему
+    становится возможным.</li>
+  <li style='text-align:justify;     '>Подкуп персонала. Hапример, малооплачиваемого
+    секретаря.</li>
+  <li style='text-align:justify;     '>Использование закладных элементов (дыр),
+    специально оставленных дизайнерами системы.</li>
+  <li style='text-align:justify;     '>И т.д.</li>
+</ul>
+<p style='text-align:justify'>Много говорят и пишут и о программных вирусах, червях, 
+  троянских конях. В этой связи обратим внимание на следующий факт, несмотря на 
+  экспоненциальный рост числа известных вирусов, аналогичного роста количества 
+  инцидентов, вызванных вирусами, не зарегистрировано. Соблюдение несложных правил 
+  компьютерной гигиены сводит риск заражения практически к нулю. Многопользовательские 
+  компьютеры меньше страдают от вирусов по сравнению с персональными компьютерами, 
+  поскольку там  имеются системные средства защиты. Мы не будем останавливаться 
+  на уточнении понятий &quot;зловредный код&quot;, &quot;вирус&quot;, &quot;червь&quot;, 
+  &quot;Троянский конь&quot;, бомба (см., например, [15]). </p>
+<p style='text-align:justify'>Таковы основные угрозы, на долю которых приходится
+  львиная доля урона, наносимого информационным системам.</p>
+<p style='text-align:justify;'> <a name="l1503"></a><b>
+<font face="Times New Roman,sans-serif,Courier,mono"size="3">15.3</font></b> <b><font face="Times New Roman,sans-serif,Courier,mono" size="3">  </font>Формализация подхода
+  к обеспечению информационной безопасности. Классы безопасности</b></p>
+<p style='text-align:justify'>Существует ряд основополагающих документов, в которых
+  регламентированы основные подходы  к проблеме информационной безопасности:</p>
+<ul>
+  <li>
+    <p align="justify">оранжевая (по цвету обложки) книга МО США  [2]</li>
+  <li>
+    <p align="justify">гармонизированные критерии европейских стран  [3]</li>
+  <li>
+    <p align="justify">руководящие документы Гостехкомиссии при Президенте РФ 
+      [17-21]
+  </li>
+  <li>
+    <p align="justify">рекомендации X.800 по защите распределенных систем [7]
+  </li>
+  <li>
+    <p align="justify">федеральный закон Об информации, информатизации и защите информации.
+  </li>
+  <li>
+    <p align="justify">и др.</li>
+</ul>
+<p align="justify">Основополагающие документы открыли
+  путь к ранжированию информационных систем по степени надежности. Так, в Оранжевой
+  книге определяется четыре уровня безопасности - D , С , В и А. По мере перехода
+  от уровня <font face="Times New Roman,sans-serif,Courier,mono"size="3">D</font> до А к надежности систем предъявляются все
+  более жесткие требования. Уровни С и В подразделяются на классы (C1, С2, В1,
+  В2, ВЗ).  Чтобы система в результате процедуры сертификации могла быть отнесена
+  к некоторому классу, ее политика безопасности и гарантированность должны удовлетворять
+  оговоренным требованиям.</p>
+<p align="justify">В качестве примера рассмотрим
+  требования класса C2, которому удовлетворяют некоторые популярные ОС (Windows
+  NT, отдельные реализации Unix и др.):</p>
+<ul>
+  <li>
+    <p align="justify">Каждый пользователь должен быть идентифицирован уникальным входным
+  именем и паролем для входа в систему. Система должна быть в состоянии использовать
+  эти уникальные идентификаторы, чтобы следить за  действиями пользователя.</li>
+  <li>
+    <p align="justify">Операционная система  должна защищать  объекты от повторного
+  использования.</li>
+  <li>
+    <p align="justify">Владелец ресурса (например, такого как файл) должен иметь возможность
+  контролировать доступ к этому  ресурсу.</li>
+  <li>
+    <p align="justify">Системный администратор должен иметь возможность учета всех событий,
+  относящихся к безопасности.</li>
+  <li>
+    <p align="justify">Система должна защищать себя от внешнего влияния или навязывания,
+  такого как модификация загруженной системы или системных файлов, хранимых на
+  диске.</li>
+</ul>
+<p style='text-align:justify;'> <a name="l1504"></a><b>
+<font face="Times New Roman,sans-serif,Courier,mono"size="3">15.4</font></b> <b><font face="Times New Roman,sans-serif,Courier,mono" size="3"> Политика безопасности</font></b></p>
+<p style='text-align:justify'>Основополагающие документы содержат определения 
+  многих ключевых понятий связанных с информационной безопасностью. Так, например, 
+  важность и сложность проблемы обеспечения безопасности требует выработки <i>политики</i> 
+  информационной безопасности, которая подразумевает ответы на следующие вопросы 
+  [29]: </p>
+<ul type=disc>
+  <li style='text-align:justify;     '>Какую информацию защищать?</li>
+  <li style='text-align:justify;     '>Какого рода атаки на безопасность системы
+    могут быть предприняты?</li>
+  <li style='text-align:justify;     '>Какие средства использовать для защиты
+    каждого вида информации?</li>
+</ul>
+<p style='text-align:justify'>В дальнейшем мы будем оперировать понятиями субъект
+  и объект безопасности. Субъект безопасности - активная, а объект - пассивная
+  системные составляющие, к которым применяется политика безопасности.  Примерами
+  субъектов могут служить пользователи и группы пользователей, а объектов - файлы,
+  системные таблицы, принтер и т.п.  Политика безопасности состоит в присвоении
+  субъектам и объектам идентификаторов и фиксации набора правил, используемых
+  для определения, имеет ли данный субъект авторизацию, достаточную для получения
+  к данному объекту данного типа доступа.</p>
+<p style='text-align:justify'>Формируя политику безопасности необходимо учитывать
+  несколько базовых принципов. Так,  Saltzer и Schroeder (1975) на основе своего
+  опыта работы с MULTICS сформулировали следующие принципы разработки ОС:</p>
+<ul>
+  <li>
+    <p align="justify">Проектирование системы должно быть открытым. Hарушитель и так
+  все знает. (криптографические алгоритмы открыты)</li>
+  <li>
+    <p align="justify">Не должно быть доступа по умолчанию. Ошибки с отклонением легитимного
+  доступа могут быть выявлены скорее, чем ошибки, там, где разрешен неавторизованный
+  доступ</li>
+  <li>
+    <p align="justify">В третьих. Тщательно  проверять текущее авторство. Так,  многие
+  системе проверяют привилегии доступа при открытии файла и не делают этого после.
+  В результате пользователь может открыть файл и держать его открытым в течение
+  недели и иметь к нему доступ, хотя владелец уже сменил защиту.</li>
+  <li>
+    <p align="justify">Давать каждому процессу  минимум возможных привилегий. ...</li>
+  <li>
+    <p align="justify">Защитные механизмы должны быть просты, постоянны и встроены в
+  нижний слой системы, это не аддитивные добавки. (Известно много неудачных попыток
+  улучшения защиты слабо приспособленной для этого ОС  <font face="Times New Roman,sans-serif,Courier,mono"size="3">MS</font>-<font face="Times New Roman,sans-serif,Courier,mono"size="3">DOS</font>).</li>
+  <li>
+    <p align="justify">Физиологическая приемлемость. Если пользователь видит, что защита
+  требует слишком много усилий, он от нее откажется.</li>
+</ul>
+<p style='text-align:justify'>Можно добавить еще ряд, например [30]:</p>
+<ul type=disc>
+  <li style='text-align:justify;     '>Принцип комплексного подхода, баланс надежности
+    защиты всех уровней</li>
+  <li style='text-align:justify;     '>Принцип единого контрольно-пропускного
+    пункта</li>
+  <li style='text-align:justify;     '>Принцип баланса возможного ущерба от реализации
+    угрозы и затрат на ее предотвращение</li>
+  <li style='text-align:justify;     '> И ряд других.</li>
+</ul>
+<p style='text-align:justify'>Приведенные соображения показывают необходимость
+  продумывания и встраивания защитных механизмов на ранних стадиях проектирования
+  системы.</p>
+<p style='text-align:justify;'> <a name="l1505"></a><b>
+<font face="Times New Roman,sans-serif,Courier,mono"size="3">15.5</font></b> <b><font face="Times New Roman,sans-serif,Courier,mono" size="3">  </font>Криптография, как
+  одна из базовых технологий безопасности ОС.</b></p>
+<p style='text-align:justify'>Многие службы информационной безопасности, такие
+  как контроль входа в систему, разграничение доступа к ресурсам, обеспечение
+  безопасного хранения данных и ряд других опираются на использование криптографических
+  алгоритмов. Имеется обширная литература по этому актуальному для безопасности
+  информационных систем вопросу.</p>
+<p style='text-align:justify'><i>Шифрование</i>  процесс изменения цифрового
+  сообщения из открытого текста (<font face="Times New Roman,sans-serif,Courier,mono"size="3">plaintext</font>) в шифротекст
+  (<font face="Times New Roman,sans-serif,Courier,mono"size="3">ciphertext</font>) таким образом, чтобы его могли прочитать только
+  те стороны, для которых он предназначен, либо для проверки подлинности отправителя
+  (аутентификация), либо для гарантии того, что отправитель действительно послал
+  данное сообщение.</p>
+<p style='text-align:justify'>В алгоритмах шифрования предусматривается наличие
+  <i>секретного ключа</i> и принято правило Кирхгофа: Стойкость шифра должна
+  определяться только секретностью ключа.</p>
+<p style='text-align:justify'>В методе шифрования с <i>секретным</i><b> </b><i>или
+  симметричным</i><b> </b>ключом имеется  один ключ, который используется как
+  для шифрования, так и для расшифровки сообщения. Такой ключ нужно хранить в
+  секрете. Это затрудняет использование системы шифрования, поскольку ключи должны
+  регулярно меняться, для чего требуется их секретное распространение. Наиболее
+  популярные алгоритмы шифрования с секретным ключом: <font face="Times New Roman,sans-serif,Courier,mono"size="3">DES</font>,
+  <font face="Times New Roman,sans-serif,Courier,mono"size="3">TripleDES</font>, ГОСТ и др.</p>
+<p style='text-align:justify'>Часто используется также шифрование с помощью <i>односторонней</i>
+  функции, называемой также хэш или дайджест функцией.  Применение этой функции
+  к шифруемым данным позволяет сформировать небольшой дайджест из нескольких байт,
+  по которому невозможно восстановить исходный текст.  Получатель сообщения может
+  проверить целостность данных, сравнивая полученный вместе с сообщением дайджест
+  с вычисленным вновь, при помощи той же односторонней функции. Эта техника активно
+  используется  для контроля входа в систему.  Например, пароли пользователей
+  хранятся на диске в зашифрованном односторонней функцией виде. Наиболее популярные
+  хэш-функции: <font face="Times New Roman,sans-serif,Courier,mono"size="3">MD</font>4, <font face="Times New Roman,sans-serif,Courier,mono"size="3">MD</font>5 и др.</p>
+<p style='text-align:justify'>В системах шифрования с <i>открытым</i> или <i>асимметричным
+  </i>ключом (<font face="Times New Roman,sans-serif,Courier,mono"size="3">public</font>/ <font face="Times New Roman,sans-serif,Courier,mono"size="3">assymmetric</font><font face="Times New Roman,sans-serif,Courier,mono"size="3"> </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">key</font>) используется два ключа.  Один
+  из ключей, называемый открытым, несекретным используется для шифрования сообщений,
+  которые могут быть расшифрованы только с помощью секретного ключа, имеющегося
+  у получателя, для которого предназначено сообщение. Либо для шифрования сообщения
+  может использоваться секретный ключ и если сообщение можно расшифровать с помощью
+  открытого ключа, то подлинность отправителя будет гарантирована (система электронной
+  подписи). Этот принцип изобретен Уитфилдом Диффи (<font face="Times New Roman,sans-serif,Courier,mono"size="3">Whitfield</font><font face="Times New Roman,sans-serif,Courier,mono"size="3"> </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">Diffie</font>) и Мартином Хеллманом (<font face="Times New Roman,sans-serif,Courier,mono"size="3">Martin</font><font face="Times New Roman,sans-serif,Courier,mono"size="3"> </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">Hellman</font>) в 1976 г.  </p>
+<p style='text-align:justify'><img border="0" src="images/image001.gif" width="616" height="314"> </p>
+<p style='text-align:justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="font-family: Times New Roman; mso-fareast-font-family: Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA"><font size="2">Рис.
+15.1 <span style="mso-spacerun: yes; font-family: Times New Roman; mso-fareast-font-family: Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">&nbsp;</span>Шифрование
+открытым ключом</font></span> </p>
+<p style='text-align:justify'>Использование открытых ключей снимает проблему
+  обмена и хранения ключей, свойственную системам с симметричными ключами. Открытые
+  ключи  могут храниться публично, и каждый может послать зашифрованное открытым
+  ключом сообщение владельцу ключа. Тогда как расшифровать это сообщение может
+  только владелец открытого ключа, и никто другой, при помощи своего секретного
+  ключа.  Однако алгоритмы с симметричным ключом более эффективны, поэтому во
+  многих криптографических системах используются оба метода. </p>
+<p style='text-align:justify'>Среди несимметричных алгоритмов наиболее известен
+  <font face="Times New Roman,sans-serif,Courier,mono"size="3">RSA</font>, предложенный Роном Ривестом (<font face="Times New Roman,sans-serif,Courier,mono"size="3">Ron</font><font face="Times New Roman,sans-serif,Courier,mono"size="3"> </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">Rivest</font>),  Ади Шамиром (<font face="Times New Roman,sans-serif,Courier,mono"size="3">Adi</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">
+  </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">Shamir</font>) и Леонардом Эдлманом (<font face="Times New Roman,sans-serif,Courier,mono"size="3">Leonard</font><font face="Times New Roman,sans-serif,Courier,mono"size="3"> </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">Adleman</font>). Рассмотрим его более подробно.</p>
+<p style='text-align:justify'><i><font face="Times New Roman,sans-serif,Courier,mono"size="3">Шифрование с использованием алгоритма </font></i><i><font face="Times New Roman,sans-serif,Courier,mono"size="3">RSA</font></i><i><font face="Times New Roman,sans-serif,Courier,mono"size="3"></font></i></p>
+<p style='text-align:justify'>Задача, положенная в основу метода состоит в том,
+  чтобы найти такую функцию <font face="Times New Roman,sans-serif,Courier,mono"size="3">y</font>=<font face="Times New Roman,sans-serif,Courier,mono"size="3">f</font>(<font face="Times New Roman,sans-serif,Courier,mono"size="3">x</font>),
+  чтобы получение обратной функции  <font face="Times New Roman,sans-serif,Courier,mono"size="3">x</font>=<font face="Times New Roman,sans-serif,Courier,mono"size="3">f</font><sup>-1</sup>(<font face="Times New Roman,sans-serif,Courier,mono"size="3">y</font>)
+  , было бы  в общем случае очень сложной задачей (<font face="Times New Roman,sans-serif,Courier,mono"size="3">NP</font>-полной
+  задачей), однако, если знать некую секретную информацию, то сделать это существенно
+  проще. Такие функции также называют односторонними функциями с лазейкой или
+  потайным ходом.  Например,  получить произведение двух чисел <font face="Times New Roman,sans-serif,Courier,mono"size="3">n</font>=<font face="Times New Roman,sans-serif,Courier,mono"size="3">p</font>*<font face="Times New Roman,sans-serif,Courier,mono"size="3">q</font> просто, а разложить <font face="Times New Roman,sans-serif,Courier,mono"size="3">n</font> на множители, если <font face="Times New Roman,sans-serif,Courier,mono"size="3">p</font> и <font face="Times New Roman,sans-serif,Courier,mono"size="3">q</font> достаточно большие простые числа,
+   сложно.</p>
+<ol>
+  <li>
+    <p align="justify">Первым  шагом в использовании алгоритма
+  <font face="Times New Roman,sans-serif,Courier,mono"size="3">RSA</font> является генерация ключей. Для этого нужно:</li>
+  <li>
+    <p align="justify">Выбрать два очень больших простых числа p и
+    q.</li>
+  <li>
+    <p align="justify">Вычислить  произведение n= p*q.</li>
+  <li>
+    <p align="justify">Выбрать большое случайное число d,  не имеющее общих сомножителей с
+  числом (p-1)*(q-1).</li>
+  <li>
+    <p align="justify">Определить число <font face="Times New Roman,sans-serif,Courier,mono"size="3">e</font>, чтобы выполнялось (<font face="Times New Roman,sans-serif,Courier,mono"size="3">e</font>*<font face="Times New Roman,sans-serif,Courier,mono"size="3">d</font>)
+  <font face="Times New Roman,sans-serif,Courier,mono"size="3">mod</font> ((<font face="Times New Roman,sans-serif,Courier,mono"size="3">p</font>-1)*(<font face="Times New Roman,sans-serif,Courier,mono"size="3">q</font>-1))=1.</li>
+</ol>
+<p align="justify">Тогда открытым ключом  будут числа
+  <font face="Times New Roman,sans-serif,Courier,mono"size="3">e</font> и n,  а секретным ключом - числа  d и n.</p>
+<p align="justify">Теперь, чтобы зашифровать данные
+  по известному ключу {e,n}, необходимо сделать следующее:</p>
+<ul>
+  <li>
+    <p align="justify">Разбить шифруемый текст на блоки,  где <font face="Times New Roman,sans-serif,Courier,mono"size="3">i</font>-й
+  блок может быть представлен в виде числа <font face="Times New Roman,sans-serif,Courier,mono"size="3">m</font>(i)=0,1,2...,
+  n-1. Их должно быть не более <font face="Times New Roman,sans-serif,Courier,mono"size="3">n</font>-1.</li>
+  <li>
+    <p align="justify">Зашифровать текст, рассматриваемый как последовательность чисел
+  m(i) по формуле <font face="Times New Roman,sans-serif,Courier,mono"size="3">c</font>(<font face="Times New Roman,sans-serif,Courier,mono"size="3">i</font>)=(<font face="Times New Roman,sans-serif,Courier,mono"size="3">m</font>(<font face="Times New Roman,sans-serif,Courier,mono"size="3">i</font>)<sup><font face="Times New Roman,sans-serif,Courier,mono"size="3">e</font></sup>)<font face="Times New Roman,sans-serif,Courier,mono"size="3">mod</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">
+  </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">n</font>.</li>
+</ul>
+<p align="justify">Чтобы расшифровать эти данные, используя
+  секретный ключ {d,n}, необходимо  вычислить: <font face="Times New Roman,sans-serif,Courier,mono"size="3">m</font>(i) =
+  (c(i)<sup>d</sup>) mod n. В результате будет получено множество чисел m(i),
+  которые представляют собой  часть исходного текста.</p>
+<p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Например, зашифруем и расшифруем сообщение </font><font face="Times New Roman,sans-serif,Courier,mono" size="3">A</font>БВ, которое представим, как последовательность
+  чисел  123 (в диапазоне 0-32)</p>
+<ul>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono"size="3">Выбираем </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">p</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">=5 и </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">q</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">=11 (числа на самом деле должны быть большими).</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Находим </font><font face="Times New Roman,sans-serif,Courier,mono" size="3">n</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">=5*11=55</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Определяем (</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">p</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">-1)*(</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">q</font><font face="Times New Roman,sans-serif,Courier,mono" size="3">-1) = 40. Тогда </font><font face="Times New Roman,sans-serif,Courier,mono" size="3">d</font><font face="Times New Roman,sans-serif,Courier,mono" size="3"> будет
+  равно, например 7.</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Выберем </font><font face="Times New Roman,sans-serif,Courier,mono" size="3">e</font><font face="Times New Roman,sans-serif,Courier,mono" size="3">, исходя из (e*7) mod 40=1. Например, </font><font face="Times New Roman,sans-serif,Courier,mono"size="3">e</font><font face="Times New Roman,sans-serif,Courier,mono"size="3">=3.</font></li>
+</ul>
+<p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Теперь зашифруем сообщение, используя открытый ключ {3,55}</font></p>
+<ul>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono"size="3">C<sub>1 </sub>= (1<sup>3</sup>)mod 55 = 1</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono"size="3">C<sub>2 </sub>= (2<sup>3</sup>)mod 55 = 8</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono"size="3">C<sub>3 </sub>= (3<sup>3</sup>)mod 55 = 27</font></li>
+</ul>
+<p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Теперь расшифруем эти данные, используя закрытый ключ {7,55}.</font><font face="Times New Roman,sans-serif,Courier,mono"size="3"></font></p>
+<ul>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono"size="3">M<sub>1</sub> = (1<sup>7</sup>)mod 55 = 1</font></li>
+  <li>
+    <p align="justify">M<sub>2</sub> = (8<sup>7</sup>)mod
+  55 = 2097152mod 55 =  2</li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono"size="3">M<sub>3</sub> = (27<sup>7</sup>)mod 55 = 10460353203
+  mod 55 = 3</font></li>
+</ul>
+<p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Таким образом, все, данные расшифрованы.</font></p>
+<p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Итак, мы выяснили, что современная криптография
+  включает в себя следующие крупные разделы:</font></p>
+<ul>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Симметричные криптосистемы.</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Криптосистемы с открытым ключом.</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Системы электронной подписи.</font></li>
+  <li>
+    <p align="justify"><font face="Times New Roman,sans-serif,Courier,mono" size="3">Управление ключами,</font></li>
+</ul>
+<p align="justify">а основные направления  использования криптографических методов -
+  передача конфиденциальной информации по каналам связи (например, электронная
+  почта), установление подлинности передаваемых сообщений, хранение информации
+  (документов, баз данных) на носителях в зашифрованном виде.</p>
+
+<p align="center"><a href="../14/ch14.htm"> Предыдущая глава</a> | 
+<a href="../os.html">Программа курса</a> | 
+<a href="../16/ch16.htm"> Следующая глава</a></p>
+
+</body>
+</html>

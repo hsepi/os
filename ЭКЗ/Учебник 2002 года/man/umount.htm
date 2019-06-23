@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>umount</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Команда umount</font> </H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Синтаксис команды</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>umount [-hV]<br>
+umount  device<br>
+umount dir<br>
+  </b></BLOCKQUOTE>
+   </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание команды</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Настоящее описание не является 
+      полным описанием команды <b><font color="#008000">umount</font></b>, а описывает 
+      только те ее опции (очень малую часть), которые используются в данном курсе. 
+      Для получения полного описания обращайтесь к UNIX manual (команда <b><font color="#008000">man</font></b>). 
+      <br>
+      <br>
+      Команда </font> <B><font color="#008000">umount</font></B> <FONT FACE="Times New Roman"> 
+      предназначена для выполнения операции логического разъединения ранее смонтированных 
+      файловых систем. <br>
+      <br>
+      Опции <b><font color="#008000">-h</font></b>, <b><font color="#008000">-V</font></b> 
+      используются при вызове команды без параметров и служат для следующих целей: 
+      </font><br>
+      <br>
+    <dir> 
+      <p align="JUSTIFY"><FONT FACE="Times New Roman"> <b><font color="#008000">-h</font></b> 
+        - вывести краткую инструкцию по пользованию командой;<br>
+        <b><font color="#008000">-V</font></b> - вывести информацию о версии команды 
+        <b> <font color="#008000">umount</font></b>;<br>
+        <br>
+        </font> 
+    </dir>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Команда <b><font color="#008000">umount</font></b> 
+      с параметром служит для выполнения операции логического разъединения файловых 
+      систем. В качестве параметра может быть задано либо имя устройства, содержащего 
+      файловую систему - <b><font color="#008000">device</font></b>, либо имя 
+      точки монтирования файловой системы (т.е. имя директории, которое указывалось 
+      в качестве параметра при вызове команды <a href="mount.htm">mount</a>) - 
+      <b><font color="#008000">dir</font></b>.<br>
+      <br>
+      <u><b>Заметим, что файловая система не может быть отмонтирована до тех пор, 
+      пока она находится в использовании (busy) - например, когда в ней существуют 
+      открытые файлы, какой-либо процесс имеет в качестве рабочей директории директорию 
+      в этой файловой системе и т.д. </b></u> </font> 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

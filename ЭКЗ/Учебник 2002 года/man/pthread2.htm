@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Pthread_create</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Функция для  создания нити исполнения</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5>
+<P>Прототип функции</P>
+</FONT></B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;pthread.h&gt;<BR>
+    &nbsp;<br>
+    </b><FONT COLOR="#008000"><B>int pthread_create</b></font><B><FONT COLOR="#008000">(pthread_t 
+    *thread, pthread_attr_t *attr, void * (*start_routine)(void *), void *arg);</font></b></BLOCKQUOTE>
+  </font></DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Описание функции</P>
+</font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p ALIGN="JUSTIFY"> 
+    <font face="Times New Roman">Функция <B><FONT COLOR="#008000">pthread_create</font></B> 
+    служит для создания новой нити исполнения (thread'а) внутри текущего процесса. 
+    Настоящее описание не является полным описанием функции, а служит только целям 
+    данного курса. Для изучения полного описания обращайтесь к UNIX man.<br>
+    <br>
+    Новый thread будет выполнять функцию <b><font color="#008000">start_routine</font></b> 
+    с прототипом <br>
+    <br>
+    <p align="center"><font color="#008000"><b>void * start_routine(void *);</b></font> 
+      <br>
+      <br>
+    <P align="JUSTIFY">передавая ей в качестве аргумента параметр <b><font color="#008000">arg</font></b>. 
+      Если требуется передать более одного параметра, они собираются в структуру, 
+      и передается адрес этой структуры.
+    Значение, возвращаемое функцией start_routine
+    не должно указывать на&nbsp; динамический
+    объект данного thread'а.<br>
+      Параметр <b><font color="#008000">attr</font></b> служит для задания различных 
+      атрибутов создаваемого thread'а. Их описание выходит за рамки нашего курса 
+      и мы вседа будем полагать их заданными по умолчанию, подставляя в качестве 
+      аргумента значение <b><font color="#008000">NULL</font></b>.
+    </font>
+  </blockquote>
+</dir>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Возвращаемые значения</P>
+</font></B>
+<dir>      <BLOCKQUOTE> 
+    <p ALIGN="JUSTIFY"><font face="Times New Roman">При удачном
+    завершении функция возвращает значение <font color="#008000"><b> 0</b></font>
+    и помещает идентификатор новой нити
+    исполнения по адресу, на который
+    указывает параметр <font color="#008000"><b>thread</b></font>.
+    В случае ошибки возвращается <b><u>положительное
+    значение</u></b> (а не отрицательное, как в
+    большинстве системных вызовов и функций!),
+    которое определяет код ошибки, описанный
+    в файле<b> <font color="#008000">errno.h</font>.</b> Значение
+    системной переменной <font color="#008000"><b>errno</b></font>
+    при этом не устанавливается. </font> 
+ </BLOCKQUOTE> 
+</DIR>
+</BODY>
+</HTML>

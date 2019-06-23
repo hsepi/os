@@ -1,0 +1,1109 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Лекция 5</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<P ALIGN="CENTER"><B> </B></P>
+<P ALIGN="CENTER"><B><font face="Times New Roman"  size=4>Глава 5. Алгоритмы синхронизации</FONT></B></p>
+
+<P align="center"><a href="../04/ch4.htm"> Предыдущая глава</a> | <a href="../os.html">Программа курса</a> | 
+ <a href="../06/ch6.htm"> Следующая глава</a></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>В предыдущей главе мы говорили 
+  о внешних проблемах кооперации, связанных с организацией взаимодействия процессов 
+  со стороны операционной системы. Допустим, что надежная связь процессов организована, 
+  и они умеют обмениваться информацией. Нужно ли нам предпринимать еще какие-либо 
+  действия для организации правильного решения задачи взаимодействующими процессами? 
+  Нужно ли нам изменять их внутреннее поведение? Выяснению этих вопросов и посвящена 
+  настоящая глава.</FONT></P>
+
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman" SIZE=3><a name="l0501"></a>5.1. Interleaving, race condition и взаимоисключения</font></b>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Давайте временно отвлечемся 
+  от операционных систем, процессов и нитей исполнения и поговорим просто об некоторых 
+  “активностях”. Под активностями мы будем понимать последовательное выполнение 
+  некоторых действий, направленных на достижение определенной цели. Активности 
+  могут иметь место в программном и техническом обеспечении, в обычной деятельности 
+  людей и животных. Мы будем разбивать активности на некоторые неделимые или атомарные 
+  операции. Например, активность “приготовление бутерброда” можно разбить на следующие 
+  атомарные операции:</FONT>
+<OL>
+  <OL>
+    <LI><FONT FACE="Times New Roman" SIZE=3>Отрезать ломтик хлеба.</FONT></LI>
+    <LI><FONT FACE="Times New Roman" SIZE=3>Отрезать ломтик колбасы.</FONT></LI>
+    <LI><FONT FACE="Times New Roman" SIZE=3>Намазать ломтик хлеба маслом.</FONT></LI>
+    <LI><FONT FACE="Times New Roman" SIZE=3>Положить ломтик колбасы на подготовленный 
+      ломтик хлеба.</FONT></LI>
+  </OL>
+</OL>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Неделимые операции могут 
+  иметь некоторые внутренние невидимые действия (взять батон хлеба в левую руку, 
+  взять нож в правую руку, собственно произвести отрезание). Мы же называем их 
+  неделимыми потому, что считаем одним целым, выполняемыми за раз, без прерывания 
+  деятельности.</FONT>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3><a name="l0501a"></a>Пусть имеется две активности</FONT> 
+<dir> 
+  <dir> 
+    <dir> <FONT FACE="Times New Roman" SIZE=3>
+      <table width="11%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><b><font color="#008000">P:</font></b></td>
+          <td><b><font color="#008000">a&nbsp;b&nbsp;c</font></b></td>
+        </tr>
+        <tr> 
+          <td><b><font color="#008000">Q:</font></b></td>
+          <td><b><font color="#008000">d&nbsp;e&nbsp;f,</font></b></td>
+        </tr>
+      </table>
+      </font> </dir>
+  </dir></dir>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>где <font color="#008000"><b>a, 
+  b, c, d, e, f </b></FONT>атомарные операции. При последовательном выполнении 
+  активностей мы получаем следующую последовательность атомарных действий:</FONT></P>
+<dir>
+  <dir>
+    <dir> 
+      <P><b><FONT FACE="Times New Roman" SIZE=3  color="#008000">PQ: a&nbsp;b&nbsp;c&nbsp;d&nbsp;e&nbsp;f</FONT></b></P>
+</dir></dir></dir>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Что произойдет при исполнении 
+  этих активностей псевдопараллельно, в режиме разделения времени? Активности 
+  могут расслоиться на неделимые операции с различным их чередованием, то есть 
+  может произойти то, что на английском языке принято называть словом interleaving. 
+  Возможные варианты чередования:</FONT></P>
+<dir>
+  <dir>
+    <dir><P><FONT FACE="Times New Roman" SIZE=3  color="#008000"><b>а&nbsp;b&nbsp;c&nbsp;d&nbsp;e&nbsp;f<br>
+ a&nbsp;b&nbsp;d&nbsp;c&nbsp;e&nbsp;f<br>
+ a&nbsp;b&nbsp;d&nbsp;e&nbsp;c&nbsp;f<br>
+ a&nbsp;b&nbsp;d&nbsp;e&nbsp;f&nbsp;c<br>
+a&nbsp;d&nbsp;b&nbsp;c&nbsp;e&nbsp;f<br>
+ ......<br>
+ d&nbsp;e&nbsp;f&nbsp;a&nbsp;b&nbsp;c</b></FONT></P>
+ </dir></dir></dir>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3><a name="l0501b"></a>То есть атомарные операции 
+  активностей могут чередоваться всевозможными способами с сохранением своего 
+  порядка расположения внутри активностей. Так как псевдопараллельное выполнение 
+  двух активностей приводит к чередованию их неделимых операций, то результат 
+  псевдопараллельного выполнения может отличаться от результата последовательного 
+  выполнения. Рассмотрим пример. Пусть у нас есть две активности <b><font color="#008000">P</font></b> 
+  и <b><font color="#008000">Q</font></b>,</font><FONT SIZE=3> </FONT><FONT FACE="Times New Roman" SIZE=3>состоящие 
+  из двух атомарных операций каждая: </font></P>
+<dir> 
+  <dir> 
+    <dir> <FONT FACE="Times New Roman" SIZE=3>
+      <table width="30%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="16%"><b><font color="#008000">P:</font></b></td>
+          <td width="48%"><b><font color="#008000">x=2</font></b></td>
+          <td width="16%"><b><font color="#008000">Q:</font></b></td>
+          <td width="20%"><b><font color="#008000">x=3</font></b></td>
+        </tr>
+        <tr> 
+          <td width="16%">&nbsp;</td>
+          <td width="48%"><b><font color="#008000">y=x-1</font></b></td>
+          <td width="16%">&nbsp;</td>
+          <td width="20%"><b><font color="#008000">y=x+1</font></b></td>
+        </tr>
+      </table>
+      </font> </dir>
+  </dir>
+</dir>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Что мы получим в результате 
+  их псевдопараллельного выполнения, если переменные <b><font color="#008000">x</font></b> 
+  и <font color="#008000">y</font> являются общими для активностей? Легко видеть, 
+  что возможны четыре разных набора значений для пары <b><font color="#008000">(x,&nbsp;y): 
+  (3,&nbsp;4), (2,&nbsp;1), (2,&nbsp;3)</font></b> и <b><font color="#008000">(3,&nbsp;2)</font></b>. 
+  Мы будем говорить, что набор активностей (например, программ) <I>детерминирован</I>, 
+  если всякий раз при псевдопараллельном исполнении для одного и того же набора 
+  входных данных он дает одинаковые выходные данные. В противном случае он <I>недетерминирован</I>. 
+  Выше приведен пример недетерминированного набора программ. Понятно, что детерминированный 
+  набор активностей можно безбоязненно выполнять в режиме разделения времени. 
+  Для недетерминированного набора такое исполнение нежелательно.</font></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3><a name="l0501c"></a>Можно ли до получения результатов, 
+  заранее, определить является ли набор активностей детерминированным или нет? 
+  Для этого существуют достаточные условия Бернстайна. Изложим их применительно 
+  к программам с разделяемыми переменными.</FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Введем наборы входных и 
+  выходных переменных программы. Для каждой атомарной операции наборы входных 
+  и выходных переменных&nbsp;—&nbsp;это наборы переменных, которые атомарная операция 
+  считывает и записывает. Набор входных переменных программы <b><font color="#008000">R(P)</font></b> 
+  (<b><font color="#008000">R</font></b> от слова read) суть объединение наборов 
+  входных переменных для всех ее неделимых действий. Аналогично, набор выходных 
+  переменных программы<b><font color="#008000"> W(P)</font></b> (<b><font color="#008000">W 
+  </font></b>от слова write) суть объединение наборов выходных переменных для 
+  всех ее неделимых действий. Например, для программы </FONT> 
+<dir> 
+  <dir> 
+    <dir> 
+      <table width="11%" border="0" cellspacing="0" cellpadding="0">
+        <FONT FACE="Times New Roman" SIZE=3> 
+        <tr> 
+          <td><b><font color="#008000">P:</font></b></td>
+          <td><b><font color="#008000">x=u+v</font></b></td>
+        </tr>
+        <tr> 
+          <td><b></b></td>
+          <td><b><font color="#008000">y=x*w</font></b></td>
+        </tr>
+        </font> 
+      </table>
+    </dir>
+  </dir></dir>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>получаем<b><font color="#008000"> 
+  R(P)&nbsp;=&nbsp;{u,&nbsp;v,&nbsp;x,&nbsp;w}, W(P)&nbsp;=&nbsp;{x,&nbsp;y}</font></b>. 
+  Заметим, что переменная <b><font color="#008000">x</font></b> присутствует как 
+  в <b><font color="#008000">R(P)</font></b>, так и в <b><font color="#008000">W(P)</font></b>.</font></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Теперь сформулируем условия Бернстайна.</FONT></P>
+<DIR> 
+      
+  <P><FONT FACE="Times New Roman" SIZE=3>Если для двух данных активностей<b><font color="#008000"> 
+    P </font></b>и<b><font color="#008000"> Q</font></b>:</FONT></P>
+</DIR>
+<UL>
+  <UL>
+    <LI><FONT FACE="Times New Roman" SIZE=3>пересечение <b><font color="#008000">W(P)</font></b> 
+      и <b><font color="#008000">W(Q)</font></b> пусто,</FONT></LI>
+    <LI><FONT FACE="Times New Roman" SIZE=3>пересечение <b><font color="#008000">W(P)</font></b> 
+      с <b><font color="#008000">R(Q)</font></b> пусто, </FONT></LI>
+    <LI><FONT FACE="Times New Roman" SIZE=3>пересечение <b><font color="#008000">R(P)</font></b> 
+      и <b><font color="#008000">W(Q)</font></b> пусто,</FONT></LI>
+  </UL>
+</UL>
+<DIR> 
+ 
+      <P><FONT FACE="Times New Roman" SIZE=3>тогда выполнение<b><font color="#008000"> 
+        P</font></b> и<b><font color="#008000"> Q</font></b> детерминировано.</FONT></P>
+ </DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Если эти условия не соблюдены, 
+  возможно, что параллельное выполнение<b><font color="#008000"> P</font></b> 
+  и <b><font color="#008000">Q</font></b> детерминировано, но возможно, что и 
+  нет.</FONT></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Случай двух активностей 
+  естественным образом обобщается на их большее количество. </FONT></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Условия Бернстайна информативны, 
+  но слишком жестки. По сути дела они требуют практически невзаимодействующих 
+  процессов. А нам хотелось бы, чтобы детерминированный набор образовывали активности, 
+  совместно использующие информацию и обменивающиеся ей. Для этого нам необходимо 
+  ограничить число возможных чередований атомарных операций, исключив некоторые 
+  чередования с помощью механизмов синхронизации выполнения программ, обеспечив 
+  тем самым упорядоченный доступ программ к некоторым данным. </FONT></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Про недетерминированный 
+  набор программ (и активностей вообще) говорят, что он имеет<I> race condition</I> 
+  (состояние гонки, состояние состязания). В приведенном выше примере процессы 
+  состязаются за вычисление значений переменных<b><font color="#008000"> x</font></b> 
+  и <b><font color="#008000">y</font></b>. </font></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Задачу упорядоченного доступа 
+  к разделяемым данным (устранение race condition), в том случае, если нам не 
+  важна его очередность, можно решить, если обеспечить каждому процессу эксклюзивное 
+  право доступа к этим данным. Каждый процесс, обращающийся к разделяемым ресурсам, 
+  исключает для всех других процессов возможность одновременного с ним общения 
+  с этими ресурсами, если это может привести к недетерминированному поведению 
+  набора процессов. Такой прием называется <I>взаимоисключением </I>(<I>mutual 
+  exclusion</I>). Если очередность доступа к разделяемым ресурсам важна для получения 
+  правильных результатов, то одними взаимоисключеньями уже не обойтись.</font></P>
+
+  <P ALIGN="CENTER"> <B><FONT FACE="Times New Roman" SIZE=3><a name="l0502">5.2. Критическая секция</a></FONT></B>
+ 
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Важным понятием при изучении 
+  способов синхронизации процессов является понятие <I>критической секции</I> 
+  (<I>critical section</I>) программы. Критическая секция - это часть программы, 
+  исполнение которой может привести к возникновению race condition. Чтобы исключить 
+  эффект гонок по отношению к некоторому ресурсу, необходимо организовать работу 
+  так, чтобы в каждый момент времени только один процесс мог находиться в своей 
+  критической секции, связанной с этим ресурсом. Иными словами, необходимо обеспечить 
+  реализацию взаимоисключения для критических секций программ. Реализация взаимоисключения 
+  для критических секций программ с практической точки зрения означает, что по 
+  отношению к другим процессам, участвующим во взаимодействии, критическая секция 
+  начинает выполняться как атомарная операция. Давайте рассмотрим следующий пример, 
+  в котором псевдопараллельные взаимодействующие процессы представлены действиями 
+  различных студентов:</font></P>
+  <TABLE align="center" CELLSPACING=0 BORDER=2 CELLPADDING=4 WIDTH=80%>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT FACE="Times New Roman" SIZE=3>Время</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT FACE="Times New Roman" SIZE=3>Студент 1</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT FACE="Times New Roman" SIZE=3>Студент 2</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT FACE="Times New Roman" SIZE=3>Студент 3</FONT>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-05</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Приходит в комнату</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-07</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Обнаруживает, что хлеба нет</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-09</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Уходит в магазин</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-11</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Приходит в комнату</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-13</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Обнаруживает, что хлеба нет</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-15</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Уходит в магазин</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-17</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Приходит в комнату</FONT> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-19</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Обнаруживает, что хлеба нет</FONT> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-21</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Уходит в магазин</FONT> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-23</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Приходит в магазин</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-25</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Покупает 2 батона на всех</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-27</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Уходит из магазина</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-29</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Приходит в магазин</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-31</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Покупает 2 батона на всех</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-33</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Уходит из магазина</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-35</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Приходит в магазин</FONT> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-37</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Покупает 2 батона на всех</FONT> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-39</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Уходит из магазина</FONT> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-41</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Возвращается в комнату</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-43</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-45</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-47</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Возвращается в комнату</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-49</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-51</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="21%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><FONT SIZE=3>17-53</FONT> 
+      </TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="26%" VALIGN="TOP"> 
+        <P><FONT FACE="Times New Roman" SIZE=3>Возвращается в комнату</FONT> 
+      </TD>
+    </TR>
+  </TABLE>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Здесь критический участок 
+    для каждого процесса — от операции “Обнаруживает, что хлеба нет” до операции 
+    “Возвращается в комнату” включительно. В результате отсутствия взаимоисключения 
+    мы из ситуации “Нет хлеба” попадаем в ситуацию “Слишком много хлеба”. Если 
+    бы этот критический участок выполнялся как атомарная операция — “Достает 2 
+    батона хлеба”, то проблема образования излишков была бы снята.</FONT></P>
+  
+
+<table align="center" cellspacing=0 border=2 cellpadding=4 width=80%>
+  <tr> 
+    <td width="21%" valign="TOP"> 
+      <p align="CENTER"><font face="Times New Roman" size=3>Время</font> 
+    </td>
+    <td width="26%" valign="TOP"> 
+      <p align="CENTER"><font face="Times New Roman" size=3>Студент 1</font> 
+    </td>
+    <td width="26%" valign="TOP"> 
+      <p align="CENTER"><font face="Times New Roman" size=3>Студент 2</font> 
+    </td>
+    <td width="26%" valign="TOP"> 
+      <p align="CENTER"><font face="Times New Roman" size=3>Студент 3</font></p>
+    </td>
+  </tr>
+  <tr> 
+    <td width="21%" valign="TOP"> 
+      <p align="CENTER"><font size=3>17-05</font> 
+    </td>
+    <td width="26%" valign="TOP"> 
+      <p><font face="Times New Roman" size=3>Приходит в комнату</font> 
+    </td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td width="21%" valign="TOP"> 
+      <p align="CENTER"><font size=3>17-07</font> 
+    </td>
+    <td width="26%" valign="TOP"> 
+      <p><font face="Times New Roman" size=3>Достает два батона хлеба</font> 
+    </td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td width="21%" valign="TOP"> 
+      <p align="CENTER"><font size=3>17-43</font> 
+    </td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+    <td width="26%" valign="TOP"> 
+      <p><font face="Times New Roman" size=3>Приходит в комнату</font> 
+    </td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td width="21%" valign="TOP"> 
+      <p align="CENTER"><font size=3>17-47</font> 
+    </td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+    <td width="26%" valign="TOP">&nbsp;</td>
+    <td width="26%" valign="TOP"> 
+      <p><font face="Times New Roman" size=3>Приходит в комнату</font> 
+    </td>
+  </tr>
+</table>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Сделать процесс добывания 
+  хлеба атомарной операцией можно было бы следующим образом: перед началом этого 
+  процесса закрыть дверь изнутри на засов и уходить добывать хлеб через окно, 
+  а по окончании процесса вернуться в комнату через окно и отодвинуть засов. Тогда 
+  пока один студент добывает хлеб, все остальные находятся в состоянии ожидания 
+  под дверью.</FONT></P>
+
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Итак, для решения задачи 
+  необходимо, чтобы в том случае, когда процесс находится в своем критическом 
+  участке, другие процессы не могли войти в свои критические участки. Мы видим, 
+  что критический участок должен сопровождаться прологом (<i>entry section</i>) 
+  – “закрыть дверь изнутри на засов” - и эпилогом (<i>exit section</i>) – “отодвинуть 
+  засов”, которые не имеют отношения к активности одиночного процесса. Во время 
+  выполнения пролога процесс должен, в частности, получить разрешение на вход 
+  в критический участок, а во время выполнения эпилога - сообщить другим процессам, 
+  что он покинул критическую секцию.</font></P>
+
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>В общем случае структура 
+    процесса, участвующего во взаимодействии, может быть представлена следующим 
+    образом:</FONT>
+	<dir><dir><dir>
+	<FONT FACE="Times New Roman" SIZE=3><I>
+  <font color="#008000" size="3" face="Times New Roman"><b>
+  while (some condition) {<br>
+  </b></font>
+  <dir>
+   <font color="#008000" size="3" face="Times New Roman"><b>
+   entry section<br>
+   </b></font>
+    <dir><font color="#008000" size="3" face="Times New Roman"><b>critical section<br>
+      </b></font>
+ </dir><font color="#008000" size="3" face="Times New Roman"><b>exit section<br>
+   </b></font>
+  <dir><font color="#008000" size="3" face="Times New Roman"><b>remainder section<br>
+    </b></font>
+  </dir></dir>
+  <font color="#008000" size="3" face="Times New Roman"><b>
+}</b></font></I></FONT>
+	</dir></dir></dir>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Здесь под <I>remainder 
+    section</I> понимаются все атомарные 
+    операции, не входящие в критическую секцию. </font></P>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Оставшаяся часть этой 
+    главы посвящена различным способам программной организации пролога и эпилога 
+    критического участка.</FONT></P>
+  
+  <P ALIGN="CENTER"> <B><FONT FACE="Times New Roman" SIZE=3><a name="l0503">5.3. Программные алгоритмы организации 
+    взаимодействия процессов</a></FONT></B><a name="l0503"><br></a><br>
+   
+ <B><FONT FACE="Times New Roman" SIZE=3><a name="l050301"></a>5.3.1. Требования, предъявляемые к алгоритмам</FONT></B>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Организация взаимоисключения 
+  для критических участков, конечно, позволит избежать возникновения race condition, 
+  но не является достаточной для правильной и эффективной параллельной работы 
+  кооперативных процессов. Сформулируем пять условий, которые должны выполняться 
+  для хорошего программного алгоритма организации взаимодействия процессов, имеющих 
+  критические участки, если они могут проходить их в произвольном порядке:</FONT></P>
+<OL>
+  <P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman" SIZE=3> </FONT> 
+  <LI><P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Задача должна быть решена чисто программным 
+    способом на обычной машине, не имеющей специальных команд взаимоисключения. 
+    При этом предполагается, что основные инструкции языка программирования (такие 
+    примитивные инструкции как load, store, test) являются атомарными операциями.</FONT></LI>
+  <FONT FACE="Times New Roman" SIZE=3></FONT> 
+  <P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman" SIZE=3> </FONT> 
+  <LI><P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Не должно существовать никаких предположений 
+    об относительных скоростях выполняющихся процессов или числе процессоров, 
+    на которых они исполняются.</FONT></LI>
+  <FONT FACE="Times New Roman" SIZE=3></FONT> 
+  <P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman" SIZE=3> </FONT> 
+  <LI>
+    <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Если процесс Pi исполняется 
+      в своем критическом участке, то не существует никаких других процессов, 
+      которые исполняются в своих соответствующих критических секциях. Это условие 
+      получило название условия взаимоисключения (mutual exclusion).</FONT>
+  </LI>
+  <FONT FACE="Times New Roman" SIZE=3></FONT> 
+  <P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman" SIZE=3> </FONT> 
+  <LI>
+    <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Процессы, которые находятся 
+      вне своих критических участков и не собираются входить в них, не могут препятствовать 
+      другим процессам входить в их собственные критические участки. Если нет 
+      процессов в критических секциях, и имеются процессы, желающие войти в них, 
+      то только те процессы, которые не исполняются в remainder section, должны 
+      принимать решение о том, какой процесс войдет в свою критическую секцию. 
+      Такое решение не должно приниматься бесконечно долго. Это условие получило 
+      название условия прогресса (progress).</font> 
+  </LI>
+  <FONT FACE="Times New Roman" SIZE=3></FONT> 
+  <P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman" SIZE=3> </FONT> 
+  <LI>
+    <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Не должно возникать 
+      бесконечного ожидания для входа процесса в свой критический участок. От 
+      того момента, когда процесс запросил разрешение на вход в критическую секцию, 
+      и до того момента, когда он это разрешение получил, другие процессы могут 
+      пройти через свои критические участки лишь ограниченное число раз. Это условие 
+      получило название условия ограниченного ожидания (bound waiting).</FONT>
+  </LI>
+  <FONT FACE="Times New Roman" SIZE=3></FONT> 
+</OL>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Надо заметить, что описание 
+  соответствующего алгоритма в нашем случае означает описание способа организации 
+  пролога и эпилога для критической секции. </FONT></P>
+  <P ALIGN="CENTER"><B><FONT FACE="Times New Roman" SIZE=3><a name="l050302"></a>5.3.2. Запрет прерываний</FONT></B>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Наиболее простым решением 
+    поставленной задачи является следующая организация пролога и эпилога:</FONT></P>
+    <dir><dir><dir>
+    <FONT FACE="Times New Roman" SIZE=3><i>
+  <font color="#008000"><b>
+  while (some condition) { <br>
+  </b></font>
+  <dir><font color="#008000"><b>запретить все прерывания <br>
+    </b></font>
+  <dir><font color="#008000"><b>critical section <br>
+    </b></font>
+  </dir><font color="#008000"><b>разрешить все прерывания <br>
+    </b></font>
+  <dir>  <font color="#008000"><b>  remainder section <br>
+    </b></font>
+   </dir></dir> <font color="#008000"><b> } <br></b></font></i></font>
+</dir></dir></dir>    
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Поскольку, выход процесса 
+    из состояния исполнения без его завершения осуществляется по прерыванию, то 
+    внутри критической секции никто не может вмешаться в его работу. Однако такое 
+    решение чревато далеко идущими последствиями, поскольку разрешает процессу 
+    пользователя разрешать и запрещать прерывания во всей вычислительной системе. 
+    Допустим, что в результате ошибки или злого умысла пользователь запретил прерывания 
+    в системе и зациклил или завершил свой процесс. Без перезагрузки системы в
+    такой ситуации не обойтись.</font></P>
+  
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Тем не менее, запрет 
+    и разрешение прерываний часто применяются как пролог и эпилог к критическим 
+    секциям внутри самой операционной системы, например, при обновлении содержимого 
+    PCB.</FONT></P>
+  
+ <P ALIGN="CENTER"><B><FONT FACE="Times New Roman" SIZE=3><a name="l050303"></a>5.3.3. Переменная-замок</FONT></B>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>В качестве следующей 
+    попытки решения задачи для пользовательских процессов рассмотрим другое предложение. 
+    Возьмем некоторую переменную, доступную всем процессам, и положим ее начальное 
+    значение равным <font color="#008000"><b>0</b></font>. 
+    Процесс может войти в критическую секцию только тогда, когда значение этой 
+    переменной-замка равно <font color="#008000"><b>0</b></font>, 
+    одновременно изменяя ее значение на <font color="#008000"><b> 1</b></font>
+    — закрывая замок. При выходе из критической секции процесс сбрасывает ее значение 
+    в<font color="#008000"><b> 0</b></font> — 
+    замок открывается (как в случае с покупкой хлеба студентами в
+  <a href="#l0502"> разделе 5.2.</a>).</font></P>
+
+   <dir><dir><dir>
+  <p ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3 color="#008000"><I><b>
+   shared int lock = 0;<br><br>
+   while (some condition) {<br>
+<dir>    while(lock);
+ lock = 1;<br>
+<dir>    critical section<br>
+</dir>    lock = 0;<br>
+<dir>    remainder section<br>
+</dir></dir>   }<br></b></i></font>
+  </dir></dir></dir>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>К сожалению, внимательное 
+    изучение показывает, что такое решение, не удовлетворяет условию взаимоисключения, 
+    так как действие <font color="#008000"><b><i> while(lock); lock =
+  1</i></b></font>; не 
+    является атомарным. Допустим, что процесс
+  <font color="#008000"><b> P<sub>0</sub> 
+  <i>  
+  </i></b></font> 
+    протестировал значение переменной <font color="#008000"><i><b> lock
+  </b></i></font> и 
+    принял решение двигаться дальше. В этот момент, еще до присваивания переменной<b><i><font color="#008000"> 
+    lock </font></i></b> значения <font color="#008000"><b>1</b></font>, планировщик 
+    передал управление процессу <font color="#008000"><b> P<sub>1</sub></b></font>. 
+    Он тоже изучает содержимое переменной <b><i><font color="#008000"> lock</font></i></b>
+    и тоже принимает решение войти в критический участок. Мы получаем два процесса 
+    одновременно выполняющих свои критические секции.</font></P>
+ 
+  <P ALIGN="CENTER"><B><FONT FACE="Times New Roman" SIZE=3><a name="l050304"></a>5.3.4. Строгое чередование</FONT></B>
+
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Попробуем решить задачу 
+    сначала для двух процессов. Очередной подход будет также использовать общую 
+    для них обоих переменную с начальным значением
+  <font color="#008000"><b>0</b></font>. 
+    Только теперь она будет играть не роль замка для критического участка, 
+    а явно указывать, кто может следующим войти в него. Для<font color="#008000"><b><i> i-го</i></b></font> 
+    процесса это выглядит так:</font></P>
+<dir><dir><dir>    
+ <FONT FACE="Times New Roman" SIZE=3 color="#008000"><b><I>
+  shared int turn = 0; <br><br>
+  while (some condition) { <br>
+ <dir> while(turn != i); <br>
+ <dir> critical section <br>
+ </dir> turn = 1-i; <br>
+ <dir> remainder section <br>
+</dir></dir>  } <br></i></b></font>
+</dir></dir></dir>  
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Легко видеть, что взаимоисключение 
+  гарантируется, процессы входят в критическую секцию строго по очереди: <font color="#008000"><b>P<sub>0</sub>, 
+  P<sub>1</sub>, P<sub>0</sub>, P<sub>1</sub>, P<sub>0</sub></b></font>, ... Но 
+  наш алгоритм не удовлетворяет условию прогресса. Например, если значение </FONT><font face="Times New Roman" size="3" color="#008000"><b><i>turn 
+  </i></b></font><FONT FACE="Times New Roman" SIZE=3> равно <font color="#008000"><b> 
+  1 </b></font> и процесс </FONT><FONT SIZE=3 color="#008000" face="Times New Roman"><b>P<sub>0</sub></b></font><font size="3"><sub><FONT FACE="Times New Roman"> 
+  </FONT></sub></font><FONT FACE="Times New Roman" SIZE=3> готов войти в критический 
+  участок, он не может сделать этого, даже если процесс</FONT><FONT SIZE=3> </font><font face="Times New Roman" size="3" color="#008000"><b>P<sub>1</sub> 
+  </b> <font color="#000000">находится в <I>remainder section</I></font>.</font></P>
+  <P ALIGN="CENTER"> <B><FONT FACE="Times New Roman" SIZE=3><a name="l050305"></a>5.3.5. Флаги готовности</FONT></B>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Недостаток предыдущего 
+    алгоритма заключается в том, что процессы ничего не знают о состоянии друг 
+    друга в текущий момент времени. Давайте попробуем исправить эту ситуацию. 
+    Пусть два наши процесса имеют разделяемый массив флагов готовности входа процессов 
+    в критический участок</FONT></P>
+    <dir><dir><dir>
+  <font face="Times New Roman" color="#008000"><b><i>
+  shared int ready[2] = {0, 0};</i></b></font> <br>
+    </dir></dir></dir>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Когда </font><I><FONT SIZE=3>i</font></I><FONT FACE="Times New Roman" SIZE=3>-й 
+    процесс готов войти в критическую секцию, он присваивает элементу массива 
+    </FONT><I><FONT SIZE=3 color="#008000" face="Times New Roman"><b>ready[i]</b></font></I><FONT FACE="Times New Roman" SIZE=3> 
+    значение равное </FONT><FONT SIZE=3 color="#008000" face="Times New Roman"><b>1</b></font><FONT FACE="Times New Roman" SIZE=3>. 
+    После выхода из критической секции он, естественно, сбрасывает это значение 
+    в </FONT><FONT SIZE=3 color="#008000" face="Times New Roman"><b>0</b></font><FONT FACE="Times New Roman" SIZE=3>. 
+    Процесс не входит в критическую секцию, если другой процесс уже готов ко входу 
+    в критическую секцию или находится в ней.</font></P>
+    <dir><dir><dir>
+    <FONT SIZE=3 color="#008000" face="Times New Roman"><b><i>
+  while (some condition) { <br>
+<dir>  ready[i] = 1; <br>
+  while(ready[1-i]); <br>
+<dir>  critical section <br>
+</dir>  ready[i] = 0; <br>
+<dir>  remainder section <br>
+</dir></dir>  } <br></i></b></font>
+    </dir></dir></dir>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Полученный алгоритм обеспечивает 
+    взаимоисключение, позволяет процессу, готовому к входу в критический участок, 
+    войти в него сразу после завершения эпилога в другом процессе, но все равно 
+    нарушает условие прогресса. Пусть процессы практически одновременно подошли 
+    к выполнению пролога. После выполнения присваивания </font><I><FONT SIZE=3><font color="#008000"><b>ready[0] 
+    = 1</b></font> </font></I><FONT FACE="Times New Roman" SIZE=3>планировщик передал процессор 
+    от процесса <font color="#008000"><b> 0</b></font> процессу
+  <font color="#008000"><b>1</b></font>, который также выполнил присваивание </FONT><font size="3" color="#008000"><b><i><FONT FACE="Times New Roman"> </FONT>ready[1] 
+    = 1<FONT FACE="Times New Roman">.</FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3> После этого оба процесса 
+    бесконечно долго ждут друг друга на входе в критическую секцию. Возникает 
+    ситуация, которую принято называть <I>тупиковой</I></FONT><FONT SIZE=3> (<I>deadlock</I>).</font></P>
+  
+  <P ALIGN="CENTER"><B><FONT FACE="Times New Roman" SIZE=3><a name="l050306"></a>5.3.6. Алгоритм Петерсона</FONT></B>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Первое решение проблемы, 
+    удовлетворяющее всем требованиям и использующее идеи ранее рассмотренных алгоритмов, 
+    было предложено датским математиком Деккером (Dekker). В 1981 году Петерсон 
+    (Peterson) предложил более изящное решение. Пусть оба процесса имеют доступ 
+    к массиву флагов готовности и к переменной очередности. </FONT></P>
+    <dir><dir><dir>
+    <FONT SIZE=3 color="#008000" face="Times New Roman"><b><i>
+  shared int ready[2] = {0, 0}; <br>
+  shared int turn; <br><br>
+  while (some condition) { <br>
+  </i></b></font><dir><FONT SIZE=3 color="#008000" face="Times New Roman"><b><i>ready[i] = 1; <br>
+  turn =1- i; <br>
+  while(ready[1-i] &amp;&amp; turn == 1-i); <br>
+<dir>  critical section <br>
+</dir>  ready[i] = 0; <br>
+</i></b></font><dir><FONT SIZE=3 color="#008000" face="Times New Roman"><b><i>  remainder section <br></i></b></font>
+</dir></dir>  } <br>
+  </dir></dir></dir>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>При исполнении пролога 
+    критической секции процесс </font><FONT SIZE=3 color="#008000" face="Times New Roman"><b>P<sub>i</sub></b></font><FONT FACE="Times New Roman" SIZE=3> 
+    заявляет о своей готовности выполнить критический участок и одновременно предлагает 
+    другому процессу приступить к его выполнению. Если оба процесса подошли к 
+    прологу практически одновременно, то они оба объявят о своей готовности и 
+    предложат выполняться друг другу. При этом одно из предложений всегда последует 
+    после другого. Тем самым работу в критическом участке продолжит процесс, которому 
+    было сделано последнее предложение.</font></P>
+   
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Давайте докажем, что 
+    все пять наших требований к алгоритму действительно удовлетворяются. </FONT></P>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Удовлетворение требований
+  1 и 2 очевидно. </FONT></P>
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Докажем выполнение условия 
+  взамоисключения методом от противного. Пусть оба процесса одновременно оказались 
+  внутри своих критических секций. Заметим, что процесс<font color="#008000"><b> 
+  P</b></font><sub><font color="#008000"><b>i</b></font> </sub> может войти в 
+  критическую секцию, только если </font><font size="3" color="#008000"><b><i>ready[1-i] 
+  == 0<FONT FACE="Times New Roman"> </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3> 
+  или </FONT><font size="3" color="#008000"><b><i>turn == i.</i></b></font><FONT SIZE=3> 
+  </FONT><FONT FACE="Times New Roman" SIZE=3>Заметим также, что если оба процесса 
+  одновременно выполняют свои критические секции, то значения флагов готовности 
+  для обоих процессов совпадают и равны </FONT><FONT SIZE=3 color="#008000"><b>1</b></font><FONT SIZE=3>.</FONT><FONT FACE="Times New Roman" SIZE=3> 
+  Могли ли оба процесса войти в критические секции из состояния, когда они оба 
+  одновременно находились в процессе выполнения цикла </FONT><I><FONT SIZE=3 color="#008000"><b>while</b></font></I><FONT FACE="Times New Roman" SIZE=3>? 
+  Нет, так как в этом случае переменная </FONT><font face="Times New Roman" size="3" color="#008000"><b><i>turn 
+  </i></b></font><FONT FACE="Times New Roman" SIZE=3> должна была бы одновременно 
+  иметь значения </FONT><FONT SIZE=3 color="#008000"><b>0</b></font><FONT FACE="Times New Roman" SIZE=3> 
+  и </FONT><FONT SIZE=3 color="#008000"><b>1</b></font><FONT SIZE=3> (</FONT><FONT FACE="Times New Roman" SIZE=3>когда 
+  оба процесса выполняют цикл, то значения переменных измениться не могут). Пусть 
+  процесс </FONT><font size="3" color="#008000"><b>P<sub>0<FONT FACE="Times New Roman"> 
+  </FONT></sub></b></font><FONT FACE="Times New Roman" SIZE=3> первым вошел в 
+  критический участок, тогда процесс </FONT><b><font size="3" color="#008000"><FONT FACE="Times New Roman"> 
+  </FONT>P</font><font size="3"><sub><font color="#008000">1</font></sub></font></b><font size="3"><sub><FONT FACE="Times New Roman"> 
+  </FONT></sub></font><FONT FACE="Times New Roman" SIZE=3> должен был выполнить 
+  перед вхождением в цикл </FONT><I><FONT SIZE=3 color="#008000"><b>while</b></font></I><FONT FACE="Times New Roman" SIZE=3>, 
+  по крайней мере, один предваряющий оператор (</FONT><I><FONT SIZE=3 color="#008000"><b>turn 
+  = 0;</b></font></I><FONT SIZE=3>)</FONT><FONT FACE="Times New Roman" SIZE=3>. 
+  Однако после этого он не может выйти из цикла до окончания критического участка 
+  процесса </FONT><font size="3" color="#008000"><b>P<sub>0</sub><FONT FACE="Times New Roman">, 
+  </FONT></b></font><FONT FACE="Times New Roman" SIZE=3> так как при входе в цикл 
+  </FONT><font size="3" color="#008000"><b><i>ready[0] == 1<FONT FACE="Times New Roman"> 
+  </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3> и </FONT><font size="3" color="#008000"><b><i><FONT FACE="Times New Roman"> 
+  </FONT>turn == 0<FONT FACE="Times New Roman">, </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3> 
+  и эти значения не могут измениться до тех пор, пока процесс </FONT><font size="3" color="#008000"><b><FONT FACE="Times New Roman"> 
+  </FONT>P<sub>0</sub></b></font><FONT FACE="Times New Roman" SIZE=3> не покинет 
+  свой критический участок. Мы получили противоречие. Следовательно, имеет место 
+  взаимоисключение.</font></P>
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Докажем выполнение условия 
+    прогресса. Возьмем, без ограничения общности, процесс </font><FONT SIZE=3 color="#008000"><b>P<sub>0</sub></b></font><FONT FACE="Times New Roman" SIZE=3>. 
+    Заметим, что он не может войти в свою критическую секцию только при совместном 
+    выполнении условий </FONT><font size="3" color="#008000"><b><i>ready[1] == 1<FONT FACE="Times New Roman"> 
+ </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3> 
+    и </FONT><font size="3" color="#008000"><b><i><FONT FACE="Times New Roman"> 
+ </FONT>turn == 1</i></b></font><FONT SIZE=3><I>.</I></font><FONT FACE="Times New Roman" SIZE=3> 
+    Если процесс </FONT><font size="3" color="#008000"><b>P<sub>1</sub><FONT FACE="Times New Roman"> 
+ </FONT></b></font><FONT FACE="Times New Roman" SIZE=3> 
+    не готов к выполнению критического участка, то </FONT><I><FONT SIZE=3 color="#008000"><b>ready[1] 
+    == 0</b></font></I><FONT FACE="Times New Roman" SIZE=3> и процесс </FONT><font size="3" color="#008000"><b>P<sub>0</sub><FONT FACE="Times New Roman"> 
+ </FONT></b></font><FONT FACE="Times New Roman" SIZE=3> 
+    может осуществить вход. Если процесс </FONT><FONT SIZE=3 color="#008000"><b>P<sub>1</sub>
+</b> </font><FONT FACE="Times New Roman" SIZE=3>готов 
+    к выполнению критического участка, то </FONT><font size="3" color="#008000"><b><i>ready[1] == 1</i></b></font><FONT FACE="Times New Roman" SIZE=3>
+и переменная </FONT><font size="3" color="#008000"><b><i>turn<FONT FACE="Times New Roman"> 
+ </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3> 
+    имеет значение либо </FONT><FONT SIZE=3 color="#008000"><b>0</b></font><FONT FACE="Times New Roman" SIZE=3>, 
+    либо</FONT><font face="Times New Roman" size="3"> </font><b><FONT SIZE=3 color="#008000">1</font></b><FONT FACE="Times New Roman" SIZE=3></FONT><FONT FACE="Times New Roman" SIZE=3>, 
+    позволяя либо процессу </FONT><font size="3" color="#008000"><b>P<sub>0</sub></b></font><FONT FACE="Times New Roman" SIZE=3>, 
+    либо процессу </FONT><font size="3" color="#008000"><b>P<sub>1</sub></b></font><FONT FACE="Times New Roman" SIZE=3>
+начать выполнение критической секции. Если процесс
+</FONT><font size="3" color="#008000"><b>P<sub>1</sub></b></font><FONT FACE="Times New Roman" SIZE=3>
+завершил выполнение критического участка, то он сбросит свой флаг готовности 
+    </FONT><FONT FACE="Times New Roman" SIZE=3></FONT><I><FONT SIZE=3 color="#008000"><b>ready[1] 
+    == 0</b></font></I><FONT FACE="Times New Roman" SIZE=3>  , 
+    разрешая процессу </FONT><font size="3" color="#008000"><b>P<sub>0</sub></b></font><FONT FACE="Times New Roman" SIZE=3>
+приступить к выполнению критической работы. Таким образом, условие прогресса 
+    выполняется.</font></P>
+
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Отсюда же вытекает выполнение 
+    условия ограниченного ожидания. Так как в процессе ожидания разрешения на 
+    вход процесс </font><font size="3" color="#008000"><b>P<sub>0</sub></b></font><FONT FACE="Times New Roman" SIZE=3>
+  не изменяет значения переменных, то он сможет начать исполнение своего критического 
+    участка после не более чем одного прохода по критической секции процесса </FONT><font size="3" color="#008000"><b>P<sub>1</sub></b></font><FONT SIZE=3>.</font></P>
+
+  
+<P ALIGN="CENTER"> <B><FONT FACE="Times New Roman" SIZE=3><a name="l050307"></a>5.3.7. 
+  Алгоритм булочной (</font><FONT SIZE=3>Bakery algorithm)</font></B> 
+<P ALIGN="JUSTIFY">
+<FONT FACE="Times New Roman" SIZE=3> Алгоритм Петерсона дает нам решение задачи 
+корректной организации взаимодействия двух процессов. Давайте рассмотрим теперь 
+соответствующий алгоритм для n взаимодействующих процессов, который получил название 
+алгоритм булочной, хотя применительно к нашим условиям его следовало бы скорее 
+назвать алгоритм регистратуры в поликлинике. Основная его идея выглядит так. Каждый 
+вновь прибывающий клиент (он же процесс) получает талончик на обслуживание с номером. 
+Клиент с наименьшим номером на талончике обслуживается следующим. К сожалению, 
+из-за неатомарности операции вычисления следующего номера алгоритм булочной не 
+гарантирует, что у всех процессов будут талончики с разными номерами. В случае 
+равенства номеров на талончиках у двух или более клиентов первым обслуживается 
+клиент с меньшим значением имени (имена можно сравнивать в лексикографическом 
+порядке). Разделяемые структуры данных для алгоритма — это два массива 
+<DIR> 
+  <DIR> 
+     <font color="#008000"><b><i> 
+     shared enum {false, true} choosing[n]; <br>
+     shared int number[n]; <br>
+     </i></b></font>
+  </DIR>
+</DIR>
+</font><P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3><FONT FACE="Times New Roman" SIZE=3>Изначально элементы этих 
+  массивов инициируются значениями </font><I><FONT SIZE=3 color="#008000" face="Times New Roman"><b>false</b></font></I><FONT FACE="Times New Roman" SIZE=3> 
+  и</FONT></font><FONT FACE="Times New Roman" size=3 color="#008000"> <b> 0<FONT FACE="Times New Roman"> 
+  </font></b></font><FONT FACE="Times New Roman" SIZE=3> соответственно. 
+  Введем следующие обозначения</font></P><DIR>
+<DIR> 
+  <FONT FACE="Times New Roman" SIZE=3> <I></I> 
+    <P ALIGN="JUSTIFY"><FONT SIZE=3 color="#008000" face="Times New Roman"><I><b>(a,b) &lt; (c,d)</b></i></font><FONT FACE="Times New Roman" SIZE=3>, 
+      если</FONT><I><FONT SIZE=3>  <font color="#008000"><b> a &lt; c</b></font></font></I><FONT FACE="Times New Roman" SIZE=3> 
+      или если </FONT><I><FONT SIZE=3 color="#008000" face="Times New Roman"><b>a == c</b></font></I><FONT FACE="Times New Roman" SIZE=3> 
+      и</FONT>  <font color="#008000"><b><i> b &lt; d</i></b></font> <br>
+    <I></I> 
+    </font><P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3> <FONT SIZE=3><I><font color="#008000"><b>max(a<sub>0</sub>,
+    a<sub>1</sub>, ...., a<sub>n</sub>)</b></font> </i></font><FONT SIZE=3>—</FONT><FONT FACE="Times New Roman" SIZE=3> 
+      это число </FONT></font><FONT FACE="Times New Roman" size=3 color="#008000"> <b><i>k<FONT FACE="Times New Roman"> 
+ </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3>  
+      такое, что </font><FONT FACE="Times New Roman" size=3 color="#008000"> <b><i>k &gt;=
+    a<sub>i</sub><FONT FACE="Times New Roman"> 
+ </FONT></i></b></font><FONT FACE="Times New Roman" SIZE=3>  
+      для всех <font color="#008000"><b><i>i = 0, ...,n</i></b></font>  <br>
+  </font></DIR>
+</DIR><FONT FACE="Times New Roman" SIZE=3>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Структура процесса </font><FONT SIZE=3 color="#008000" face="Times New Roman"><b>P<sub>i</sub></b></font><FONT FACE="Times New Roman" SIZE=3> 
+  для алгоритма булочной приведена ниже</font></P>
+<DIR> 
+  <DIR> 
+  	<dir>
+     <FONT SIZE=3 color="#008000" face="Times New Roman"><b><i>
+     while (some condition) { <br>
+ <dir>     choosing[i] = true; <br>
+      number[i] = max(number[0], ..., number[n-1]) + 1; <br>
+      choosing[i] = false; <br>
+      for(j = 0; j &lt; n; j++){ <br>
+  <dir>     while(choosing[j]); <br>
+       while(number[j] != 0 &amp;&amp; (number[j],j) &lt; (number[i],i)); <br>
+  </dir>    } <br>
+    <dir>   critical section <br>
+  </dir>    number[i] = 0; <br>
+    <dir>   remainder section <br>
+  </DIR>
+</DIR>
+ } <br></i></b></font>
+ </dir></dir></dir>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Доказательство того, что 
+  этот алгоритм удовлетворяет условиям 1 – 5, проделайте самостоятельно в качестве 
+  упражнения.</FONT></P>
+  <P ALIGN="CENTER"><B><FONT FACE="Times New Roman" SIZE=3><a name="l0504"></a>5.4. Аппаратная поддержка взаимоисключений</FONT></B>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Наличие аппаратной поддержки 
+  взаимоисключений позволяет упростить алгоритмы и повысить их эффективность точно 
+  так же, как это происходит и в других областях программирования. Мы уже обращались 
+  к общепринятому hardware для решения задачи реализации взаимоисключений, когда 
+  говорили об использовании механизма запрета/разрешения прерываний. </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Многие вычислительные системы 
+  помимо этого имеют специальные команды процессора, которые позволяют проверить 
+  и изменить значение машинного слова или поменять местами значения двух машинных 
+  слов в памяти, выполняя эти действия как атомарные операции. Давайте обсудим, 
+  как концепции таких команд могут быть использованы для реализации взаимоисключений.</FONT></P>
+<P ALIGN="JUSTIFY"> <FONT SIZE=3> </FONT> 
+  <P ALIGN="CENTER"> 
+<B><FONT FACE="Times New Roman" SIZE=3><a name="l050401"></a>5.4.1. Команда </font><FONT SIZE=3>Test-and-Set</FONT><FONT FACE="Times New Roman" SIZE=3> 
+    (Проверить и присвоить 1)</font></B>
+  
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>О выполнении команды 
+    </font><FONT SIZE=3>Test-and-Set</FONT><FONT FACE="Times New Roman" SIZE=3>, 
+    осуществляющей проверку значения логической переменной с одновременной установкой 
+    ее значения в 1, можно думать, как о выполнении функции</font></P>
+    <dir><dir><dir>
+<FONT FACE="Times New Roman" SIZE=3 color="#008000"><i><b>
+   int Test_and_Set (int *target){ <br>
+<dir>    int tmp = *target; <br>
+    *target = 1; <br>
+    return tmp; <br>
+</dir>   } <br></b></i></font>
+    </dir></dir></dir>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>С использованием этой 
+    атомарной команды мы можем модифицировать наш алгоритм для переменной-замка, 
+    так чтобы он обеспечивал взаимоисключения</FONT></P>
+     <dir><dir><dir>
+<FONT FACE="Times New Roman" SIZE=3 color="#008000"><i><b>
+  shared int lock = 0; <br><BR>
+   while (some condition) { <br>
+      </b></i>
+      <dir><i><b> while(Test_and_Set(&amp;lock)); <br>
+        </b></i><dir><i><b> critical section <br>
+        </b></i></dir>
+        <i><b>lock = 0; <br>
+        </b></i><dir><i><b> remainder section <br>
+        </b></i></dir>
+      </dir>
+      <i><b>} <br></b></i></font>
+    </dir></dir></dir>
+
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>К сожалению, даже в таком 
+    виде полученный алгоритм не удовлетворяет условию ограниченного ожидания для 
+    алгоритмов. Подумайте, как нужно его изменить для соблюдения всех условий.</FONT></P>
+  <P ALIGN="JUSTIFY"> <FONT SIZE=3> </FONT> 
+  <P ALIGN="CENTER"> 
+  <B><FONT FACE="Times New Roman" SIZE=3><a name="l050402"></a>5.4.2. Команда </font><FONT SIZE=3>Swap</FONT><FONT FACE="Times New Roman" SIZE=3> 
+    (Обменять значения)</font></B>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Выполнение команды Swap</FONT><FONT FACE="Times New Roman" SIZE=3>, 
+  обменивающей два значения, находящихся в памяти, можно проиллюстрировать следующей 
+  функцией</font></P>
+<DIR> 
+  <DIR> 
+  <dir>
+<FONT FACE="Times New Roman" SIZE=3 color="#008000"><i><b>
+     void Swap (int *a, int *b){ <br>
+<dir>      int tmp = *a; <br>
+      *a = *b; <br>
+      *b = tmp; <br>
+</dir>     } <br></b></i></font>
+</dir>
+  </DIR>
+</DIR>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Применяя атомарную команду 
+  </font><FONT SIZE=3>Swap</FONT><FONT FACE="Times New Roman" SIZE=3>, мы можем 
+  реализовать предыдущий алгоритм, введя дополнительную логическую переменную 
+  </FONT>key локальную для каждого процесса:<br>
+<DIR> 
+  <DIR> 
+    <dir> <FONT FACE="Times New Roman" SIZE=3 color="#008000"><i><b> shared int 
+      lock = 0; <br>
+      int key; <br>
+      <br>
+      while (some condition) { <br>
+      <dir> key = 1; <br>
+        do Swap(lock,key); <br>
+        while (key); <br>
+        <dir> critical section <br>
+        </dir>
+        lock = 0; <br>
+        <dir> remainder section <br>
+        </dir>
+      </dir>
+      } <br>
+      </b></i></font> </dir>
+  </dir></dir>
+  <P ALIGN="CENTER"> 
+<B><FONT FACE="Times New Roman" SIZE=3><a name="l0505"></a>5.5. Резюме</FONT></B>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Последовательное выполнение 
+  некоторых действий, направленных на достижение определенной цели, называется 
+  <a href="#l0501"> активностью</a>. Активности состоят из <a href="#l0501"> атомарных 
+  операций</a>, выполняемых неразрывно, как единичное целое. При исполнении нескольких 
+  активностей в псевдопараллельном режиме атомарные операции различных активностей 
+  могут перемешиваться между собой с соблюдением порядка следования внутри активностей. 
+  Это явление получило название </font><a href="#l0501a"><FONT SIZE=3>interleaving</FONT><FONT FACE="Times New Roman" SIZE=3> 
+  (чередование)</FONT></a><FONT FACE="Times New Roman" SIZE=3>. Если результаты 
+  выполнения нескольких активностей не зависят от варианта чередования, то этот 
+  набор активностей называется <a href="#l0501b"> детерминированным</a>. В противном 
+  случае он носит название <a href="#l0501b"> недетерминированного</a>. Существует 
+  <a href="#l0501c">достаточное условие Бернстайна</a> для определения детерминированности 
+  набора активностей, но оно накладывает очень жесткие ограничения на набор, требуя 
+  практически не взаимодействующих активностей. Про недетерминированный набор 
+  активностей говорят, что он имеет </FONT><FONT SIZE=3>race condition</FONT><FONT FACE="Times New Roman" SIZE=3> 
+  (условие гонки, состязания). Устранение </FONT><FONT SIZE=3>race condition</FONT><FONT FACE="Times New Roman" SIZE=3> 
+  возможно при ограничении допустимых вариантов чередований атомарных операций 
+  с помощью синхронизации поведения активностей. Участки активностей, выполнение 
+  которых может привести к </FONT><FONT SIZE=3>race condition</FONT><FONT FACE="Times New Roman" SIZE=3>, 
+  называют<a href="#l0502"> критическими участками</a>. Необходимым условием для 
+  устранения</FONT><FONT SIZE=3> race condition</FONT><FONT FACE="Times New Roman" SIZE=3> 
+  является организация взаимоисключения на критических участках: внутри соответствующих 
+  критических участков не может одновременно находиться более одной активности.</font></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3>Для эффективных программных 
+  алгоритмов устранения</font><FONT SIZE=3> race condition</FONT><FONT FACE="Times New Roman" SIZE=3> 
+  помимо условия взаимоисключения требуется выполнение
+  <a href="#l050301"> следующих условий</a>: алгоритмы 
+  не используют специальных команд процессора для организации взаимоисключений, 
+  алгоритмы ничего не знают о скоростях выполнения процессов, алгоритмы удовлетворяют 
+  условиям прогресса и ограниченного ожидания. Всем этим условиям удовлетворяют
+  <a href="#l050306"> 
+  алгоритм Петерсона</a> для двух процессов и <a href="#l050307"> алгоритм булочной</a> для нескольких процессов.</font></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman" SIZE=3><a href="#l0504">Применение специальных 
+  команд процессора</a>, выполняющих ряд действий как атомарную операцию, - </font><FONT SIZE=3><a href="#l050401">Test-And-Set</a>,
+<a href="#l050402"> 
+  Swap</a></FONT><FONT FACE="Times New Roman" SIZE=3> – позволяет существенно упростить 
+  алгоритмы, удовлетворяющие оставшимся условиям.</font></P>
+  <P align="center"><a href="../04/ch4.htm"> Предыдущая глава</a> | <a href="../os.html">Программа курса</a> | 
+ <a href="../06/ch6.htm"> Следующая глава</a></P>
+
+</font></BODY>
+</HTML>

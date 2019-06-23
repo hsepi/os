@@ -1,0 +1,148 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>4.c-s4s</title>
+</head>
+
+<body>
+
+<p><font size="3" color="#008000"><b><font color="#000000">/* Программа, осуществляющая 
+  однонаправленную связь через FIFO между процессом-родителем и процессом-ребенком 
+  */</font></b></font> 
+<p><b><font size="3" color="#008000"><br>
+  #include &lt;sys/types.h&gt;<br>
+  #include &lt;sys/stat.h&gt;<br>
+  #include &lt;fcntl.h&gt;<br>
+#include &lt;unistd.h&gt;<br>
+#include &lt;stdio.h&gt;<br>  <br>
+int main(){<br>
+</font></b><font size="3" color="#008000">
+<dir><b> int fd, result;<br>
+  size_t size;<br>
+  char resstring[14]; <br>
+  char name[]="aaa.fifo";<br>
+  <br>
+  <font color="#000000">/* Обнуляем</font> <a href="../../man/umask3.htm">маску 
+  создания файлов текущего процесса</a> <font color="#000000">для того, чтобы<br>
+  права доступа у создаваемого FIFO точно соотвествовали параметру вызова</font> 
+  mknod()<font color="#000000"> */</font><br>
+  <br>
+  (void)<a href="../../man/umask2.htm">umask</a>(0); <br>
+  <br>
+  <font color="#000000">/* Попытаемся создать FIFO с именем</font>&nbsp; aaa.fifo 
+  <font color="#000000">в текущей директории */<br>
+  </font><br>
+  if(<a href="../../man/mknod.htm">mknod</a>(name, S_IFIFO |
+  0666, 0) &lt; 0){<br>
+  </b> 
+  <dir><b> <br>
+    <font color="#000000">/* Если создать FIFO не удалось, печатаем об этом сообщение 
+    и прекращаем работу */<br>
+    </font><br>
+    printf(&quot;Can\'t create FIFO\n&quot;);<br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+  <b>} <br>
+  <br>
+  <font color="#000000">/* Порождаем новый процесс */ </font><br>
+  <br>
+  if((result = <a href="../../man/fork.htm">fork</a>()) &lt; 0){ <br>
+  <font color="#000000"><br>
+  </font></b> 
+  <dir> <font color="#000000"><b>/* Если создать процесс не удалось, сообщаем 
+    об этом и завершаем работу */</b></font><b><br>
+    <br>
+    printf("Can\'t fork child\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b><br>
+  </dir>
+  <b> } else if (result &gt; 0) {<br>
+  </b> <font color="#000000"><br>
+  </font>
+  <dir><font color="#000000"><b> /* Мы находимся в родительском процессе, который 
+    будет передавать информацию процессу-ребенку . В этом процессе открываем FIFO 
+    на запись.*/</b></font><b><br>
+    <br>
+    if((fd = <a href="../../man/open.htm">open</a>(name, O_WRONLY)) < 0){<br>
+  </b> 
+  <dir><b> <br>
+      <font color="#000000">/* Если открыть FIFO не удалось, печатаем об этом 
+      сообщение и прекращаем работу */</font><br>
+    <br>
+    printf(&quot;Can\'t open FIFO for writting\n&quot;);<br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+    <b>} <br>
+    <br>
+    <font color="#000000">/* Пробуем записать в FIFO 14 байт, т.е. всю строку</font> 
+    "Hello, world!" <br>
+    <font color="#000000">вместе с признаком конца строки */</font><br>
+    <br>
+    size = <a href="../../man/read.htm">write</a>(fd, "Hello, world!", 14);<br>
+    <br>
+    if(size != 14){<br>
+    </b> 
+    <dir><b><br>
+      <font color="#000000">/* Если записалось меньшее количество байт, сообщаем 
+      об ошибке и завершаем работу */</font><br>
+      <br>
+      printf(&quot;Can\'t write all string to FIFO\n&quot;); <br>
+      <a href="../../man/exit.htm">exit</a>(-1); <br>
+      </b></dir>
+    <b>} <br>
+    <br>
+    <font color="#000000">/* Закрываем входной поток данных и на этом родитель 
+    прекращает работу */<br>
+    </font><br>
+    <a href="../../man/close.htm">close</a>(fd);<br>
+    printf("Parent exit\n");<br>
+    <br>
+    </b> </dir>
+  <b>} else {<br>
+  </b> <font color="#000000"><br>
+  </font>
+  <dir><font color="#000000"><b> /* Мы находимся в порожденном процессе, который 
+    будет получать информацию от процесса-родителя. Открываем FIFO на чтение.*/<br>
+    </b></font><b><br>
+    if((fd = <a href="../../man/open.htm">open</a>(name, O_RDONLY)) < 0){<br>
+  </b> 
+  <dir><b> <br>
+      <font color="#000000">/* Если открыть FIFO не удалось, печатаем об этом 
+      сообщение и прекращаем работу */</font><br>
+    <br>
+    printf(&quot;Can\'t open FIFO for reading\n&quot;);<br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+    <b>} <br>
+    <br>
+    <font color="#000000">/* Пробуем прочитать из FIFO 14 байт в массив, т.е. 
+    всю записанную строку */</font><br>
+    <br>
+    size = <a href="../../man/read.htm">read</a>(fd, resstring, 14);<br>
+    <br>
+    if(size &lt; 0){<font color="#000000"><br>
+    </font></b> 
+    <dir><font color="#000000"><b><br>
+      /* Если прочитать не смогли, сообщаем об ошибке и завершаем работу */</b></font><b><br>
+      <br>
+      printf(&quot;Can\'t read string\n&quot;); <br>
+      <a href="../../man/exit.htm">exit</a>(-1); <br>
+      </b></dir>
+    <b>} <br>
+    <font color="#000000"><br>
+    /* Печатаем прочитанную строку */</font><br>
+    <br>
+    printf("%s\n",resstring);<br>
+    <br>
+    <font color="#000000">/* Закрываем входной поток и завершаем работу */</font><br>
+    <br>
+    <a href="../../man/close.htm">close</a>(fd);<br>
+    </b></dir>
+  <br><b>
+  }<br>
+<br>
+   return 0; </b></dir>
+<b>} </b></font> 
+</body>
+</html>

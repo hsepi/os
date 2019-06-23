@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>signal</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов signal()</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>
+#include &lt;signal.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>void (*signal (int sig, void (*handler) (int)))(int);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <b><font color="#008000">signal</font></b> 
+      служит для изменения реакции процесса на какой-либо сигнал. Хотя прототип 
+      системного вызова выглядит довольно пугающе, ничего страшного в нем нет. 
+      Приведенное выше описание можно словесно изложить следующим образом:<br>
+      <br>
+      </font> 
+    <dir> 
+      <p align="JUSTIFY"><FONT FACE="Times New Roman"> функция <b><font color="#008000">signal</font></b>, 
+        возвращающая указатель на функцию  с одним 
+        параметром типа <b> <font color="#008000">int</font></b>, которая ничего не возвращает, и имеющая два 
+        параметра: параметр <b><font color="#008000">sig</font></b> типа <b><font color="#008000">int</font></b> 
+        и параметр <b><font color="#008000">handler</font></b>, являющийся указателем 
+        на ничего не возвращающую функцию с одним параметром типа <b><font color="#008000">int</font></b>. 
+        <br>
+        <br>
+        </font> 
+    </dir>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр <b><font color="#008000">sig</font></b> 
+      — это номер сигнала, обработку которого мы хотим изменить.<br>
+      <br>
+      Параметр <b><font color="#008000">handler</font></b> описывает новый способ 
+      обработки сигнала — это может быть указатель на пользовательскую функцию 
+      — обработчик сигнала, специальное значение <b><font color="#008000">SIG_DFL</font></b> 
+      или специальное значение <b><font color="#008000">SIG_IGN</font></b>. </font><font face="Times New Roman, sans-serif, Courier, mono" size="3">Специальное 
+      значение <b><font color="#008000">SIG_IGN</font></b> используется для того, 
+      чтобы процесс игнорировал поступившие сигналы с номером <b><font color="#008000">sig</font></b>, 
+      специальное значение <b><font color="#008000">SIG_DFL</font></b> </font><font face="Times New Roman">—</font> 
+      <font face="Times New Roman, sans-serif, Courier, mono" size="3">для восстановления 
+      реакции процесса на этот сигнал по умолчанию.</font><FONT FACE="Times New Roman"><br>
+      </font><br>
+    <FONT FACE="Times New Roman"><font face="Times New Roman, Times, serif" size="3">
+<p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Системный 
+      вызов возвращает указатель 
+      на старый способ обработки сигнала, значение которого можно использовать 
+      для восстановления старого способа в случае необходимости. </font></P>
+    </font> </FONT> </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

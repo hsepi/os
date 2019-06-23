@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Pthread_join</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Функция pthread_join</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5>
+<P>Прототип функции</P>
+</FONT></B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;pthread.h&gt;<BR>
+    &nbsp;<br>
+    </b><FONT COLOR="#008000"><B>int pthread_join (pthread_t thread, void **status_addr);</b></font></BLOCKQUOTE>
+  </font></DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Описание функции</P>
+</font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p ALIGN="JUSTIFY"> <font face="Times New Roman">Функция <B><FONT COLOR="#008000">pthread_join</font></B><font color="#008000"><b> 
+      </b></font>блокирует работу вызвавшей ее нити исполнения до завершения thread'а 
+      с идентификатором <font color="#008000"><b>thread</b></font>. После разблокирования 
+      в указатель, расположенный по адресу <b><font color="#008000">status_addr</font></b>, 
+      заносится адрес, который вернул завершившийся thread либо при выходе из 
+      ассоциированной с ним функции, либо при выполнении функции <a href="pthread3.htm">pthread_exit()</a>. 
+      Если нас не интересует, что вернула нам нить исполнения, в качестве этого 
+      параметра можно использовать значение <b><font color="#008000">NULL</font></b>.<br>
+      </font>
+  </blockquote>
+</dir>
+<font face="Times New Roman">
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Возвращаемые значения</P>
+</font></B>
+</font><dir><BLOCKQUOTE>      <font face="Times New Roman"> 
+      
+    Функция возвращает значение <font color="#008000"><b> 0</b></font> при успешном завершении. 
+    В случае ошибки возвращается <b><u>положительное
+    значение</u></b> (а не отрицательное, как в
+    большинстве системных вызовов и функций!),
+    которое определяет код ошибки, описанный
+    в файле <font color="#008000"><b>errno.h</b></font>. Значение
+    системной переменной <font color="#008000"><b>errno</b></font>
+    при этом не устанавливается. 
+    </font>
+  </blockquote>
+</dir>
+</BODY>
+</HTML>

@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Shmctl</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> shmctl</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/shm.h&gt;<br>
+    <br>
+    int shmctl(int shmid, int cmd, struct shmid_ds *buf); </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">shmctl 
+      </font></B>предназначен для получения информации об области разделяемой 
+      памяти, изменения ее атрибутов и удаления ее из системы. Данное описание 
+      не является полным описанием системного вызова, а ограничивается рамками 
+      текущего курса. Для изучения полного описания обращайтесь к UNIX man.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">В нашем курсе мы будем пользоваться 
+      системным вызовом <b><font color="#008000">shmctl</font></b> только для 
+      удаления области разделяемое памяти из системы. Параметр <B><font color="#008000">shmid 
+      </font></B> является дескриптором System V IPC для сегмента разделяемой 
+      памяти, т.е. значением, которое вернул системный вызов <b><a href="shmget.htm">shmget()</a></b> 
+      при создании сегмента или при его поиске по ключу.<br>
+      В качестве параметра <B><FONT COLOR="#008000">cmd</font></B> в рамках нашего</font><FONT FACE="Times New Roman"> 
+      курса мы всегда будем передавать значение <b><font color="#008000">IPC_RMID</font></b> 
+      - команду для удаления сегмента разделяемой памяти с заданным идентификатором. 
+      Параметр <b><font color="#008000">buf</font></b> для этой команды не используется, 
+      поэтому мы всегда будем подставлять туда значение <b><font color="#008000">NULL</font></b>. 
+      <br>
+      </font><br>
+  </BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение <b><font color="#008000">0</font></b> при нормальном завершении 
+      и значение <b><font color="#008000">-1 </font></b> при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

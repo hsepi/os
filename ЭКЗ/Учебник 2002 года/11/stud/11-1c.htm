@@ -1,0 +1,125 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>1.c-s11s</title>
+</head>
+
+<body>
+
+<p><font face="Times New Roman, Times, serif"  color="#008000"><font color="#000000">/* 
+  Программа для иллюстрации работы с memory mapped файлом*/</font><b><br>
+  <br>
+  <br>
+  int main(void)<br>
+  {<br>
+  </b></font> 
+<dir> <font face="Times New Roman, Times, serif"  color="#008000"><b> <br>
+  int fd; </b><font color="#000000">/* Файловый дескриптор для файла, в котором 
+  будет храниться наша информация*/</font><b><br>
+  size_t length; </b><font color="#000000">/* Длина отображаемой части файла */</font><b><br>
+  int i; <br>
+  <br>
+  </b> <font color="#000000">/* Ниже следует описание типа структуры, которыми 
+  мы забъем файл, и двух указателей на подобный тип. Указатель </font><b>ptr</b> 
+  <font color="#000000"> будет использоваться в качестве начального адреса выделенной 
+  области памяти, а указатель </font><b>tmpptr</b> <font color="#000000"> для 
+  перемещения внутри этой области. */<br>
+  </font><b><br>
+  struct A {<br>
+  </b></font> 
+  <dir> <font face="Times New Roman, Times, serif"  color="#008000"><b> double 
+    f;<br>
+    double f2;<br>
+    </b></font> </dir>
+  <font face="Times New Roman, Times, serif"  color="#008000"><b> } *ptr, *tmpptr;<br>
+  <br>
+  </b> <font color="#000000">/* Открываем файл с одновремееным его созданием (если 
+  такого файла не было). Права доступа к файлу при создании определяем как read-write 
+  для всех категорий пользователей (0666). Из-за ошибки в Linux, мы будем вынуждены 
+  ниже в системном вызове</font><b> <a href="../../man/mmap.htm">mmap()</a> </b><font color="#000000">разрешить 
+  в отображении файла и чтение, и запись, хотя реально нам нужна только запись. 
+  Поэтому и при открытии файла мы вынуждены задавать </font><b>O_RDWR</b><font color="#000000">. 
+  */</font><b><br>
+  <br>
+  fd = <a href="../../man/open.htm">open</a>("mapped.dat", O_RDWR | O_CREAT, 0666);<br>
+  <br>
+  if( fd == -1){<br>
+  </b></font> 
+  <dir> <font face="Times New Roman, Times, serif"  color="#008000"><b> <br>
+    </b> <font color="#000000">/* Если файл открыть не удалось, выдаем сообщение 
+    об ошибке и завершаем работу */<br>
+    </font><b><br>
+    printf("File open failed!\n");<br>
+    <a href="../../man/exit.htm">exit</a>(1);<br>
+    </b></font> </dir>
+  <font face="Times New Roman, Times, serif"  color="#008000"><b> }<br>
+  <br>
+  </b> <font color="#000000">/* Вычисляем будущую длину файла (мы собираемся записать 
+  в него 100000 структур) */<br>
+  </font><b><br>
+  length = 100000*sizeof(struct A);<br>
+  <br>
+  </b> <font color="#000000">/* Вновь созданный файл имеет длину 0. Если мы его 
+  отобразим в память с такой длиной файла, то любая попытка записи в выделенную 
+  память приведет к ошибке. Увеличиваем длину файла до требуемой с помощью вызова</font><b> 
+  <a href="../../man/ftruncat.htm">ftruncate()</a></b><font color="#000000">. 
+  */</font><b><br>
+  <br>
+  <a href="../../man/ftruncat.htm">ftruncate</a>(fd,length);<br>
+  <br>
+  </b> <font color="#000000">/* Отображаем файл в память. Разрешенные операции 
+  над отображением указываем как </font><b>PROT_WRITE | PROT_READ </b><font color="#000000">по 
+  уже сказанным причинам. Значение флагов ставим в</font><b> MAP_SHARED</b><font color="#000000">, 
+  так как мы хотим сохранить информацию, которую занесем в отображение, на диске. 
+  Файл отображаем с его начала (</font><b>offset</b><font color="#000000"> = 0) 
+  и до конца (</font><b>length</b><font color="#000000"> = длине файла). */</font><b><br>
+  <br>
+  ptr = (struct A *)<a href="../../man/mmap.htm">mmap</a>(NULL, length, PROT_WRITE 
+  | PROT_READ, MAP_SHARED, fd, 0);<br>
+  <br>
+  </b> <font color="#000000">/* Файловый дескриптор нам более не нужен, и мы его 
+  закрываем */<br>
+  </font><b><br>
+  <a href="../../man/close.htm">close</a>(fd);<br>
+  <br>
+  if( ptr == MAP_FAILED ){<br>
+  </b></font> 
+  <dir> <font face="Times New Roman, Times, serif"  color="#008000"><b> <br>
+    </b> <font color="#000000">/* Если отобразить файл не удалось, сообщаем об 
+    ошибке и завершаем работу */<br>
+    </font><b><br>
+    printf("Mapping failed!\n");<br>
+    <a href="../../man/exit.htm">exit</a>(2);<br>
+    </b></font> </dir>
+  <font face="Times New Roman, Times, serif"  color="#008000"><b> }<br>
+  <br>
+  </b> <font color="#000000">/* В цикле заполняем образ файла числами от 1 до 
+  100000 и их квадратами. Для перемещения по области памяти используем указатель</font><b> 
+  tmpptr</b><font color="#000000">, так как указатель </font><b> ptr</b> <font color="#000000"> 
+  на начало образа файла нам понадобится для преращения отображения вызовом</font><b> 
+  <a href="../../man/munmap.htm">munmap()</a>.</b><font color="#000000"> */</font><b><br>
+  <br>
+  tmpptr = ptr;<br>
+  for(i = 1; i <=100000; i++){<br>
+  </b></font> 
+  <dir> <font face="Times New Roman, Times, serif"  color="#008000"><b> tmpptr->f 
+    = i;<br>
+    tmpptr->f2 = tmpptr->f*tmpptr->f;<br>
+    tmpptr++;<br>
+    </b></font> </dir>
+  <font face="Times New Roman, Times, serif"  color="#008000"><b> }<br>
+  <br>
+  </b> <font color="#000000">/* Прекращаем отображать файл в память, записываем 
+  содержимое отображения на диск и освобождаем память. */<br>
+  </font><b><br>
+  <a href="../../man/munmap.htm">munmap</a>((void *)ptr, length);<br>
+  return 0;<br>
+  </b></font> </dir>
+<font face="Times New Roman, Times, serif"  color="#008000"><b>
+}<br>
+</b>
+</FONT> 
+</body>
+
+</html>

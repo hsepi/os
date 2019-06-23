@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>mount</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Команда mount</font> </H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Синтаксис команды</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>mount [-hV]<br>
+ mount [-rw] [-t fstype] device dir<br>
+  </b></BLOCKQUOTE>
+   </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание команды</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Настоящее описание не является 
+      полным описанием команды <b><font color="#008000">mount</font></b>, а описывает 
+      только те ее опции (очень малую часть), которые используются в данном курсе. 
+      Для получения полного описания обращайтесь к UNIX manual (команда <b><font color="#008000">man</font></b>). 
+      <br>
+      <br>
+      Команда </font> <B><font color="#008000">mount</font></B> <FONT FACE="Times New Roman"> 
+      предназначена для выполнения операции монтирования файловой системы и получения 
+      информации об уже смонтированных файловых системах. <br>
+      <br>
+      Опции <b><font color="#008000">-h</font></b>, <b><font color="#008000">-V</font></b> 
+      используются при вызове команды без параметров и служат для следующих целей: 
+      </font><br>
+      <br>
+    <dir> 
+      <p align="JUSTIFY"><FONT FACE="Times New Roman"> <b><font color="#008000">-h</font></b> 
+        - вывести краткую инструкцию по пользованию командой;<br>
+        <b><font color="#008000">-V</font></b> - вывести информацию о версии команды<b><font color="#008000"> 
+        mount</font></b>;<br>
+        <br>
+        </font>
+    </dir>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Команда <b><font color="#008000">mount</font></b> 
+      без опций и без параметров выводит информацию обо всех уже смонтированных 
+      файловых системах.<br>
+      <br>
+      Команда <b><font color="#008000">mount</font></b> с параметрами служит для 
+      выполнения операции монтирования файловой системы. <br>
+      <br>
+      Параметр <b><font color="#008000">device</font></b> задает имя специального 
+      файла для устройства, содержащего файловую систему.<br>
+      Параметр <b><font color="#008000">dir</font></b> задает имя точки монтирования 
+      (имя некоторой уже существующей пустой директории). При монтировании могут 
+      быть использованы следующие опции: </font><br>
+      <br>
+    <dir> 
+      <p align="JUSTIFY"><FONT FACE="Times New Roman"> <b><font color="#008000">-r</font></b> 
+        - смонтировать файловую систему только для чтения (read only);<br>
+        <b><font color="#008000">-w</font></b> - смонтировать файловую систему 
+        для чтения и для записи (read/write). Используется по умолчанию;<br>
+        <b><font color="#008000">-t fstype</font></b> - задать тип монтируемой 
+        файловой системы как <b><font color="#008000">fstype</font></b>. Поддерживаемые 
+        типы файловых систем в операционной системе Linux: adfs, affs, autofs, 
+        coda, coherent, cramfs, devpts, efs, ext, ext2, ext3, hfs, hpfs, iso9660 
+        (для CD), minix, msdos, ncpfs, nfs, ntfs, proc, qnx4, reiserfs, romfs, 
+        smbfs, sysv, udf, ufs, umsdos, vfat, xenix, xfs, xiafs. При отсутствии 
+        явно заданного типа для большинства типов файловых систем команда способна 
+        опознать его автоматически.</font> 
+    </dir>
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

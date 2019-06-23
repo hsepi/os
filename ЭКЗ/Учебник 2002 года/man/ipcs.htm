@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>ipcs</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Команда ipcs</font> </H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Синтаксис команды</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>ipcs [-asmq] [-tclup]<br>
+    ipcs [-smq] -i id<br>
+    ipcs -h</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание команды</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><font face="Times New Roman">Команда </font> <B><font color="#008000">ipcs</font></B> 
+    <FONT FACE="Times New Roman">предназначена для получения информации о средствах 
+    System V IPC, к которым пользователем имеет право доступа на чтение.<br>
+    <br>
+    </font><font face="Times New Roman">Опция <font color="#008000"><b>-i</b></font> 
+    позволяет указать идентификатор ресурсов. Будет выдаваться только информация 
+    для ресурсов, имеющих этот идентификатор.<br>
+    <br>
+    Виды IPC ресурсов могут быть заданы с помощью следующих опций:<br>
+    <dir> <font color="#008000"><b> -s</b></font> для семафоров<br>
+      <font color="#008000"><b> -m</b></font> для сегментов разделяемой памяти<br>
+      <font color="#008000"><b> -q</b></font> для очередей сообщений<br>
+      <font color="#008000"><b> -a </b></font> для всех ресурсов (по умолчанию). 
+    </dir>
+    Опции <font color="#008000"><b>[-tclup]</b></font> используются для изменения 
+    состава выходной информации. По умолчанию для каждого средства выводятся его 
+    ключ, идентификатор IPC, идентификатор владельца, права доступа и ряд других 
+    характеристик. Применение опций позволяет вывести:<br>
+    <dir> <b><font color="#008000"> -t</font> </b> времена совершения последних 
+      операций над средствами IPC<br>
+      <font color="#008000"><b> -p</b></font> идентификаторы процесса, создавшего 
+      ресурс,и процесса, совершившего над ним последнюю операцию<br>
+      <font color="#008000"><b> -c</b></font> идентификаторы пользователя и группы 
+      для создателя ресурса и его собственника<br>
+      <font color="#008000"><b> -l </b></font> системные ограничения для средств 
+      System V IPC<br>
+      <font color="#008000"><b> -u</b></font> общее состояние IPC ресурсов в системе</dir>
+    Опция <font color="#008000"><b> -h</b></font> используется для получения краткой 
+    справочной информации. </font></BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

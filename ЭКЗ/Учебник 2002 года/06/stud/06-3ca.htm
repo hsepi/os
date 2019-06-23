@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>3a.c-s5s</title>
+</head>
+
+<body>
+
+<p><font face="Times New Roman, Times, serif"  color="#008000"><b>/* Программа 1 для
+иллюстрации некорректности работы с разделяемой памятью*/</b>
+
+<p>&nbsp;<p><font size="3" color="#008000"><b>/* Мы организуем
+разделяемую память для массива из 3-х целых
+чисел. Первый элемент массива является
+счетчиком числа запусков программы 1, т.&nbsp;е.
+данной программы, второй элемент массива -
+счетчиком числа запусков <a href="06-3cb.htm">программы
+2</a>, третий элемент массива - счетчиком
+числа запусков обеих программ */</b></font> 
+<p><font size="3" color="#008000"><b>#include &lt;sys/types.h><br>
+#include &lt;sys/ipc.h><br>
+#include &lt;sys/shm.h><br>
+#include &lt;stdio.h><br>
+#include &lt;errno.h><br>
+<br>
+int main()<br>
+{<br>
+</b>
+<dir><b> int *array; /* Указатель на разделяемую память */<br>
+  <br>
+  int shmid; /* IPC дескриптор для области разделяемой памяти */<br>
+  <br>
+  int new = 1; /* Флаг необходимости инициализации элементов массива */<br>
+  <br>
+  char pathname[] = "06-1a.c"; /* Имя файла, использующееся для генерации ключа. 
+  Файл с таким именем должен существовать в текущей директории */<br>
+  <br>
+  key_t key; /* IPC ключ */ <br>
+  <br>
+  long i;<br>
+  <br>
+  /* Генерируем IPC ключ из имени файла 06-1a.c в текущей директории и номера экземпляра 
+  области разделяемой памяти 0 */<br>
+  <br>
+  if((key = <a href="../../man/ftok.htm">ftok</a>(pathname,0)) &lt; 0){<br>
+  </b> 
+  <dir><b>printf("Can\'t generate key\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  /* Пытаемся эксклюзивно создать разделяемую память для сгенерированного ключа, 
+  т.е. если для этого ключа она уже существует, то системный вызов вернет отрицательное 
+  значение. Размер памяти определяем как размер массива из 3-х целых переменных, 
+  права доступа 0666 - чтение и запись разрешены для всех */<br>
+  <br>
+  if((shmid = <a href="../../man/shmget.htm">shmget</a>(key, 3*sizeof(int), 0666|IPC_CREAT|IPC_EXCL)) 
+  &lt; 0){<br>
+  <br>
+  <br>
+  /* В случае возникновения ошибки пытаемся определить: возникла ли она из-за 
+  того, что сегмент разделяемой памяти уже существует, или по другой причине */<br>
+  <br>
+  </b> 
+  <dir><b>if(errno != EEXIST){<br>
+    <br>
+    </b> 
+    <dir><b>/* Если по другой причине - прекращаем работу */<br>
+      <br>
+      printf(&quot;Can\'t create shared memory\n");<br>
+      <a href="../../man/exit.htm">exit</a>(-1);<br>
+      </b></dir>
+    <b>} else {<br>
+    </b> 
+    <dir><b><br>
+      /* Если из-за того, что разделяемая память уже существует, пытаемся получить 
+      ее IPC дескриптор и, в случае удачи, сбрасываем флаг необходимости инициализации 
+      элементов массива */<br>
+      <br>
+      &nbsp;if((shmid = <a href="../../man/shmget.htm">shmget</a>(key, 3*sizeof(int), 
+      0)) &lt; 0){<br>
+      </b> 
+      <dir><b>printf("Can\'t find shared memory\n");<br>
+        <a href="../../man/exit.htm">exit</a>(-1);<br>
+        </b></dir>
+      <b>}<br>
+      new = 0;<br>
+      </b></dir>
+    <b>}<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  <br>
+  /* Пытаемся отобразить разделяемую память в адресное пространство текущего процесса. 
+  Обратите внимание на то, что для правильного сравнения мы явно преобразовываем 
+  значение -1 к указателю на целое.*/ <br>
+  <br>
+  if((array = (int *)<a href="../../man/shmat.htm">shmat</a>(shmid, NULL, 0)) 
+  == (int *)(-1)){<br>
+  </b> 
+  <dir><b>printf("Can't attach shared memory\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  <br>
+  /* В зависимости от значения флага new либо инициализируем массив, либо увеличиваем 
+  соответствующие счетчики */ <br>
+  <br>
+  if(new){<br>
+  </b> 
+  <dir><b>array[0] = 1;<br>
+    array[1] = 0;<br>
+    array[2] = 1;<br>
+    </b></dir>
+  <b>} else {<br>
+  </b> 
+  <dir><b>array[0] += 1;<br>
+    <br>
+    for(i=0; i&lt;1000000000L; i++); <br>
+    <br>
+    /* <br>
+    Предельное значение для i может меняться в зависимости <br>
+    от производительности компьютера <br>
+    */<br>
+    <br>
+    array[2] += 1;<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  <br>
+  /* Печатаем новые значения счетчиков, удаляем разделяемую память из адресного 
+  пространства текущего процесса и завершаем работу */&nbsp;<br>
+  <br>
+  printf("Program 1 was spawn %d times, program 2 - %d times, total - %d times\n",<br>
+  array[0], array[1], array[2]);<br>
+  <br>
+  if(<a href="../../man/shmdt.htm">shmdt</a>(array) < 0){ </b> 
+  <dir><b>printf("Can't detach shared memory\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>}<br>
+  return 0;<br>
+  </b></dir>
+<b>}</b></font> </FONT>
+</body>
+
+</html>

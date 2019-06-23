@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>stat</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системные вызовы для чтения атрибутов файла</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототипы системных вызовов</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/stat.h&gt;<br>
+    #include &lt;unistd.h&gt;</b></BLOCKQUOTE>
+  <BLOCKQUOTE><b>int stat(char *filename, struct stat *buf);<br>
+  int fstat(int fd, struct stat *buf);<br>
+  int lstat(char *filename, struct stat *buf);</b></BLOCKQUOTE>
+  </font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Описание системных вызовов</b></P>
+</font>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Настоящее описание не является 
+      полным описанием этих системных вызовов, а приспособлено для целей данного 
+      курса. Для получения полного описания обращайтесь в UNIX Manual. <br>
+      <br>
+      Системные вызовы <B><FONT COLOR="#008000">stat</font></B>, <B><FONT COLOR="#008000">fstat</font></B> 
+      и <B><FONT COLOR="#008000">lstat</font></B> служат для получения информации 
+      об атрибутах файла. <br>
+      <br>
+      Системный вызов <B><FONT COLOR="#008000">stat</font></B> читает информацию 
+      об атрибутах файла, на чье имя указывает параметр <b><font color="#008000">filename</font></b>, 
+      и заполняет ими структуру, расположенную по адресу <b><font color="#008000">buf</font></b>. 
+      Заметим, что имя файла должно быть полным, либо строиться относительно той 
+      директории, которая является текущей для процесса, совершившего вызов. Если 
+      имя файла относится к файлу типа "связь", то читается информация (рекурсивно!) 
+      об атрибутах файла, на который указывает символическая связь.<br>
+      <br>
+      Системный вызов <B><FONT COLOR="#008000">lstat</font></B> идентичен системному 
+      вызову <B><FONT COLOR="#008000">stat</font></B> за одним исключением: если 
+      имя файла относится к файлу типа "связь", то читается информация о самом 
+      файле типа "связь".<br>
+      <br>
+      Системный вызов <B><FONT COLOR="#008000">fstat</font></B> идентичен системному 
+      вызову <B><FONT COLOR="#008000">stat</font></B>, только файл задается не 
+      именем, а своим файловым дескриптором (естественно, файл к этому моменту 
+      должен быть открыт).<br>
+      <br>
+      <FONT FACE="Times New Roman">Для системных вызовов <B><FONT COLOR="#008000">stat</font></B> 
+      и <B><FONT COLOR="#008000">lstat</font></B> процессу не нужны никакие права 
+      доступа к указанному файлу, но могут понадобиться права для поиска во всех 
+      директориях, входящих в специфицированное имя файла.</FONT><br>
+      <br>
+      Структура <b><font color="#008000">stat</font></b> в различных версиях UNIX 
+      может быть описана по-разному. В Linux она содержит следующие поля: </FONT> 
+  </BLOCKQUOTE>
+  <dir> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman" COLOR="#008000"><B> struct 
+      stat {</b></font><br>
+    <dir> 
+      <p align="JUSTIFY"><FONT FACE="Times New Roman" COLOR="#008000"><B> dev_t 
+        st_dev; </b><font color="#000000">/* устройство, на котором расположен 
+        файл */</font><B><br>
+        ino_t st_ino; </b><font color="#000000">/* номер индексного узла для файла 
+        */ </font><B><br>
+        mode_t st_mode; </b><font color="#000000">/* тип файла и права доступа 
+        к нему */</font><B><br>
+        nlink_t st_nlink; </b><font color="#000000">/* счетчик числа жестких связей 
+        */</font><B><br>
+        uid_t st_uid;</b><font color="#000000"> /* идентификатор пользователя 
+        владельца */</font><B><br>
+        gid_t st_gid; </b><font color="#000000">/* идентификатор группы владельца 
+        */</font><B><br>
+        dev_t st_rdev; </b><font color="#000000">/* тип устройства для специальных 
+        файлов устройств */</font><B><br>
+        off_t st_size; </b><font color="#000000">/* размер файла в байтах (если 
+        определен для данного типа файлов) */</font><B><br>
+        unsigbed long st_blksize;</b><font color="#000000"> /* размер блока для 
+        файловой системы */</font><B><br>
+        unsigned long st_blocks; </b><font color="#000000">/* число выделенных 
+        блоков */</font><B><br>
+        time_t st_atime; </b><font color="#000000">/* время последнего доступа 
+        к файлу */</font><B><br>
+        time_t st_mtime;</b><font color="#000000"> /* время последней модификации 
+        файла */</font><B><br>
+        time_t st_ctime;</b><font color="#000000"> /* время создания файла */</font><B><br>
+        </b></font> 
+    </dir>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman" COLOR="#008000"><B> }<br>
+      <br>
+      </b></font> 
+  </dir>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman"><a name="stat1"></a>Для определения 
+      типа файла можно использовать следующие логические макросы, применяя их 
+      к значению поля <b><font color="#008000">st_mode</font></b>:</FONT> 
+  </BLOCKQUOTE>
+  <dir> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman" COLOR="#008000"><B> S_ISLNK(m)</b><font color="#000000"> 
+      - файл типа "связь"?</font><B><br>
+      S_ISREG(m)</b><font color="#000000"> - регулярный файл?</font><B><br>
+      S_ISDIR(m) </b><font color="#000000">- директория?</font><B><br>
+      S_ISCHR(m) </b><font color="#000000">- специальный файл символьного устройства?</font><B><br>
+      S_ISBLK(m) </b><font color="#000000">- специальный файл блочного устройства?</font><B><br>
+      S_ISFIFO(m)</b><font color="#000000"> - файл типа FIFO?</font><B><br>
+      S_ISSOCK(m)</b><font color="#000000"> - файл типа socket?</font><B><br>
+      <br>
+      </b></font> 
+  </dir>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Младшие 9 бит поля <b><font color="#008000">st_mode</font></b> 
+      определяют права доступа к файлу подобно тому, как это делается в <a href="umask3.htm">маске 
+      создания файлов текущего процесса</a>. <br>
+      <br>
+      Системный вызов возвращает значение 0 при нормальном завершении и значение 
+      -1 при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

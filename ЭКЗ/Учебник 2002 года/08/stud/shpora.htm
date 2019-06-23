@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Shpora-s6</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Подсказка </font></H1>
+
+
+<FONT FACE="Times New Roman" size=3 >
+<BLOCKQUOTE>
+  <p  align="JUSTIFY">При создании семафора инициируйте его значением <b><font color="#008000">1 
+    </font></b>с помощью операции <b><font color="#008000">A(S,1)</font></b>. 
+    То, что семафор действительно создается, определите, используя флаг <b><font color="#008000">IPC_EXCL</font></b> 
+    и значение переменной <b><font color="#008000">errno == EEXIST</font></b> 
+    так, как это было сделано для инициализации данных в разделяемой памяти. Перед 
+    входом в критический участок выполните операцию <b><font color="#008000">D(S,1)</font></b>, 
+    а после выхода из него - снова операцию <b><font color="#008000">A(S,1)</font></b>. 
+</BLOCKQUOTE>
+</font>
+</BODY>
+</HTML>

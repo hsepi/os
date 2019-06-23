@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>ftruncate</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов ftruncate</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include  &lt;sys/types.h&gt;<br>
+#include &lt;unistd.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>int ftruncate(int fd, size_t length);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><FONT COLOR="#008000">ftruncate</font></B> 
+    <FONT FACE="Times New Roman">предназначен для изменения длины открытого регулярного 
+    файла. </FONT> </BLOCKQUOTE>
+  <BLOCKQUOTE><p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">fd</font></B><FONT FACE="Times New Roman"> 
+    является дескриптором соответствующего файла, т.&nbsp;е. значением, которое 
+    вернул системный вызов <a href="open.htm">open()</a>.<br>
+    Параметр <b><font color="#008000">length</font></b> - значение новой длины 
+    для этого файла. Если параметр <b><font color="#008000">length</font></b> 
+    меньше, чем текущая длина файла, то вся не влезающая в новый размер информация 
+    в конце файла будет потеряна. Если же он больше, чем текущая длина, то файл 
+    будет выглядеть так, как будто мы дополнили его до недостающего размера нулевыми 
+    битами.</FONT></BLOCKQUOTE>
+  <BLOCKQUOTE><p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов возвращает значение 
+    0 при нормальном завершении и значение -1 при возникновении ошибки</font>.</BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

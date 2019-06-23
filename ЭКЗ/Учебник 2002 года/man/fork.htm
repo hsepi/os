@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Fork</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов для порождения
+  нового процесса</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT></B>
+<DIR><FONT COLOR="#008000">
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;unistd.h&gt;<BR>
+    &nbsp;<br>
+    </b><FONT COLOR="#008000"><B>pid_t</b></font><B><FONT COLOR="#008000"> fork(void);</font></b></BLOCKQUOTE>
+  </font></DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P>
+</font></B>
+<DIR>
+  <BLOCKQUOTE><p ALIGN="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов </font><B><FONT COLOR="#008000">fork</font></B><FONT FACE="Times New Roman">
+    служит для создания нового процесса в операционной системе UNIX. Процесс,
+    который инициировал системный вызов </font><B><FONT COLOR="#008000">fork</font></b><FONT FACE="Times New Roman">,
+    принято называть родительским процессом (parent process). Вновь порожденный
+    процесс принято называть прооцессом-ребенком (child process). Процес-ребенок
+    является почти полной копией родительского процесса. У порожденного процесса
+    по сравнению с родительским процессом изменяются значения следующих параметров:</font></BLOCKQUOTE>
+  <ul type="disc">
+    <dir>
+      <li><font face="Times New Roman, Times, serif">идентификатор процесса;</font></li>
+      <li><font face="Times New Roman, Times, serif">идентификатор родительского
+        процесса;</font></li>
+      <li><font face="Times New Roman, Times, serif">время, оставшееся до получения
+        сигнала </font><font  face="Times New Roman, Times, serif" color="#008000"><b>SIGALRM</b></font>.</li>
+      <li>Сигналы, ожидавшие доставки
+        родительскому процессу, не будут
+        доставляться порожденному процессу.</li>
+      </dir>
+  </ul>
+  <blockquote><p ALIGN="JUSTIFY"><font face="Times New Roman">При однократном системном вызове возврат
+    из него может произойти дважды: один раз в родительском процессе, а второй
+    раз в порожденном процессе. Если создание нового процесса произошло успешно,
+    то в порожденном процессе системный вызов вернет значение 0, а в родительском
+    процессе</font><font face="Times New Roman" size="3"> —</font><font face="Times New Roman">
+    положительное значение, равное идентификатору процесса-ребенка. Если создать
+    новый процесс не удалось, то системный вызов вернет в
+    инициировавший его процесс
+    отрицательное значение.<br>
+    &nbsp;<br>
+    Системный вызов </font><b><font color="#008000">fork</font></b><font face="Times New Roman">
+    является единственным способом породить новый процесс после инициализации
+    операционной системы UNIX.</font></blockquote>
+</DIR>
+</BODY>
+</HTML>

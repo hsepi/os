@@ -1,0 +1,159 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>6c-s13-14s</title>
+</head>
+
+<body>
+ <basefont face="Times New Roman, sans-serif, Courier, mono" size="3">
+<p>
+<font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><font color="#000000">/* 
+Программа с асинхронным получением информации о статусе 2-х завершившихся порожденных 
+процессов */</font><b><br>
+<br>
+#include &lt;sys/types.h&gt;<br>
+#include &lt;unistd.h&gt;<br>
+#include &lt;waith&gt;<br>
+#include &lt;signal.h&gt;<br>
+#include &lt;stdio.h&gt;<br>
+<br>
+<br>
+</b> <font color="#000000">/* Функция <b><font color="#008000">my_handler</font></b> 
+- обработчик сигнала</font><b> SIGCHLD</b><font color="#000000"> */ </font><b><br>
+<br>
+void my_handler(int nsig){<br>
+<br>
+</b> 
+<dir> <b> int status;<br>
+  pid_t pid;<br>
+  <br>
+  </b> <font color="#000000">/* Опрашиваем статус завершившегося процесса и одновременно 
+  узнаем его идентификатор */ </font><b><br>
+  <br>
+  if((pid =<a href="../../man/waitpid.htm"> waitpid</a>(-1, &status, 0)) < 0){<br>
+  <font color="#000000"><br>
+  </font></b> 
+  <dir><font color="#000000"> /* Если возникла ошибка - сообщаем о ней и продолжаем 
+    работу */ </font><br>
+    <br>
+<b>
+       printf("Some error on waitpid errno = %d\n", errno);<br>
+<br>
+</b>
+</dir>
+<b>
+     } else {<br>
+  <font color="#000000"><br>
+  </font></b> 
+  <dir><font color="#000000"> /* Иначе анализируем статус завершившегося процесса 
+    */ </font><br>
+    <br>
+<b>
+       if ((status & 0xff) == 0) {<br>
+    <font color="#000000"><br>
+    </font></b> 
+    <dir><font color="#000000"> /* Процесс завершился с явным или неявным вызовом 
+      функции <a href="../../man/exit.htm">exit</a>() */ </font><br>
+      <br>
+<b>
+           printf("Process %d was exited with status %d\n", pid, status >> 8);<br>
+<br>
+</b>
+</dir>
+<b>
+       } else if ((status & 0xff00) == 0){<br>
+    <font color="#000000"><br>
+    </font></b> 
+    <dir><font color="#000000"> /* Процесс был завершен с помощью сигнала */ </font><br>
+      <br>
+<b>
+           printf("Process %d killed by signal %d %s\n", pid, status &0x7f,<br>
+           (status & 0x80) ? "with core file" : "without core file");<br>
+</b>
+</dir>
+<b>
+       }<br>
+<br>
+</b>
+</dir>
+<b>
+     }<br>
+<br>
+</b>
+</dir>
+<b>
+}<br>
+<br>
+int main(void){<br>
+<br>
+</b>
+<dir> <b> pid_t pid;<br>
+  <br>
+  </b> <font color="#000000">/* Устанавливаем обработчик для сигнала</font><b> 
+  SIGCHLD </b><font color="#000000">*/ </font><b><br>
+  <br>
+  (void) <a href="../../man/signal.htm">signal</a>(SIGCHLD, my_handler);<br>
+  <br>
+  </b> <font color="#000000">/* Порождаем Сhild 1 */ <br>
+  </font><b><br>
+  if((pid = <a href="../../man/fork.htm">fork</a>()) < 0){<br>
+  <br>
+  </b> 
+  <dir>
+<b>
+       printf("Can\'t fork child 1\n");<br>
+    <a href="../../man/exit.htm">exit</a>(1);<br>
+<br>
+</b>
+</dir>
+  <b> } else if (pid == 0){<br>
+  </b><font color="#000000"><br>
+  </font> 
+  <dir> <font color="#000000"> /* Child 1 - завершается с кодом 200 */</font><b><br>
+    <br>
+    <a href="../../man/exit.htm">exit</a>(200);<br>
+    <br>
+    </b> </dir>
+  <b> }<br><br>
+  </b> <font color="#000000">/* Продолжение процесса-родителя - порождаем Сhild 
+  2 */ </font><b><br>
+  <br>
+  <br>
+  if((pid = <a href="../../man/fork.htm">fork</a>()) < 0){<br>
+  <br>
+  </b> 
+  <dir>
+<b>
+       printf("Can\'t fork child 2\n");<br>
+       exit(1);<br>
+<br>
+</b>
+</dir>
+  <b> } else if (pid == 0){<br>
+  </b><font color="#000000"><br>
+  </font> 
+  <dir> <font color="#000000"> /* Child 2 - циклится, необходимо убивать! */</font><b><br>
+    <br>
+    while(1);<br>
+    <br>
+    </b> </dir>
+  <b> }<br>
+  <br>
+  <br>
+  </b> <font color="#000000">/* Продолжение процесса-родителя - уходим в цикл 
+  */ </font><b><br>
+  <br>
+  while(1);<br>
+  return 0;<br>
+  <br>
+  </b> </dir>
+<b>
+}<br>
+<br>
+
+</b></font> 
+
+</body>
+
+</html>

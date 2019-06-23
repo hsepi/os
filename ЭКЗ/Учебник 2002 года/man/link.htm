@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>linki</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов link</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;unistd.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>int link(char *pathname, char *linkpathname);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><FONT COLOR="#008000">link</font></B><FONT FACE="Times New Roman"> 
+      <font face="Times New Roman"> </font>служит для создания жесткой связи к 
+      файлу с именем, на которое указывает параметр<b><font color="#008000"> pathname</font></b>. 
+      Указатель на имя создаваемой связи задается параметром <b><font color="#008000">linkpathname</font></b> 
+      (полное или относительное имя связи). </FONT>
+  </BLOCKQUOTE>
+  <BLOCKQUOTE>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Во всех существующих реализациях 
+      операционной системы UNIX запрещено создавать жесткие связи к директориям. 
+      В операционной системе Linux (по непонятной причине) дополнительно запрещено 
+      создавать жесткие связи к специальным файлам устройств.</FONT>.
+  </BLOCKQUOTE>
+  <BLOCKQUOTE>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов возвращает 
+      значение 0 при нормальном завершении и значение -1 при возникновении ошибки</font>.
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

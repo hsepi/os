@@ -1,0 +1,46 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>4c-s13-14s</title>
+</head>
+
+<body>
+ <basefont face="Times New Roman, sans-serif, Courier, mono" size="3">
+<p><font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><font color="#000000">/* 
+  Программа с пользовательской обработкой сигнала <b><font color="#008000">SIGINT</font></b> 
+  */</font><b><br>
+  <br>
+  #include &lt;signal.h&gt;<br>
+  #include &lt;stdio.h&gt;<br>
+  <br>
+  </b> <font color="#000000">/* Функция</font><b> my_handler </b><font color="#000000">- 
+  пользовательский обработчик сигнала */</font><b> <br>
+  <br>
+  void my_handler(int nsig){</b></font> 
+<dir> <font face="Times New Roman, sans-serif, Courier, mono" size="3" color="#008000"> 
+  <b> printf("Receive signal %d, CTRL-C pressed\n"); </b></font></dir>
+  <font face="Times New Roman, sans-serif, Courier, mono" size="3" color="#008000"> <b>
+  }<br>
+  <br>
+  int main(void){ </b></font> <br>
+<dir> <font face="Times New Roman, sans-serif, Courier, mono" size="3" color="#000000"> 
+  /* Выставляем реакцию процесса на сигнал</font><font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><b> 
+  SIGINT </b><font color="#000000"> */ </font><b><br>
+  <br>
+  (void)<a href="../../man/signal.htm">signal</a>(SIGINT, my_handler);<br>
+  <br>
+  </b> <font color="#000000">/*Начиная с этого места, процесс будет печатать сообщение 
+  о возникновении сигнала</font><b> SIGINT </b><font color="#000000">*/</font><b> 
+  <br>
+  <br>
+  while(1);<br>
+  return 0;<br>
+  </b></font> </dir>
+   <font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><b>
+}
+</b></font> 
+
+</body>
+
+</html>

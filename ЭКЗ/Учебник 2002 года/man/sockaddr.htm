@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Socket address</TITLE>
+<META NAME="Template" CONTENT="D:\MSOFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<FONT FACE="Times New Roman"><H1 ALIGN="CENTER">Адреса sоcket'ов</H1>
+</FONT><B><FONT FACE="Times New Roman" SIZE=5><P>Общий шаблон адреса</P></font></B><DIR><FONT FACE="Times New Roman" SIZE=5><B>
+
+</b></font><BLOCKQUOTE><FONT FACE="Times New Roman">Указатели типа </font><B><FONT COLOR="#008000">struct sockaddr *</font></B><FONT FACE="Times New Roman"> встречаются во многих сетевых системных вызовах для передачи им информации о том к какому адресу привязан или должен быть привязан </FONT>socket<FONT FACE="Times New Roman">. Давайте разберемся с этим типом данных подробнее. Структура </FONT><B><FONT COLOR="#008000">struct sockaddr </font></B><FONT FACE="Times New Roman">описана в файле </FONT><B><FONT COLOR="#008000">sys/socket.h</font></B><FONT FACE="Times New Roman"> следующим образом:</font></BLOCKQUOTE><DIR><FONT FACE="Times New Roman">
+
+</font><B><FONT COLOR="#008000"><BLOCKQUOTE>struct sockaddr {<BR><DIR>
+short sa_family;<BR>
+char sa_data[14];<BR>
+</DIR>};</BLOCKQUOTE></font></b></DIR>
+
+<BLOCKQUOTE><FONT FACE="Times New Roman">Такой состав структуры обусловлен тем, что сетевые системные вызовы могут применяться для различных семейств протоколов, которые по-разному определяют адресное пространство для пары процесс-компьютер. По сути дела этот тип данных является лишь общим шаблоном для передачи системным вызовам структур данных специфичных для каждого семейства протоколов. Общим элементом этих структур является только поле </font><B><FONT COLOR="#008000">short sa_family </font></B><FONT FACE="Times New Roman">(которое в разных структурах, естественно, может иметь разные имена, важно лишь, чтобы все они были одного типа и являлись первыми элементами своих структур) для описания семейства протоколов. Содержимое этого поля системный вызов анализирует для точного определения состава поступившей ему информации.</font></BLOCKQUOTE></DIR>
+
+
+<B><P><FONT FACE="Times New Roman" SIZE=5><A NAME=a1></A>Адрес для семейства протоколов</font><FONT SIZE=5>TCP/IP</font></P></B><DIR><FONT SIZE=5><B>
+
+</b></font><BLOCKQUOTE><FONT FACE="Times New Roman">Для работы с семейством протоколов TCP/IP мы будем использовать адрес socket'а следующего вида</font>, <FONT FACE="Times New Roman">описанного в файле </FONT><B><FONT COLOR="#008000">&lt;netinet/in.h&gt;</font></B>:</BLOCKQUOTE><DIR>
+
+<B></B><BLOCKQUOTE><FONT COLOR="#008000"><B>struct sockaddr _in{<BR></b></font><DIR><FONT COLOR="#008000"><B>
+short sin_family</b></font><FONT FACE="Times New Roman">; /* Избранное семейство протоколов - всегда</FONT><B><FONT COLOR="#008000"> AF_INET </font></B>*/<BR>
+<B><FONT COLOR="#008000">unsigned short sin_port; </font></B><FONT FACE="Times New Roman">/* 16-битовый номер порта в сетевом порядке байт */<BR>
+</FONT><B><FONT COLOR="#008000">struct in_addr sin_addr; </font></B><FONT FACE="Times New Roman">/* Адрес сетевого интерфейса */<BR>
+</FONT><B><FONT COLOR="#008000">char sin_zero[8]; </font></B><FONT FACE="Times New Roman">/* Это поле не используется, но должно всегда быть заполнено нулями */<BR>
+</FONT></DIR><B><FONT COLOR="#008000">};</font></b></BLOCKQUOTE></DIR>
+
+<BLOCKQUOTE><FONT FACE="Times New Roman">Структура типа </font><B><FONT COLOR="#008000">struct in_addr</font></B> <FONT FACE="Times New Roman">используется для хранения числовых значений IP адресов в сетевом порядке байт и выглядит так:</font></BLOCKQUOTE><DIR><FONT FACE="Times New Roman">
+</font><B><FONT COLOR="#008000"><BLOCKQUOTE>struct in_addr {<BR><DIR>
+in_addr_t s_addr; <BR>
+</DIR>}; </BLOCKQUOTE></font></b></DIR>
+
+<BLOCKQUOTE><FONT FACE="Times New Roman">То, что используется такая структура, а не просто переменная типа </font><B><FONT COLOR="#008000">in_addr_t</font></B><FONT FACE="Times New Roman">, сложилось исторически.</font></BLOCKQUOTE>
+  <BLOCKQUOTE> <FONT FACE="Times New Roman">Существует два варианта задания номера 
+    порта: фиксированный порт по желанию пользователя и порт, который произвольно 
+    назначает операционная система. Первый вариант требует указания в качестве 
+    номера порта положительного заранее известного числа и обычно используется 
+    при привязке socket'ов сервера с помощью системного вызова </font><A HREF="bind.htm"><U><FONT COLOR="#0000ff"><I>bind()</I></font></U></A>, 
+    <FONT FACE="Times New Roman">при установлении соединения клиента с сервером 
+    с помощью системного вызова </FONT><A HREF="connect.htm"><U><FONT COLOR="#0000ff"><I>connect()</I></font></U></A><FONT FACE="Times New Roman"> 
+    и при передаче информации с помощью системного вызова </FONT><A HREF="sendto.htm"><U><FONT COLOR="#0000ff"><I>sendto()</I></font></U></A><FONT FACE="Times New Roman">. 
+    Второй вариант требует указания в качестве номера порта значения 0. В этом 
+    случае операционная система сама привязывает socket к свободному номеру порта. 
+    Этот способ обычно используется при настройке </FONT>socket'<FONT FACE="Times New Roman">ов 
+    программ клиентов с помощью системного вызова </FONT><A HREF="bind.htm"><U><FONT COLOR="#0000ff"><I>bind()</I></font></U></A><FONT FACE="Times New Roman">, 
+    когда точное предварительное знание адреса порта для программиста является 
+    необязательным. </font></BLOCKQUOTE>
+<BLOCKQUOTE>IP <FONT FACE="Times New Roman">адрес сетевого протокола также может быть определен двумя способами. При использовании системного вызова </FONT><A HREF="bind.htm"><U><FONT COLOR="#0000ff"><I>bind()</I></font></U></A> socket <FONT FACE="Times New Roman">может быть привязан к конкретному сетевому интерфейсу (т.е. сетевой плате), заставляя операционную систему принимать</FONT>/<FONT FACE="Times New Roman">передавать информацию только через этот сетевой интерфейс, а может быть привязан и ко всей вычислительной системе (информация может быть получена</FONT>/<FONT FACE="Times New Roman">отослана через любой сетевой интерфейс). В первом случае в качестве значения поля структуры </FONT><B><FONT COLOR="#008000">sin_addr.s_addr</font></B> <FONT FACE="Times New Roman">используется числовое значение </FONT>IP <FONT FACE="Times New Roman">адреса конкретного сетевого интерфейса в сетевом порядке байт. Во втором случае это значение должно быть равно значению предопределенной константы </FONT><B><FONT COLOR="#008000">INADDR_ANY</font></B>, <FONT FACE="Times New Roman">приведенному к сетевому порядку байт. При формировании адресов </FONT>socket'<FONT FACE="Times New Roman">ов, расположенных на других вычислительных системах, естественно, пригоден только первый вариант.</font></BLOCKQUOTE><BLOCKQUOTE>
+<FONT FACE="Times New Roman">Размер адреса </font>socket'<FONT FACE="Times New Roman">а для семейства протоколов </FONT>TCP/IP <FONT FACE="Times New Roman">может быть определен как </FONT><B><FONT COLOR="#008000">sizeof(struct&nbsp;sockaddr_in)</font></B>.</BLOCKQUOTE></DIR>
+
+
+<B><P><FONT FACE="Times New Roman" SIZE=5><A NAME=a2></A>Адрес для </font><FONT SIZE=5>UNIX Domain socket'</FONT><FONT FACE="Times New Roman" SIZE=5>ов</font></P></B><DIR><FONT FACE="Times New Roman" SIZE=5><B>
+
+</b></font><BLOCKQUOTE><FONT FACE="Times New Roman">Для работы с </font>UNIX Domain socket'<FONT FACE="Times New Roman">ами мы будем использовать адрес socket'а следующего вида</FONT>, <FONT FACE="Times New Roman">описанного в файле </FONT><B><FONT COLOR="#008000">&lt;sys/un.h&gt;</font></B>:</BLOCKQUOTE><DIR>
+
+<B></B><BLOCKQUOTE><FONT COLOR="#008000"><B>struct sockaddr _un{<BR></b></font><DIR><FONT COLOR="#008000"><B>
+short sun_family</b></font><FONT FACE="Times New Roman">; /* Избранное семейство протоколов - всегда</FONT><B><FONT COLOR="#008000"> AF_UNIX </font></B>*/<BR>
+<B><FONT COLOR="#008000">char sun_path[108]; </font></B><FONT FACE="Times New Roman">/* Имя файла типа </FONT>socket */<BR>
+</DIR><B><FONT COLOR="#008000">};</font></b></BLOCKQUOTE></DIR>
+
+<BLOCKQUOTE><FONT FACE="Times New Roman">Размер адреса для </font>UNIX Domain <FONT FACE="Times New Roman">адреса </FONT>socket'<FONT FACE="Times New Roman">а может быть определен как </FONT><B><FONT COLOR="#008000">sizeof&nbsp;(short)&nbsp;+strlen&nbsp;(</FONT><FONT FACE="Times New Roman" COLOR="#008000">"использованное имя файла</FONT><FONT COLOR="#008000">")</font></B>.</BLOCKQUOTE></DIR>
+
+</BODY>
+</HTML>

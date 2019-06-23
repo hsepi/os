@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>creat</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> creat</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;fcntl.h&gt;<br>
+    <br>
+    int creat(char *path, int mode);
+    </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><FONT COLOR="#008000">creat</font></B> 
+      <FONT FACE="Times New Roman">эквивалентен системному вызову <a href="open.htm">open()</a> 
+      с параметром<font color="#008000"> <b>flags</b></font>, установленным в 
+      значение<b><font color="#008000"> O_CREAT | O_WRONLY | O_TRUNC</font></b>.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">path</font></B><FONT FACE="Times New Roman"> 
+      является указателем на строку, содержащую полное или относительное имя файла.<br>
+      </font><FONT FACE="Times New Roman">
+      <br>
+      Если файл с указанным именем не существовал к моменту системного вызова, 
+      то он будет создан и открыт только для выполнения операций записи. Если 
+      файл уже существовал, то он открывается также только для операции записи, 
+      при этом его длина уменьшается до 0 с одновременным сохранением всех других 
+      атрибутов файла.<br><br></font> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Параметр </font><B><FONT COLOR="#008000">mode</font></B><FONT FACE="Times New Roman"> 
+      устанавливает атрибуты прав доступа различных категорий пользователей к 
+      новому файлу при его создании. </font><FONT FACE="Times New Roman">Этот 
+      параметр задается как сумма следующих восьмеричных значений:<br>
+      <br>
+      </font> 
+    <FONT FACE="Times New Roman"> 
+    <table align = "center" width="66%" border="0" cellspacing="0" cellpadding="0">
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0400</b></font></td>
+        <td width="89%"> &nbsp;- Разрешено чтение для пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0200</b></font></td>
+        <td width="89%">&nbsp;- Разрешена запись для пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0100</b></font></td>
+        <td width="89%">&nbsp;- Разрешено исполнение для пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0040</b></font></td>
+        <td width="89%">&nbsp;- Разрешено чтение для группы пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0020</b></font></td>
+        <td width="89%">&nbsp;- Разрешена запись для группы пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0010</b></font></td>
+        <td width="89%">&nbsp;- Разрешено исполнение для группы пользователя, 
+          создавшего файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0004</b></font></td>
+        <td width="89%">&nbsp;- Разрешено чтение для всех остальных пользователей</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0002</b></font></td>
+        <td width="89%">&nbsp;- Разрешена запись для всех остальных пользователей</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0001</b></font></td>
+        <td width="89%">&nbsp;- Разрешено исполнение для всех остальных пользователей</td>
+      </tr>
+    </table>
+    <br>
+    <p align="JUSTIFY"> При создании файла реально устанавливаемые права доступа 
+      получаются из стандартной комбинации параметра <font color="#008000"><b>mode</b></font> 
+      и <a href="umask3.htm">маски создания файлов текущего процесса</a><font color="#008000"> 
+      <b>umask</b></font>, а именно - они равны <b> <font color="#008000">mode 
+      &<sup> ~</sup>umask</font></b>. <br>
+      <br>
+    </font></BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение файлового дескриптора для открытого файла при нормальном завершении 
+      и значение -1 при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

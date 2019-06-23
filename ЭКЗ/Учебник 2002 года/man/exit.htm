@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Exit</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Функция для нормального завершения
+  процесса</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5>
+<P>Прототип функции</P>
+</FONT></B>
+<DIR><FONT COLOR="#008000">
+  <BLOCKQUOTE><b>#include &lt;stdlib.h&gt;<BR>
+    &nbsp;<br>
+    </b><FONT COLOR="#008000"><B>void exit</b></font><B><FONT COLOR="#008000">(int
+    status);</font></b></BLOCKQUOTE>
+  </font></DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Описание функции</P>
+</font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font>
+  <BLOCKQUOTE>
+    <p ALIGN="JUSTIFY"><font face="Times New Roman">Функция </font><B><FONT COLOR="#008000">exit</font></B><FONT FACE="Times New Roman">
+      служит для нормального завершения процесса. При выполнении этой функции
+      происходит сброс всех частично заполненых буферов ввода-вывода с закрытием
+      соответствующих потоков (файлов, pipes, FIFO, socket'ов), после чего инициируется
+      системный вызов прекращения работы процесса и перевода его в состояние <i><b>закончил
+      исполнение</b></i>.</font>
+    <p ALIGN="JUSTIFY"><font face="Times New Roman">Возврата из функции в текущий 
+      процесс не происходит, и функция ничего не возвращает. </font> 
+    <p ALIGN="JUSTIFY"><font face="Times New Roman">Значение параметра </font><b><font face="Times New Roman" color="#008000">status
+      &#150; </font></b><font face="Times New Roman"> кода завершения процесса
+      &#150; передается ядру операционной системы и может быть затем получено
+      процессом, породившим завершившийся процесс. При этом используются только
+      младшие 8 бит параметра, так что для кода завершения допустимы значения
+      от 0 до 255. По соглашению, код завершения 0 означает безошибочное завершения
+      процесса. </font>
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

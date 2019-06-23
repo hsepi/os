@@ -1,0 +1,2310 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>KR1SOL</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman"><font size="6">Контрольная работа 
+  1-00</font></FONT></B></P>
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman"><font size="4">Вариант 2</font></FONT></B><br>
+  <B><font face="Times New Roman" size="3">(решение)</font></B></P>
+  
+<p>&nbsp;</p>
+<OL START=0>
+  <b>
+  <li> 
+    <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3"> За разговоры с соседом 
+      -3 балла за каждый.</font></p>
+  </li>
+  <li> 
+    <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3"> (6 баллов) Возможны 
+      ли следующие переходы процесса из одного состояния в другое?</font></p>
+  </li>
+  </b> 
+  <ol type="a">
+    <b>
+    <li><font face="Times New Roman, Times, serif" size="3">Из состояния <I>ожидание</I> 
+      в состояние <I>готовность</I>.</font></li>
+    <li><font face="Times New Roman, Times, serif" size="3">Из состояния <I>рождение</I> 
+      в состояние <I>ожидание</I>.</font></li>
+    <li><font face="Times New Roman, Times, serif" size="3">Из состояния <I>исполнение</I> 
+      в состояние <I>готовность</I>.</font></li>
+    </b> <font face="Times New Roman, Times, serif"><br>
+    &nbsp; </font>
+  </ol>
+  <P ALIGN="JUSTIFY"><font size="3" face="Times New Roman, Times, serif"><b>Если переход возможен, 
+    кратко сформулируйте, когда он происходит. Если невозможен, напишите почему.</b></font></p>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <OL TYPE="a">
+      <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Переход возможен и 
+      происходит, когда в системе произошло событие, без которого процесс, находящийся 
+      в состоянии <I>ожидание</I> не мог продолжить свою работу.</font></LI>
+    <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Переход невозможен, 
+      так как в состояние ожидания может попасть только исполняющийся процесс.</font></LI>
+    <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Переход возможен и 
+      происходит, когда в системе происходит какое-либо прерывание, например, 
+      прерывание по таймеру.</font></LI>
+    <font face="Times New Roman, Times, serif"><br>
+    &nbsp; </font>
+</OL>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Оценка:</u></I></font></P>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">По одному баллу за каждый 
+    правильный ответ о возможности или невозможности перехода и по 1 баллу за 
+    каждое грамотное обоснование.</font></P>
+  <OL START=0>
+  </OL>
+  <b>
+  <li> 
+    <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">(3 балла) Кратко сформулируйте 
+      разницу между программой и процессом.</font></p>
+  </li>
+  </b> 
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Программа представляет 
+    собой статический объект – исполняемый файл. Процесс – это динамический объект, 
+    совокупность набора последовательно исполняемых инструкций, связанных с ним 
+    ресурсов системы (стеки, основное адресное пространство, выделенные устройства 
+    ввода-вывода и т.д.) и их текущего состояния, которая находится под управлением 
+    операционной системы. </font></P>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Таким образом, понятие 
+    процесса не включается в понятие программы. С другой стороны понятие программа 
+    также не включается в понятие процесса, так как для решения задачи одна программа 
+    может породить несколько процессов.</font></P>
+  <b>
+  <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif">(12 баллов)</font> <font face="Times New Roman, Times, serif" size="3">Пусть 
+    в вычислительную систему поступают пять процессов различной длительности по 
+    следующей схеме:</font></P></LI>
+</b> 
+  <TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=568 align="center">
+    <TR> 
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">Номер 
+          процесса</font> </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">Время 
+          поступления в систему</font> </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">Время 
+          исполнения</font> </b> </font>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">1</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">2</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">4</font> 
+          </b> </font>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">2</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">3</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">10</font> 
+          </b> </font>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">3</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">6</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">5</font> 
+          </b> </font>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">4</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">4</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">1</font> 
+          </b> </font>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">5</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0</font> 
+          </b> </font>
+      </TD>
+      <TD WIDTH="33%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">4</font> 
+          </b> </font>
+      </TD>
+    </TR>
+  </TABLE>
+<P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3"><b>Вычислите среднее 
+    время между стартом процесса и его завершением (turnaroud time) и среднее 
+    время ожидания процесса (waiting time) для каждого из трех алгоритмов планирования 
+    FCFS (First Come First Served), RR (Round Robin) и SJF (Short Job First). 
+    При вычислениях считать, что процессы не совершают операций ввода-вывода, 
+    величину кванта времени принять равной 1, временем переключения контекста 
+    пренебречь. Для алгоритма RR принять, что вновь прибывший процесс выбирается 
+    для исполнения первым.</b></font></p>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <OL TYPE="a">
+    <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Рассмотрим выполнение 
+      процессов в системе для алгоритма FCFS. По вертикали в таблице отложены 
+      номера процессов, по горизонтали — моменты времени. Буква И означает состояние 
+      исполнения, буква Г – состояние готовности.</font></p></LI>
+    <TABLE BORDER CELLSPACING=1 CELLPADDING=1 WIDTH=600 align="center">
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">4</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">5</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">6</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">8</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">9</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">10</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">11</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">12</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">13</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">14</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">15</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">16</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">17</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">18</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">19</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">20</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">21</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">22</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">23</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">4</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">5</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+    </TABLE>
+    <P><font face="Times New Roman, Times, serif" size="3">Среднее время между 
+      стартом процесса и его завершением: tt = (6 + 15 + 18 + 15 + 4)/5 = 11.6.</font><font face="Times New Roman, Times, serif"><br>
+      <font size="3">Среднее время ожидания: </font></font><font size="3" face="Times New Roman, Times, serif">wt 
+      = (2 + 5 + 13 + 14 + 0)/5 = 6.8.</font></P>
+    <LI><font face="Times New Roman, Times, serif" size="3">Рассмотрим выполнение 
+      процессов в системе для алгоритма RR:</font></LI>
+    <font face="Times New Roman, Times, serif"><br>
+    &nbsp; </font>
+    <TABLE BORDER CELLSPACING=1 CELLPADDING=1 WIDTH=600 align="center">
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">4</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">5</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">6</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">8</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">9</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">10</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">11</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">12</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">13</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">14</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">15</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">16</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">17</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">18</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">19</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">20</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">21</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">22</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">23</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">4</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">5</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+    </TABLE>
+    <P><font face="Times New Roman, Times, serif" size="3">Среднее время между 
+      стартом процесса и его завершением: tt = (13 + 21 + 13 + 1 + 10)/5 = 11.8.</font><font face="Times New Roman, Times, serif"><br>
+      <font size="3">Среднее время ожидания: </font></font><font size="3" face="Times New Roman, Times, serif">wt 
+      = (9 + 11 + 8 + 0 + 6)/5 = 6.8.</font></P>
+    <LI><font face="Times New Roman, Times, serif" size="3">Рассмотрим выполнение 
+      процессов в системе для алгоритма SJF:</font></LI>
+    <font face="Times New Roman, Times, serif"><br>
+    &nbsp; </font>
+    <TABLE BORDER CELLSPACING=1 CELLPADDING=1 WIDTH=600 align="center">
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">4</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">5</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">6</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">8</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">9</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">10</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">11</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">12</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">13</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">14</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">15</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">16</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">17</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">18</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">19</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">20</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">21</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">22</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">23</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Г</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">4</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">5</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">И</font> 
+        </TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+      </TR>
+    </TABLE>
+    <P><font face="Times New Roman, Times, serif" size="3">Среднее время между 
+      стартом процесса и его завершением: tt = (7 + 21 + 8 + 1 + 4)/5 = 8.2.</font> 
+      <font face="Times New Roman, Times, serif" size="3"><br>
+      Среднее время ожидания: wt = (3 + 11 + 3 + 0 + 0)/5 = 3.4.</font></P>
+  </ol>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Оценка:</u></I></font></P>
+  <P><font face="Times New Roman, Times, serif" size="3">По 2 балла за каждое 
+    правильно вычисленное время.</font></P>
+  <b>
+  <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">(3 балла) Дайте краткое 
+    определение термина “race condition (состояние гонки)”.</font></P></LI>
+  </b> 
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+ <P ALIGN="JUSTIFY"><font size="3" face="Times New Roman, Times, serif">Race condition (состояние 
+    гонки) — это ситуация, когда результат выполнения процессов, совместно использующих 
+    ресурсы, является недетерминированным, т.е. может меняться от запуска к запуску.</font></P>
+  <b>
+  <LI ><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">(18 баллов) Рассмотрим 
+    задачу “поможем матушке природе”. Пусть в вычислительной системе существуют 
+    процессы, которые “добывают атомы элементов” для последующего их “объединения 
+    в молекулы”. Нас будет интересовать “создание молекулы воды”. Для этого в 
+    системе существует три процесса: два, добывающих водород, и один, добывающий 
+    кислород. Когда в наличии имеется два атома водорода и один кислорода, синтезируется 
+    молекула воды. Для решения этой задачи была предложена следующая неправильная 
+    схема организации взаимодействия процессов:</font></p></LI>
+</b> 
+  <DIR> <b>
+    <P><font size="3" face="Times New Roman, Times, serif"><I>int nh = 0; /* количество 
+      атомов водорода в наличии */</I></font><font face="Times New Roman, Times, serif"><br>
+      <font size="3"><I> int no = 0; /* количество атомов кислорода в наличии 
+      */</I></font></font></P>
+    <P><font face="Times New Roman, Times, serif" size="3">Процессы, добывающие 
+      водород <I>Ph1</I> и <I>Ph2</I>:</font></P>
+    <P><font size="3" face="Times New Roman, Times, serif"><I>while (1) {</I></font><font face="Times New Roman, Times, serif"><br>
+      </font>
+    <dir><font size="3" face="Times New Roman, Times, serif"><I>take_h_atom();</I></font><font face="Times New Roman, Times, serif"><br>
+      <font size="3"><I>nh = nh +1;</I></font><br>
+      </font></dir>
+    <font size="3" face="Times New Roman, Times, serif"><I>}</I></font> 
+    <P><font face="Times New Roman, Times, serif" size="3">Процесс, добывающий 
+      кислород <I>Po</I>:</font></P>
+    <P><font size="3" face="Times New Roman, Times, serif"><I>while (1) {</I></font><font face="Times New Roman, Times, serif"><br>
+      </font>
+    <dir><font size="3" face="Times New Roman, Times, serif"><I>take_o_atom();</I></font><font face="Times New Roman, Times, serif"><br>
+      <font size="3"><I>no = no +1;</I></font><br>
+      <font size="3"><I>while(nh &lt; 2);</I></font><br>
+      <font size="3"><I>nh = nh-2;</I></font><br>
+      <font size="3"><I>no = no-1;</I></font><br>
+      <font size="3"><I>make_water();</I></font><br>
+      </font></dir>
+    <font size="3" face="Times New Roman, Times, serif"><I>}</I></font></b></DIR>
+  <font face="Times New Roman, Times, serif"><br>
+  </font><b>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Укажите, почему она является 
+    неправильной, и предложите правильную схему с использованием семафоров. Докажите, 
+    что она удовлетворяет условию взаимоисключения (mutual exclusion).</font></P>
+  </B> 
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <OL TYPE="a">
+    <LI ><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Здесь встречается 
+      две однотипные ошибки: первая связана с операцией <I>nh = nh+1</I> в процессах 
+      <I>Ph1</I> и <I>Ph2</I>, вторая — с операцией <I>nh = nh-2</I> в процессе 
+      <I>Po</I>. Эти операции не являются атомарными. По сути дела они состоят 
+      из трех операций: взять значение <I>nh</I>, изменить его и положить обратно. 
+      Поэтому возможна следующая ситуация:
+      </font></p></LI>
+    <dir><font size="3" face="Times New Roman, Times, serif"><I>Пусть nh == 0.</i></font><font face="Times New Roman, Times, serif"><br>
+      <font size="3"><I> Ph1: взять nh.</I></font><br>
+      <font size="3"><I> Ph2: взять nh.</I></font><br>
+      <font size="3"><I>Ph1: nh = nh+1.</I></font><br>
+      <font size="3"><I>Ph2: nh = nh+1.</I></font><br>
+      <font size="3"><I>Ph1: положить nh.</I></font><br>
+      <font size="3"><I> Ph2: положить nh.</I></font></font> <font face="Times New Roman, Times, serif"><br>
+      &nbsp; </font></dir>
+    <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">В результате <I>nh</I> 
+      окажется равным <I>1</I>, а не <I>2</I>, как должно бы быть. Аналогично 
+      рассматривается и ситуация взаимодействия процессов <I>Phi</I> и <I>Po</I><var>.</var></font></p>
+    <LI ><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Для исправления ситуации 
+      воспользуемся семафорами, организовав взаимоисключение на критических участках.</font></P></LI>
+    <dir> 
+      <P><font size="3" face="Times New Roman, Times, serif"><I>int nh = 0; /* 
+        количество атомов водорода в наличии */</I></font><font face="Times New Roman, Times, serif"><br>
+        <font size="3"><I> int no = 0; /* количество атомов кислорода в наличии 
+        */</I></font></font></P>
+      <P><font size="3" face="Times New Roman, Times, serif"><I><B>semaphore mutex 
+        = 1;</B></I></font></P>
+      <P><font face="Times New Roman, Times, serif" size="3">Процессы, добывающие 
+        водород <I>Ph1</I> и <I>Ph2</I>:</font></P>
+      <P><font size="3" face="Times New Roman, Times, serif"><I>while (1) {</I></font><font face="Times New Roman, Times, serif"><br>
+        </font>
+      <dir><font size="3" face="Times New Roman, Times, serif"><I>take_h_atom();</I></font><font face="Times New Roman, Times, serif"><br>
+        <font size="3"><I><B>Wait(mutex);</b></I></font><br>
+        <font size="3"><I>nh = nh +1;</I></font><br>
+        <font size="3"><I><B>Signal(mutex);</b></I></font><br>
+        </font></dir>
+      <font size="3" face="Times New Roman, Times, serif"><I>}</I></font> 
+      <P><font face="Times New Roman, Times, serif" size="3">Процесс, добывающий 
+        кислород <I>Po</I>:</font></P>
+      <P><font size="3" face="Times New Roman, Times, serif"><I>while (1) {</I></font><font face="Times New Roman, Times, serif"><br>
+        </font>
+      <dir><font size="3" face="Times New Roman, Times, serif"><I>take_o_atom();</I></font><font face="Times New Roman, Times, serif"><br>
+        <font size="3"><I>no = no +1;</I></font><br>
+        <font size="3"><I>while(nh &lt; 2);</I></font><br>
+        <font size="3"><I><B>Wait(mutex)</B>;</I></font><br>
+        <font size="3"><I>nh = nh-2;</I></font><br>
+        <font size="3"><I><B>Signal(mutex);</b></I></font><br>
+        <font size="3"><I>no = no-1;</I></font><br>
+        <font size="3"><I>make_water();</I></font><br>
+        </font></dir>
+      <font size="3" face="Times New Roman, Times, serif"><I>}</I></font></dir>
+    <font face="Times New Roman, Times, serif"><br>
+    &nbsp; </font>
+    <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Докажем выполнение 
+      условия mutual exclusion (взаимоисключения). Доказательство индукцией по 
+      числу входов в критические участки. Для первого входа в критический участок 
+      один из процессов успешно преодолел операцию <I>Wait, </I>первоначальное 
+      значение семафора было <I>1,</I> значит, стало <I>0</I> и остальные процессы 
+      не могут войти в критический участок, пока этот процесс не покинет его. 
+      Пусть доказано для <I>n </I>входов, докажем для <I>n+1</I> – го. На <I>n</I>-м 
+      входе внутри критического участка находился лишь один процесс. Значит, значение 
+      семафора равнялось <I>0.</I> Этот процесс произвел одну операцию <I>Signal</I> 
+      при выходе из критического участка, что позволило только одному из процессов 
+      войти в свой критический участок на <I>n+1</I> – м входе, а остальные должны 
+      ожидать, пока он покинет критический участок и выполнит операцию <I>Signal</I>. 
+      </font></p></LI>
+  </OL>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Оценка:</u></I></font></P>
+  <P><font face="Times New Roman, Times, serif" size="3">По 6 баллов за каждый 
+    пункт.</font></P>
+  <b>
+  <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">(5 баллов) В вычислительной 
+    системе с сегментной организацией памяти из 32-х бит адреса старшие 10 его 
+    бит отводятся для номера сегмента.</font></P></LI>
+  </b> 
+  <OL TYPE="a">
+    <b>
+    <LI ><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Какое максимальное 
+      количество сегментов может иметь процесс? Каков максимальный размер сегмента?</font></LI>
+    <LI><font face="Times New Roman, Times, serif" size="3">Для некоторого процесса 
+      таблица сегментов имеет вид:</font></LI>
+    <font face="Times New Roman, Times, serif"><br>
+    &nbsp; </font></b> 
+    <TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=568 align="center">
+      <TR> 
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">Номер 
+            сегмента</font> </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">Адрес 
+            начала сегмента</font> </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">Длина 
+            сегмента</font> </b> </font>
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">1</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x000000</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x100000</font> 
+            </b> </font>
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">2</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x200000</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x080000</font> 
+            </b> </font>
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">3</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x100000</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x080000</font> 
+            </b> </font>
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">5</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x300000</font> 
+            </b> </font>
+        </TD>
+        <TD WIDTH="33%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif"><b><font size="3">0x300000</font> 
+            </b> </font>
+        </TD>
+      </TR>
+    </TABLE>
+    <P><font face="Times New Roman, Times, serif" size="3"><b>Каким физическим 
+      адресам соответствуют адреса 0х245678</b></font><font face="Times New Roman, Times, serif"><b><font size="3">, 
+      0x500001, 0x00c700de?</font></b></font></P>
+  </ol>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <OL>
+    <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">На номер сегмента 
+      отводится 10 бит, значит, максимальное количество сегментов у процесса 2**10 
+      = 1024 сегмента. На смещение внутри сегмента остается 32 - 10 = 22 бит, 
+      поэтому максимальный размер сегмента 2**22 байт.</font></LI>
+    <LI><P ALIGN="JUSTIFY"><font size="3" face="Times New Roman, Times, serif">0x245678 —&gt; error 
+      (нет сегмента с номером 0), 0x500001 —&gt; error (сегмент 1, смещение 0x100001 
+      — больше, чем длина сегмента), 0x00c700de —&gt; (сегмент 3, смещение 0x700de 
+      — меньше, чем длина сегмента) —&gt;0x100000+0x700de = 0x1700de. </font><font face="Times New Roman, Times, serif"><br>
+      &nbsp;</font></LI>
+  </OL>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Оценка:</u></I></font></P>
+  <P><font face="Times New Roman, Times, serif" size="3">По 1 баллу за каждое 
+    значение.</font></P>
+  <b>
+  <LI><P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">(9 баллов) Для некоторого 
+    процесса известна следующая строка запросов страниц памяти:</font><font face="Times New Roman, Times, serif"><br>
+    </font></p></LI>
+  <DIR> 
+    <font size="3" face="Times New Roman, Times, serif">2, 0, 3, 7, 0, 3, 2, 
+      7, 2, 7, 1, 3, 2, 0, 7</font>
+  </DIR>
+ <P ALIGN="JUSTIFY"> <font face="Times New Roman, Times, serif" size="3">Сколько ситуаций отказа 
+    страницы (<I>page fault</I>) возникнет для данного процесса при каждом из 
+    трех алгоритмов замещения страниц — FIFO (Fist Input Fist Output) , LRU (the 
+    Least Recently Used), OPT (optimal) , если процессу выделено 3 кадра памяти?</font></p>
+  </b> 
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <OL TYPE="a">
+    <LI><font face="Times New Roman, Times, serif" size="3">Начнем с FIFO:</font><br>&nbsp;</LI>
+    <TABLE BORDER CELLSPACING=1 CELLPADDING=1 WIDTH=559 align="center">
+      <TR> 
+        <TD WIDTH="19%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Строка 
+            запросов</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="19%" VALIGN="TOP" ROWSPAN=3> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Страницы 
+            в памяти</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="19%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">Page 
+            fault</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+      </TR>
+    </TABLE>
+    <P><font face="Times New Roman, Times, serif" size="3">Количество page fault’ов 
+      — 9.</font></P>
+    <LI> <font face="Times New Roman, Times, serif" size="3">Для LRU:<br>&nbsp;</font></LI>
+    <TABLE BORDER CELLSPACING=1 CELLPADDING=1 WIDTH=559 align="center">
+      <TR> 
+        <TD WIDTH="19%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Строка 
+            запросов</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="19%" VALIGN="TOP" ROWSPAN=3> 
+          <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Страницы 
+            в памяти</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+        </TD>
+      </TR>
+      <TR> 
+        <TD WIDTH="19%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">Page 
+            fault</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+        <TD WIDTH="5%" VALIGN="TOP"> 
+          <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+        </TD>
+      </TR>
+    </TABLE>
+    <P><font face="Times New Roman, Times, serif" size="3">Количество page fault’ов 
+      — 11.</font></P>
+    <LI><font face="Times New Roman, Times, serif" size="3">Для OPT:<br>&nbsp;</font></LI>
+
+  <TABLE BORDER CELLSPACING=1 CELLPADDING=1 WIDTH=559 align="center">
+    <TR> 
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Строка 
+          запросов</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="19%" VALIGN="TOP" ROWSPAN=3> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Страницы 
+          в памяти</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">3</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">1</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">0</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">7</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">Page 
+          fault</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+      <TD WIDTH="5%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">+</font> 
+      </TD>
+      <TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+    </TR>
+  </TABLE>
+  <P><font face="Times New Roman, Times, serif" size="3">Количество page fault’ов 
+    — 8.</font></P>
+  </OL>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Оценка:</u></I></font></P>
+  <P><font face="Times New Roman, Times, serif" size="3">По 3 балла за каждое 
+    значение</font></P>
+    <b>  <LI> <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">(15 баллов) Ваш научный 
+      руководитель обратился к Вам за помощью для составления конфигурации приобретаемого 
+      компьютера. Вы можете потратить $1500 на приобретение следующих компонент:</font></p></LI></b>
+  
+  <TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=568 align="center">
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">Компонента</font> 
+          </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">Время 
+          доступа</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">Минимальный 
+          размер</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">Стоимость 
+          </font> </b>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font size="3" face="Times New Roman, Times, serif">TLB</font> 
+          </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">10 
+          наносекунд</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">4 
+          входа</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font size="3" face="Times New Roman, Times, serif">$20 
+          за вход</font> </b>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">Оперативная 
+          память</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">200 
+          наносекунд</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font size="3" face="Times New Roman, Times, serif">16 
+          Mb</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">$2 
+          за Mb</font> </b>
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">Жесткий 
+          диск</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">10 
+          миллисекунд</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font size="3" face="Times New Roman, Times, serif">2 
+          Gb</font> </b>
+      </TD>
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><b><font face="Times New Roman, Times, serif" size="3">$0.20 
+          за Mb</font> </b>
+      </TD>
+    </TR>
+  </TABLE>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3"><b>Размер страницы памяти 
+    в системе фиксирован и составляет 16 Kb. Предполагается, что в системе будут 
+    одновременно работать 3-4 приложения, каждое из которых требует не более 64 
+    Mb памяти и имеет рабочий объем памяти (общий размер рабочего набора страниц) 
+    256 Kb. Сформулируйте Ваши предложения руководителю по конфигурации системы.</b></font></P>
+  <P><font size="3" face="Times New Roman, Times, serif"><I><u>Решение:</u></I></font></P>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">Начнем с диска. Так как 
+    диск наиболее медленная компонента системы, мы берем наименьший размер. 2 
+    Gb = 2048 Mb или $410. У нас осталось $1090. Минимальное количество входов 
+    для TLB, которое необходимо для отображения рабочего набора страниц составляет 
+    256Kb / 16Kb = 16 входов или $320. У нас остается $770. С этими деньгами мы 
+    могли бы приобрести 385Mb памяти, однако нам нужно только 4 * 64Mb = 256 Mb 
+    памяти или $512. Остаток $258 потратим еще на 12 TLB входов ($240). Увеличивая 
+    количество TLB, мы до некоторой степени улучшаем производительность системы 
+    при смене рабочих наборов страниц. Дальнейшее увеличение количества TLB потребовало 
+    бы уменьшения оперативной памяти, что привело бы к возникновению paging’а.</font></P>
+  <P><font face="Times New Roman, Times, serif" size="3"><I><u>Оценка:</u></I></font></P>
+  <P><font face="Times New Roman, Times, serif" size="3">За правильный выбор для 
+    каждой компоненты по 3 балла, исходя из таблицы:</font></P>
+  <TABLE BORDER CELLSPACING=1 CELLPADDING=7 WIDTH=568 align="center">
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Компонента/баллы</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">3 
+          балла</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">2 
+          балла</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">1 
+          балл</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">0 
+          баллов</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">TLB</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">29 
+          &gt;= TLB&gt;=16</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">32&gt;=TLB&gt;29</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">TLB&gt;32</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">TLB&lt;16</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Память</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">&gt;=256</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">256&gt;Mem&gt;=128</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">128&gt;Mem&gt;=64</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">&lt;64</font> 
+      </TD>
+    </TR>
+    <TR> 
+      <TD WIDTH="25%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">Диск</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">2Gb</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font face="Times New Roman, Times, serif" size="3">&gt;2Gb 
+          при закупке TLB и памяти на 3 балла</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">&gt;2Gb</font> 
+      </TD>
+      <TD WIDTH="19%" VALIGN="TOP"> 
+        <P ALIGN="CENTER"><font size="3" face="Times New Roman, Times, serif">&lt;2Gb</font> 
+      </TD>
+    </TR>
+  </TABLE>
+  <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3">За выбор TLB исходя из 
+    рабочего объема памяти + 3 балла. За разумное обоснование конфигурации + 3 
+    балла.</font></P>
+</OL>
+<font size="3" face="Times New Roman, Times, serif"></font> 
+</BODY>
+</HTML>

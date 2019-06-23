@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>opendir</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Функция opendir()</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип функции</P></FONT>
+</B><DIR><FONT COLOR="#008000"><BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;dirent.h&gt;</b></BLOCKQUOTE>
+  <BLOCKQUOTE><b>DIR *opendir(char *name);</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание функции</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Функция <B><FONT COLOR="#008000">opendir</font></B> 
+      <font face="Times New Roman"> </font>служит для открытия потока информации 
+      для директории, имя которой расположено по указателю<b><font color="#008000"> 
+      name</font></b>. Тип данных <b><font color="#008000">DIR</font></b> представляет 
+      собой некоторую структуру данных, описывающую такой поток. Функция <b><font color="#008000">opendir</font></b> 
+      подготавливает почву для функционирования других функций, выполняющих операции 
+      над директорией, и позиционирует поток на первой записи директории.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">При удачном завершении функция 
+      возвращает указатель на открытый поток директории, который будет в дальнейшем 
+      передаваться в качестве параметра всем другим функциям, работающим с этой 
+      директорией. При неудачном завершении возвращается значение<b><font color="#008000"> 
+      NULL</font></b>.</font>
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

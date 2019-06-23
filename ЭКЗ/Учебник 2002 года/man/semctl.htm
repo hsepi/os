@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Semctl</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> semctl</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/sem.h&gt;<br>
+    <br>
+    int semctl(int semid, int semnum, int cmd, union semun arg); </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">semctl 
+      </font></B>предназначен для получения информации о массиве IPC семафоров, 
+      изменения его атрибутов и удаления его из системы. Данное описание не является 
+      полным описанием системного вызова, а ограничивается рамками текущего курса. 
+      Для изучения полного описания обращайтесь к UNIX man.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">В нашем курсе мы будем пользоваться 
+      системным вызовом <b><font color="#008000">semctl</font></b> только для 
+      удаления массива семафоров из системы. Параметр <B><font color="#008000">semid 
+      </font></B> является дескриптором System V IPC для массива семафоров, т.е. 
+      значением, которое вернул системный вызов <a href="semget.htm">semget()</a> 
+      при создании массива или при его поиске по ключу.<br>
+      В качестве параметра <B><FONT COLOR="#008000">cmd</font></B> в рамках нашего</font><FONT FACE="Times New Roman"> 
+      курса мы всегда будем передавать значение <b><font color="#008000">IPC_RMID</font></b> 
+      - команду для удаления сегмента разделяемой памяти с заданным идентификатором. 
+      Параметры <b><font color="#008000">semnum</font></b> и <b><font color="#008000">arg</font></b> 
+      для этой команды не используется, поэтому мы всегда будем подставлять вместо 
+      них значение <b><font color="#008000">0</font></b>. <br>
+      <br>
+      Если какие-либо процессы находились в состоянии ожидание для семафоров из 
+      удаляемого массива при выполнении системного вызова <a href="semop.htm">semop()</a>, 
+      то они будут разблокированы и вернутся из вызова <a href="semop.htm">semop()</a> 
+      с индикацией ошибки. <br>
+      </font><br>
+  </BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение <b><font color="#008000">0</font></b> при нормальном завершении 
+      и значение <b><font color="#008000">-1 </font></b> при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

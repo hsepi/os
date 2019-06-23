@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>03-2.c</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<p align="JUSTIFY">
+<font color="#000000"><b><font face="Times New Roman">/* Программа, изменяющая 
+пользовательский контекст процесса (запускающая другую программу) */</font></b></font><b><font face="Times New Roman" color="#008000"><br>
+<br>
+#include &lt;sys/types.h><br>
+#include &lt;unistd.h><br>
+#include &lt;stdio.h><br>
+<br>
+int main(int argc, char *argv[], char *envp[]){</font>
+</b>
+<dir><b><font face="Times New Roman" color="#008000"> <font color="#000000">/* 
+  Мы будем запускать команду <font color="#008000">cat</font> c аргументом командной 
+  строки <font color="#008000">03-2.с</font> без изменения параметров среды,<br>
+  </font></font><font face="Times New Roman" color="#000000">т.е. фактически выполнять 
+  команду <font color="#008000">&quot;cat 03-2.c&quot;</font>, которая должна 
+  выдать содержимое данного файла на экран.<br>
+  Для функции <font color="#008000">execle</font> в качестве имени программы мы 
+  указываем ее полное имя с путем от корневой директории.<br>
+  Первое слово в командной строке у нас должно совпадать с именем запускаемой 
+  программы. Второе слово в командной строке - это имя файла, содержимое которого 
+  мы хотим распечатать.*/</font><font face="Times New Roman" color="#008000"><br>
+  <br>
+  (void) <a href="../../man/exec.htm">execle</a>(&quot;/bin/cat&quot;, "/bin/cat", 
+  "03-2.c", 0, envp);<br>
+  <font color="#000000"><br>
+  </font> </font></b><font face="Times New Roman" color="#008000"> 
+  <b><font color="#000000"> /* Сюда попадаем только при возникновении ошибки 
+    */</font><br>
+    <br>
+    printf("Error on program start\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+<br>
+  return 0;<font color="#000000"> /* Никогда не выполняется, нужен для того, чтобы 
+  компилятор не выдавал warning */</font><br>
+  </b></font></dir>
+<b><font face="Times New Roman" color="#008000">
+}<br>
+</font>
+</b>
+
+</BODY>
+</HTML>

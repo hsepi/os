@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>kill</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Команда kill</font> </H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Синтаксис команды</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>kill [-signal] [--] pid<br>
+    kill -l </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание команды</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align ="JUSTIFY"><font face="Times New Roman">Команда </font> <B><font color="#008000">kill</font></B> 
+      <FONT FACE="Times New Roman">предназначена для передачи сигнала одному или 
+      нескольким специфицированным процессам в рамках полномочий пользователя.<br>
+      <br>
+      Параметр <b><font color="#008000">pid</font></b> определяет процесс или 
+      процессы, которому будут доставляться сигналы. Он может быть задан одним 
+      из следующих четырех способов:<br>
+      <br>
+      </font> 
+    <dir> 
+      <ul nype="square">
+        <li> 
+          <p align ="JUSTIFY"><font face="Times New Roman">Число <font color="#008000"><b> 
+            n</b></font> &gt; 0 - определяет идентификатор процесса, которому 
+            будет доставлен сигнал.</font> 
+        </li>
+        <li> 
+          <p align ="JUSTIFY"><font face="Times New Roman">Число <font color="#008000"><b> 
+            0</b></font> - сигнал будет доставлен всем процессам текущей группы 
+            для данного управляющего терминала.</font> 
+        </li>
+        <li> 
+          <p align ="JUSTIFY"><font face="Times New Roman">Число <font color="#008000"><b> 
+            -1</b></font> с предваряющей опцией <b><font color="#008000">--</font></b> 
+            - сигнал будет доставлен (если позволяют полномочия) всем процессам 
+            с идентификаторами большими 1.</font> 
+        </li>
+        <li> 
+          <p align ="JUSTIFY"><font face="Times New Roman">Число <font color="#008000"><b> 
+            -n</b></font>, где <b><font color="#008000">n</font></b> не равно 
+            1, с предваряющей опцией <b><font color="#008000">--</font></b> - 
+            сигнал будет доставлен всем процессам из группы процессов, идентификатор 
+            которой равен <b><font color="#008000">n</font></b>.</font> <br>
+            <br>
+        </li>
+      </ul>
+    </dir>
+    <p align ="JUSTIFY"> <font face="Times New Roman"> Параметр <b><font color="#008000">-signal</font></b> 
+      определяет тип сигнала, который должен быть доставлен, и может задаваться 
+      в числовой или символьной форме, например <b><font color="#008000">-9</font></b> 
+      или <b><font color="#008000">-SIGKILL</font></b>. Если этот параметр опущен, 
+      процессам по умолчанию посылается сигнал <b><font color="#008000">SIGTERM</font></b>.<br>
+      <br>
+      </font><font face="Times New Roman, sans-serif, Courier, mono" size="3"> 
+      Послать сигнал (если у вас нет полномочий суперпользователя) можно только 
+      процессу, у которого эффективный идентификатор пользователя совпадает с 
+      идентификатором пользователя, посылающего сигнал</font><font face="Times New Roman">. 
+      <br>
+      <br>
+      </font><font face="Times New Roman">Опция <font color="#008000"><b> -l</b></font> 
+      используется для получения списка сигналов, существующих в системе в символьной 
+      и числовой формах. <br>
+      <br>
+      Во многих операционных системах существуют еще и свои дополнительные опции 
+      для команды <b><font color="#008000">kill</font></b>.</font> 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

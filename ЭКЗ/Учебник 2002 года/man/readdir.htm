@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>readdir</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Функция readdir()</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип функции</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;dirent.h&gt;</b></BLOCKQUOTE>
+  <BLOCKQUOTE><b>struct dirent *readdir(DIR *dir);</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание функции</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Функция <B><font color="#008000">readdir</font></B> 
+      служит для чтения очередной записи из потока информации для директории. 
+      </FONT>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр <b><font color="#008000">dir</font></b> 
+      представляет собой указатель на структуру, описывающую поток директории, 
+      который вернула функция <a href="opendir.htm">opendir()</a>. </FONT>
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Тип данных <b><font color="#008000">struct 
+      dirent </font></b> представляет собой некоторую структуру данных, описывающую 
+      одну запись в директории. Поля этой записи сильно варьируются от одной файловой 
+      системы к другой, но одно из полей, которое собственно и будет нас интересовать, 
+      всегда присутствует в ней. Это поле <b><font color="#008000">char d_name[&nbsp;] 
+      </font></b>неопределенной длины, не превышающей значения <b><font color="#008000">NAME_MAX+1</font></b>, 
+      которое содержит символьное имя файла, завершающееся символом конца строки. 
+      Данные, возвращаемые функцией<b><font color="#008000"> readdir</font></b>, 
+      переписываются при очередном вызове этой функции для того же самого потока 
+      директории.</FONT>
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">При удачном завершении функция 
+      возвращает указатель на структуру, содержащую очередную запись директории. 
+      При неудачном завершении или при достижении конца директории возвращается 
+      значение<b><font color="#008000"> NULL</font></b>.</font> 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

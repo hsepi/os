@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Преобразование IP адресов</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<FONT FACE="Times New Roman"><H1 ALIGN="CENTER">Функции преобразования IP адресов</H1>
+</FONT><B><FONT FACE="Times New Roman" SIZE=5><P>Прототипы функций</P><DIR>
+
+</FONT><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;sys/socket.h&gt;<BR>
+#include &lt;arpa/inet.h&gt;<BR>
+#include &lt;netinet/in.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>int inet_aton(const char *strptr, struct in_addr *addrptr);</FONT><BR>
+<FONT COLOR="#008000">char *inet_ntoa(struct in_addr *addrptr);</BLOCKQUOTE></DIR>
+
+</FONT><FONT FACE="Times New Roman" SIZE=5><P>Описание функций</P><DIR>
+
+</B></FONT><FONT FACE="Times New Roman"><BLOCKQUOTE>Функция </FONT><B><FONT COLOR="#008000">inet_aton</B> </FONT><FONT FACE="Times New Roman">переводит символьный IP адрес, расположенный по указателю </FONT><B><FONT COLOR="#008000">strptr</B></FONT><FONT FACE="Times New Roman">, в числовое представление в сетевом порядке байт и заносит его в структуру, расположенную по адресу </FONT><B><FONT COLOR="#008000">addrptr</B></FONT><FONT FACE="Times New Roman">. Функция возвращает значение 1, если в строке записан правильный IP адрес, и значение 0 в противном случае. Структура типа </FONT><B><FONT COLOR="#008000">struct in_addr</B> </FONT><FONT FACE="Times New Roman">используется для хранения IP адресов в сетевом порядке байт и выглядит так:</BLOCKQUOTE>
+</FONT><B><FONT COLOR="#008000"><BLOCKQUOTE>struct in_addr {<DIR> in_addr_t s_addr; </DIR>}; </BLOCKQUOTE>
+</B></FONT><FONT FACE="Times New Roman"><BLOCKQUOTE>То, что используется адрес такой структуры, а не просто адрес переменной типа </FONT><B><FONT COLOR="#008000">in_addr_t</B> </FONT><FONT FACE="Times New Roman">, сложилось исторически. </BLOCKQUOTE>
+<BLOCKQUOTE>Функция </FONT><B><FONT COLOR="#008000">inet_ntoa</B></FONT><FONT FACE="Times New Roman"> применяется для обратного преобразования. Числовое представление адреса в сетевом порядке байт должно быть занесено в структуру типа </FONT><B><FONT COLOR="#008000">struct in_addr</B></FONT><FONT FACE="Times New Roman">, адрес которой </FONT><B><FONT COLOR="#008000">addrpt</B>r</FONT><FONT FACE="Times New Roman"> передается функции как аргумент. Функция возвращает указатель на строку, содержащую символьное представление адреса. Эта строка располагается в статическом буфере, при последующих вызовах ее новое содержимое заменяет старое содержимое.</BLOCKQUOTE></DIR>
+</FONT></BODY>
+</HTML>

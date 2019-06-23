@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>kill()</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов kill()</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include  &lt;sys/types.h&gt;<br>
+#include &lt;signal.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>int kill(pid_t pid,  int signal);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><font color="#008000"> 
+      kill()</font></B> 
+    <FONT FACE="Times New Roman">предназначен для передачи сигнала одному или 
+    нескольким специфицированным процессам в рамках полномочий пользователя.<br>
+    <br>
+    Послать сигнал (если у вас нет полномочий суперпользователя) можно только 
+    процессу, у которого эффективный идентификатор пользователя совпадает с эффективным 
+    идентификатором пользователя для процесса, посылающего сигнал.<br>
+    <br>
+    <font face="Times New Roman, Times, serif" size="3">
+    <p align="JUSTIFY"><FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Аргумент 
+      <b><font color="#008000">pid</font></b><i> </i>описывает, кому посылается 
+      сигнал, а аргумент <b><font color="#008000">sig</font></b><i> </i>— какой 
+      сигнал посылается. Этот системный вызов умеет делать много разных вещей, 
+      в зависимости от значения аргументов:</font></P>
+    <UL type="square">
+      <LI> <p align="JUSTIFY"><FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+        <b><font color="#008000">pid &gt; 0 </font></b> и <b><font color="#008000">sig 
+        &gt; 0</font></b>, то сигнал номером <b><font color="#008000">sig</font></b> 
+        (если позволяют привилегии) посылается процессу с идентификатором <b><font color="#008000">pid</font></b><i>.</i></font></LI>
+      <LI><p align="JUSTIFY"><FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если<font color="#008000"><b> 
+        pid = 0</b></font>, а <b><font color="#008000">sig &gt; 0</font></b>, 
+        то сигнал с номером <b><font color="#008000">sig</font></b> посылается 
+        всем процессам в группе, к которой принадлежит посылающий процесс.</font></LI>
+      <LI><p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+        <b><font color="#008000">pid = -1</font></b>, <font color="#008000"><b>sig 
+        &gt; 0</b></font> и посылающий процесс не является процессом суперпользователя, 
+        то сигнал посылается всем процессам в системе, для которых идентификатор 
+        пользователя совпадает с эффективным идентификатором пользователя процесса, 
+        посылающего сигнал.</font></LI>
+      <LI><p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+        <b><font color="#008000">pid = -1</font></b>, <font color="#008000"><b>sig 
+        &gt; 0</b></font> и посылающий процесс является процессом суперпользователя, 
+        то сигнал посылается всем процессам в системе, за исключением системных 
+        процессов (обычно всем, кроме процессов с <b><font color="#008000">pid 
+        = 0</font></b> и <b><font color="#008000">pid = 1</font></b>).</font></LI>
+      <LI><FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+        <b><font color="#008000">pid &lt; 0</font></b>, но не <b><font color="#008000">–1</font></b>, 
+        <b><font color="#008000">sig &gt; 0</font></b><I>,</I> то сигнал посылается 
+        всем процессам из группы, идентификатор которой равен абсолютному значению 
+        аргумента<font color="#008000"><b> pid</b></font><i> </i>(если позволяют 
+        привилегии).</font></LI>
+      <LI><p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+        значение <b><font color="#008000">sig = 0</font></b>, то производится 
+        проверка на ошибку, а сигнал не посылается, так как все сигналы имеют 
+        номера <b><font color="#008000">&gt; 0</font></b>. Это можно использовать 
+        для проверки правильности аргумента <b><font color="#008000">pid</font></b> 
+        ( есть ли в системе процесс или группа процессов с соответствующим идентификатором). 
+        </font></LI>
+      <br>
+      <br>
+    </UL>
+    <p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Системный 
+      вызов возвращает 0 при нормальном завершении и –1 при ошибке.</font></P>
+    </font> </FONT> </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

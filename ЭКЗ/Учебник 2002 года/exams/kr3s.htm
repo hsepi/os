@@ -1,0 +1,1459 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>KR1SOL</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman"><font size="6">Контрольная работа 
+  1-01</font></FONT></B></P>
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman"><font size="4">Вариант 2</font></FONT></B><br>
+  <B><font face="Times New Roman" size="3">(решение)</font></B></P>
+  
+<p>&nbsp;</p>
+<OL START=0>
+  <b>
+  <li> 
+    <P ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif" size="3"> За разговоры с соседом 
+      -3 балла за каждый.</font></p>
+  </li>
+<FONT FACE="Times New Roman" SIZE=3><LI><P align="JUSTIFY"> (6 баллов) В операционных системах, поддерживающих нити исполнения (threads) внутри одного процесса на уровне ядра системы, наряду с блоками управления процессами (PCB) существуют структуры данных для управления нитями - TCB (Thread Control Block). Укажите, какие данные из перечисленных ниже, хранятся, по Вашему мнению, в TCB: 
+<br>&nbsp;
+<OL TYPE="a">
+</FONT><FONT FACE="Times New Roman" SIZE=3><LI>содержимое регистров процессора;</LI>
+<LI>указатель на таблицу страниц памяти;</LI>
+<LI>приоритет нити исполнения;</LI>
+<LI>адрес следующей команды для выполнения (</FONT><FONT SIZE=3>program counter);</LI>
+</FONT><FONT FACE="Times New Roman" SIZE=3><LI>указатель стека;</LI>
+<LI>указатель на таблицу открытых файлов.<br>&nbsp;
+</LI></OL></b></li>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+<OL TYPE="a">
+
+</I><LI>Входит. У каждой нити исполнения свой набор значений регистров процессора.</LI>
+<LI>Не входит. Память - это ресурс, выделяемый на процесс, а не на каждый </FONT><FONT SIZE=3>thread</FONT><FONT FACE="Times New Roman, Times" SIZE=3> в отдельности.</LI>
+<LI>Входит.</LI>
+<LI>Входит. У каждой нити исполнения свой </FONT><FONT SIZE=3>program counter.</LI>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><LI>Входит.</FONT><FONT SIZE=3> </FONT><FONT FACE="Times New Roman, Times" SIZE=3>Стеки у разных </FONT><FONT SIZE=3>thread'</FONT><FONT FACE="Times New Roman, Times" SIZE=3>ов разные.</LI>
+<LI>Не входит. Все системные ресурсы относятся к процессу, а не к отдельным </FONT><FONT SIZE=3>thread'</FONT><FONT FACE="Times New Roman, Times" SIZE=3>ам.</LI></OL>
+
+</FONT><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Оценка:</u></P>
+</I><P>По одному баллу за правильный ответ на каждый пункт.</P>
+</FONT><FONT SIZE=3>
+
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI>(3 балла) Кратко сформулируйте разницу между понятиями мультипрограммная вычислительная система и вычислительная система с разделением времени.</LI>
+</FONT></b><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+</I><P ALIGN="JUSTIFY">В мультипрограммных вычислительных системах в памяти находится одновременно несколько процессов, получающих возможность исполняться псевдопараллельно, например, когда один процесс ожидает завершения операции ввода-вывода, второй выполняется на процессоре. Системы разделения времени представляют собой частный случай мультипрограммных систем, в которых процессор переключается с процесса на процесс не только на время выполнения операции ввода-вывода, но и просто по прошествии некоторого интервала времени. </P>
+</FONT><FONT SIZE=3>
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI>(12 баллов) Пусть в вычислительную систему поступают пять процессов различной длительности по следующей схеме:</LI><br>&nbsp;</FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=9 WIDTH=710 align="center">
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Номер процесса</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Время поступления в систему</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Время исполнения</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">6</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">6</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+</TR>
+</TABLE>
+
+<FONT FACE="Times New Roman" SIZE=3><P align="JUSTIFY">Вычислите среднее время между стартом процесса и его завершением (</FONT><I><FONT SIZE=3>turnaround time</I></FONT><FONT FACE="Times New Roman" SIZE=3>) и</FONT><FONT SIZE=3> </FONT><FONT FACE="Times New Roman" SIZE=3>среднее время ожидания процесса (</FONT><I><FONT SIZE=3>waiting time</I>)</FONT><FONT FACE="Times New Roman" SIZE=3> для каждого из трех алгоритмов планирования </FONT><FONT SIZE=3>FCFS (First Come First Served), RR (Round Robin) </FONT><FONT FACE="Times New Roman" SIZE=3>и </FONT><FONT SIZE=3>SJF (Short Job First). </FONT><FONT FACE="Times New Roman" SIZE=3>При вычислениях считать, что процессы не совершают операций ввода-вывода, величину кванта времени принять равной 1, временем переключения контекста пренебречь. Процесс, поступающий в систему, считать готовым к исполнению в момент поступления.</FONT><FONT SIZE=3> </FONT><FONT FACE="Times New Roman" SIZE=3>Для алгоритма </FONT><FONT SIZE=3>RR </FONT><FONT FACE="Times New Roman" SIZE=3>принять, что вновь прибывший процесс помещается в начало очереди процессов, готовых к исполнению, и</FONT><FONT SIZE=3>,</FONT><FONT FACE="Times New Roman" SIZE=3> следовательно, сразу выбирается на исполнение.</P>
+</FONT></b><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+<OL TYPE="a">
+
+</I><LI>Рассмотрим выполнение процессов в системе для алгоритма FCFS.  По вертикали в таблице отложены номера процессов,  по горизонтали - моменты времени. Буква И означает состояние исполнения, буква Г - состояние готовности.<br>&nbsp;</LI></FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=2 WIDTH=750 align="center">
+<TR><TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">6</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">8</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">9</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">10</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">11</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">12</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">13</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">14</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">15</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">16</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">17</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">18</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">19</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">20</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">21</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">22</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">23</FONT></TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+</TABLE>
+
+<FONT SIZE=3>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><P>Среднее время между стартом процесса и его завершением: tt = (12 + 18 + 14 + 6 + 5)/5 = 11.<br>
+Среднее время ожидания: wt = (5 + 12 + 10 + 4 + 0)/5 = 6.2.</P>
+</FONT><FONT SIZE=3>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><LI>Рассмотрим выполнение процессов в системе для алгоритма RR:<br>&nbsp;</LI></FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=2 WIDTH=750 align="center">
+<TR><TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">6</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">8</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">9</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">10</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">11</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">12</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">13</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">14</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">15</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">16</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">17</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">18</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">19</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">20</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">21</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">22</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">23</FONT></TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+</TABLE>
+
+<FONT SIZE=3>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><P>Среднее время между стартом процесса и его завершением: tt = (22 + 17 +</FONT><FONT SIZE=3> 14 + 5 + 17)/5 = 13.0.<br>
+Среднее время ожидания: wt = (15 + 11 + 10 + 3 + 12)/5 = 10.2</P>
+</FONT><FONT SIZE=3>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><LI>Рассмотрим выполнение процессов в системе для алгоритма SJF:<br>&nbsp;</LI></OL>
+</FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=2 WIDTH=750 align="center">
+<TR><TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">6</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">8</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">9</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">10</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">11</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">12</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">13</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">14</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">15</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">16</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">17</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">18</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">19</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">20</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">21</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">22</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">23</FONT></TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">4</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">Г</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="4%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">
+<FONT FACE="Times New Roman, Times" SIZE=3><P ALIGN="CENTER">И</FONT></TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="4%" VALIGN="TOP">&nbsp;</TD>
+</TR>
+</TABLE>
+
+<FONT SIZE=3>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><P>Среднее время между стартом процесса и его завершением: tt = (22 + 11 + 7 + 6 + 5)/5 = 10.2.<br>
+Среднее время ожидания: wt = (15 + 5 + 3 + 4 + 0)/5 = 5.4.<br>
+Возможно решение для вытесняющего алгоритма с временами (22+11+7+2+7)/5=9.8 и (15+5+3+0+2)/5=5.0 соответственно.</P>
+</FONT><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Оценка:</u></P>
+</I><P>По 2 балла за каждое правильно вычисленное время.</P>
+</FONT><FONT SIZE=3>
+
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI>(3 балла) Дайте краткое определение термина  "</FONT><FONT SIZE=3>mutual exclusion</FONT><FONT FACE="Times New Roman" SIZE=3> (взаимоисключение)".</LI>
+</FONT></b><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+</I><P>Под взаимоисключением (</FONT><FONT SIZE=3>mutual exclusion) </FONT><FONT FACE="Times New Roman, Times" SIZE=3>понимают следующую ситуацию: если один из процессов исполняется в своем критическом участке, то ни один из взаимодействующих с ним процессов не может находиться в своем соответствующем критическом участке.</P>
+</FONT><FONT SIZE=3>
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI><P align="JUSTIFY">(18 баллов) В вычислительной системе моделируется движение самосвалов от карьера к заводу и обратно по дороге со стареньким мостом. Движение по мосту может осуществляться в обоих направлениях, но на нем не может быть одновременно более трех машин, иначе он рухнет.  Каждый самосвал представлен в системе процессом следующей структуры:</LI>
+<I><P>Процесс </FONT><FONT SIZE=3>i-</FONT><FONT FACE="Times New Roman" SIZE=3>й самосвал:</P>
+</FONT><FONT SIZE=3><P>While (1) {<br><dir>
+&lt;доехать до моста&gt;<br>
+&lt;проехать по мосту&gt;<br>
+&lt;доехать до места назначения&gt;<br></dir>
+}
+</I></FONT><FONT FACE="Times New Roman" SIZE=3><P align="JUSTIFY">Опишите схему безопасного пересечения моста, используя семафоры. Докажите, что Ваша схема удовлетворяет условиям </FONT><FONT SIZE=3>bounded waiting (</FONT><FONT FACE="Times New Roman" SIZE=3>ограниченного ожидания</FONT><FONT SIZE=3>) </FONT><FONT FACE="Times New Roman" SIZE=3>и </FONT><FONT SIZE=3>progress. </FONT><FONT FACE="Times New Roman" SIZE=3>Если несколько процессов ожидают выполнения операции </FONT><I><FONT SIZE=3>Signal </I></FONT><FONT FACE="Times New Roman" SIZE=3>над семафором, то считайте, что процесс, который продолжит исполнение после выполнения этой операции, выбирается по принципу </FONT><FONT SIZE=3>FIFO.</P>
+</FONT></b><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+</FONT><FONT SIZE=3><P>Semaphore breedge_free = 3</I>;<br>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P>Процесс </FONT><FONT SIZE=3>i-</FONT><FONT FACE="Times New Roman, Times" SIZE=3>й самосвал:</P>
+</FONT><FONT SIZE=3><P>While (1) {<br><dir>
+&lt;</FONT><FONT FACE="Times New Roman, Times" SIZE=3>доехать до моста</FONT><FONT SIZE=3>&gt;<br>
+Wait(bridge_free);<br>
+&lt;</FONT><FONT FACE="Times New Roman, Times" SIZE=3>проехать по мосту</FONT><FONT SIZE=3>&gt;<br>
+Signal(bridge_free);<br>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3>доехать до места назначения</FONT><FONT SIZE=3>&gt;<br></dir>
+}</P>
+</I><p></FONT><FONT FACE="Times New Roman, Times" SIZE=3>Доказательства довольно просты.</P>
+</FONT><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Оценка:</u></P>
+</I><P>За решение с одним семафором - 8 баллов. Если семафоров больше - -2 балла за каждый семафор. За каждое доказательство - 5 баллов.</P>
+</FONT><FONT SIZE=3>
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI>(5 баллов) В вычислительной системе с сегментной организацией памяти из 32-х бит адреса старшие 9 его бит отводятся для номера сегмента.<br>&nbsp;</LI>
+
+<OL TYPE="a">
+
+<LI>Какое максимальное количество сегментов может иметь процесс? Каков максимальный размер сегмента?</LI>
+<LI>Для некоторого процесса таблица сегментов имеет вид:<br>&nbsp;</LI></OL>
+</FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=9 WIDTH=710>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Номер сегмента</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Адрес начала сегмента</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Длина сегмента</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x000000</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x100000</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x200000</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x080000</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x100000</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x080000</FONT></TD>
+</TR>
+<TR><TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x300000</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0x300000</FONT></TD>
+</TR>
+</TABLE>
+
+<FONT FACE="Times New Roman" SIZE=3><P>Каким физическим адресам соответствуют адреса 0х245678, 0x1000006, 0x018b00de?</P></b>
+
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+<OL type="a">
+
+</I><LI><p ALIGN="JUSTIFY">На номер сегмента отводится 9 бит, значит, максимальное количество сегментов у процесса 2**9 = 512 сегментов. На смещение внутри сегмента остается 32 - 9 = 23 бита, поэтому максимальный размер сегмента 2**23 байт.</LI>
+<LI>0x245678  -&gt; error (нет сегмента с номером 0), 0x1000006 -&gt;0</FONT><FONT SIZE=3>x200000 + 0x6 = 0x200006, 0x018b00de -&gt; erro</FONT><FONT FACE="Times New Roman, Times" SIZE=3>r (сегмент</FONT><FONT SIZE=3> 3, </FONT><FONT FACE="Times New Roman, Times" SIZE=3>смещение 0</FONT><FONT SIZE=3>xb00de - </FONT><FONT FACE="Times New Roman, Times" SIZE=3>больше длины сегмента).</LI></OL>
+
+</FONT><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Оценка:</u></P>
+</I><P>По 1 баллу за каждое значение.</P>
+</FONT><FONT SIZE=3>
+
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI>(9 баллов) Для некоторого процесса известна следующая строка запросов страниц памяти</LI>
+<DIR>
+
+</FONT><FONT SIZE=3><P>1, 2, 0, 3, 2, 1, 3, 0, 5, 2, 7, 1, 2, 7, 0</P></DIR>
+
+</FONT><FONT FACE="Times New Roman" SIZE=3><P align="JUSTIFY">Сколько ситуаций отказа страницы  (</FONT><I><FONT SIZE=3>page fault</I>) </FONT><FONT FACE="Times New Roman" SIZE=3>возникнет для данного процесса при каждом из трех алгоритмов замещения страниц</FONT><FONT SIZE=3> - FIFO (Fist Input Fist Output) , LRU (the Least Recently Used), OPT (optimal) , </FONT><FONT FACE="Times New Roman" SIZE=3>если процессу выделено 3 кадра памяти?</P>
+</FONT></b><FONT SIZE=3>
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Решение</u></P>
+<OL type="a">
+<OL TYPE="a">
+
+<FONT FACE="Times New Roman" SIZE=3><LI>Начнем с </FONT><FONT SIZE=3>FIFO:<br>&nbsp;</LI></FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=2 WIDTH=699 align="center">
+<TR><TD WIDTH="19%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Строка запросов</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+</TR>
+<TR><TD WIDTH="19%" VALIGN="TOP" ROWSPAN=3>
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Страницы в памяти</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+</TR>
+<TR><TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+</TR>
+<TR><TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+</TR>
+<TR><TD WIDTH="19%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">Page fault</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%"><P ALIGN="CENTER">+</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+</TR>
+</TABLE>
+
+<FONT FACE="Times New Roman" SIZE=3><P>Количество </FONT><FONT SIZE=3>page fault'</FONT><FONT FACE="Times New Roman" SIZE=3>ов - </FONT><FONT SIZE=3>10.</P>
+</FONT><FONT FACE="Times New Roman" SIZE=3><LI>Для </FONT><FONT SIZE=3>LRU:<br>&nbsp;</LI></FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=2 WIDTH=699 align="center">
+<TR><TD WIDTH="19%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Строка запросов</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+</TR>
+<TR><TD WIDTH="19%" VALIGN="TOP" ROWSPAN=3>
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Страницы в памяти</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+</TR>
+<TR><TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+</TR>
+<TR><TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+</TR>
+<TR><TD WIDTH="19%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">Page fault</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3>&nbsp;</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+</TR>
+</TABLE>
+
+<FONT FACE="Times New Roman" SIZE=3><P>Количество </FONT><FONT SIZE=3>page fault'</FONT><FONT FACE="Times New Roman" SIZE=3>ов - 1</FONT><FONT SIZE=3>1.</P>
+</FONT><FONT FACE="Times New Roman" SIZE=3><LI>Для OPT</FONT><FONT SIZE=3>:<br>&nbsp;</LI></OL>
+</FONT>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=2 WIDTH=699 align="center">
+<TR><TD WIDTH="19%" VALIGN="TOP">
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Строка запросов</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+</TR>
+<TR><TD WIDTH="19%" VALIGN="TOP" ROWSPAN=3>
+<FONT FACE="Times New Roman" SIZE=3><P ALIGN="CENTER">Страницы в памяти</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">3</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">5</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">7</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">0</FONT></TD>
+</TR>
+<TR><TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">2</FONT></TD>
+</TR>
+<TR><TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">1</FONT></TD>
+</TR>
+<TR><TD WIDTH="19%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">Page fault</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%"><P ALIGN="CENTER">+</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">&nbsp;</TD>
+<TD WIDTH="5%" VALIGN="TOP">
+<FONT SIZE=3><P ALIGN="CENTER">+</FONT></TD>
+</TR>
+</TABLE>
+
+<FONT FACE="Times New Roman" SIZE=3><P>Количество </FONT><FONT SIZE=3>page fault'</FONT><FONT FACE="Times New Roman" SIZE=3>ов - 8</FONT><FONT SIZE=3>.</P></ol>
+
+</FONT><I><FONT FACE="Times New Roman, Times" SIZE=3><P><u>Оценка:</u></P>
+</I><P>По 3 балла за каждое значение</P>
+</FONT><FONT SIZE=3>
+
+</FONT><b><FONT FACE="Times New Roman" SIZE=3><LI><P align="JUSTIFY">(15 баллов) Рассмотрим вычислительную систему со страничной организацией памяти, на которой выполняется одна программа, несколько раз последовательно сканирующая большой одномерный массив данных (это означает, что для массива, занимающего, например, в памяти четыре страницы, строка запроса страниц выглядит следующим образом: 1, 2, 3, 4, 1, 2, 3, 4, ...). Для каждого из трех алгоритмов замещения страниц - FIFO (First Input First Output), LRU (the Least Recently Used) и OPT (OPTimal) нарисуйте график зависимости частоты page faults от размеров массива. По оси y откладывается отношение числа page faults к длине строки запроса (если массив, занимающий четыре страницы памяти, сканируется 2 раза, то длина строки запроса равна 8), по оси x - размер массива: от размеров, требующих одну страницу, и до размеров, значительно превыщающих размер физической памяти. Опишите наиболее характерные точки на графике.</P></LI></b>
+</FONT><FONT FACE="Times New Roman, Times" SIZE=3><P><i><u>Решение:</u></i></P>
+<OL type ="a">
+</FONT>
+<FONT SIZE=3><li>Для FIFO:<br>&nbsp;</FONT>
+</ol>
+</font></i>
+<FONT SIZE=3><P><IMG SRC="kr1.gif" WIDTH=689 HEIGHT=262 align="center"></P>
+</FONT><FONT SIZE=3><li>Для LRU:<br>&nbsp;</FONT>
+</ul>
+<FONT SIZE=3><P><IMG SRC="kr1.gif" WIDTH=689 HEIGHT=262 align="center"></P>
+</FONT><FONT SIZE=3><li>Для OPT:<br>&nbsp;</FONT>
+<P><IMG SRC="kr2.gif" WIDTH=689 HEIGHT=262 align="center"></P><FONT FACE="Times New Roman, Times" SIZE=3><P><i><u>Оценка:</u></i></P>
+</FONT><FONT FACE="Times New Roman" SIZE=3><P align="JUSTIFY">По 5 баллов за каждый правильный график. Не указано, что точка отхода от 0 значения частоты соответствуют совпадению размеров массива с размером физической памяти - -1балл для каждого графика. Не указано, что кривая для алгоритма OPT ассимптотически стремится к прямой y = 1 при x, стремящемся к бесконечности, - -1 балл</P></LI>
+
+</OL>
+
+
+</FONT><FONT SIZE=3></FONT></BODY>
+</HTML>

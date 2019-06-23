@@ -1,0 +1,124 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>2.c-s5s</title>
+</head>
+
+<body>
+
+<p>
+<font face="Times New Roman, Times, serif"  size="3" color="#008000"><font color="#000000">/*<br>
+Программа для иллюстрации работы двух нитей исполнения<br>
+Каждая нить исполнения просто увеличивает на 1 разделяемую переменную a.<br>
+*/</font> 
+<p>
+<font size="3" color="#008000"><b> #include &lt;pthread.h&gt;<br>
+#include &lt;stdio.h&gt;<br>
+<br>
+int a = 0; <br>
+<br>
+/</B><font color="#000000">*<br>
+Переменная </font><b>a </B><font color="#000000">является глобальной статической 
+для всей программы, <br>
+поэтому она будет разделяться обеими нитями исполнения.<br>
+*/<br>
+</font><b> <br>
+</B> <font color="#000000">/*<br>
+Ниже следует текст функции, которая будет ассоциирована со 2-м thread'ом<br>
+*/<br>
+</font><b> <br>
+void *mythread(void *dummy)<br>
+<br>
+</B> <font color="#000000">/*<br>
+Параметр</font><b> dummy</B><font color="#000000"> в нашей функции не используется 
+и присутствует только для <br>
+совместимости типов данных. По той же причине функция возвращает значение <br>
+void *, хотя это никак не используется в программе.<br>
+*/<br>
+</font><b> <br>
+{<br>
+</B>
+<dir><b> pthread_t mythid; </b><font color="#000000">/* Для идентификатора нити 
+  исполнения */<br>
+  </font><b> <br>
+  <br>
+  </b> <font color="#000000">/*<br>
+  Заметим, что переменная</font><b> mythid</b><font color="#000000">является 
+  динамической локальной переменной функции<br>
+  </font><b> mythread()</b><font color="#000000">, т.&nbsp;е. помещается в стеке 
+  и, следовательно, не разделяется нитями исполнения. <br>
+  */<br>
+  </font><b> <br>
+  </b> <font color="#000000">/*<br>
+  Запрашиваем идентификатор thread'а <br>
+  */<br>
+  </font><b><font color="#000000"> </font> <br>
+  mythid = <a href="../../man/pthread1.htm">pthread_self</a>();<br>
+  <br>
+  a = a+1;<br>
+  <br>
+  printf("Thread %d, Calculation result = %d\n", mythid, a);<br>
+  <br>
+  return NULL;<br>
+  </b></dir>
+<b>}<br>
+<br>
+</B> <font color="#000000">/*<br>
+Функция main() - она же ассоциированная функция главного thread'а<br>
+*/<br>
+</font><b><font color="#000000"> </font> <br>
+int main()<br>
+{<br>
+</B> 
+<dir><b> pthread_t thid, mythid;<br>
+  int result;<br>
+  <br>
+  </b> <font color="#000000">/* <br>
+  Пытаемся создать новую нить исполнения, ассоциированную с функцией</font><b> 
+  mythread()</b><font color="#000000">.<br>
+  Передаем ей в качестве параметра значение NULL.<br>
+  В случае удачи в переменную</font><b> thid</b><font color="#000000"> занесется 
+  идентификатор нового thread'а. Если возникнет ошибка - прекратим работу. <br>
+  */<br>
+  </font><b><font color="#000000"> </font> <br>
+  result = <a href="../../man/pthread2.htm">pthread_create</a>( &thid, (pthread_attr_t 
+  *)NULL, mythread, NULL);<br>
+  <br>
+  if(result != 0){<br>
+  </b> 
+  <dir><b> printf ("Error on thread create, return value = %d\n", result);<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+  </b></dir>
+  <b>}<br>
+  <br>
+  printf("Thread created, thid = %d\n", thid);<br>
+  <br>
+  </b> <font color="#000000">/*<br>
+  Запрашиваем идентификатор главного thread'а <br>
+  */<br>
+  </font><b> <br>
+  mythid = <a href="../../man/pthread1.htm">pthread_self</a>();<br>
+  <br>
+  a = a+1;<br>
+  <br>
+  printf("Thread %d, Calculation result = %d\n", mythid, a);<br>
+  <br>
+  </b> <font color="#000000">/*<br>
+  Ожидаем завершения порожденного thread'a, не интересуясь какое значение он нам 
+  вернет. <br>
+  Если не выполнить вызов этой функции, то возможна ситуация, когда мы завершим 
+  функцию</font><b> main() <br>
+  </b> <font color="#000000">до того, как выполнится порожденный thread, что автоматически 
+  повлечет его завершение,<br>
+  исказив результаты.<br>
+  */<br>
+  </font><b><font color="#000000"> </font> <br>
+  <a href="../../man/pthread4.htm">pthread_join</a>(thid, (void **)NULL);<br>
+  <br>
+  return 0;<br>
+  </b></dir>
+<b>} </B></font> </font> 
+</body>
+
+</html>

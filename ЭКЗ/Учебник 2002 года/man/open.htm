@@ -1,0 +1,172 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>open</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> open</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;fcntl.h&gt;<br>
+    <br>
+    int open(char *path, int flags);<br>
+   int open(char *path, int flags, int mode);
+	</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><FONT COLOR="#008000">open</font></B> 
+      <FONT FACE="Times New Roman">предназначен для выполнения операции открытия 
+      файла и, в случае ее удачного осуществления, возвращает файловый дескриптор 
+      открытого файла (небольшое неотрицательное целое число, которое используется 
+      в дальнейшем для других операций с этим файлом).</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">path</font></B><FONT FACE="Times New Roman"> 
+      является указателем на строку, содержащую полное или относительное имя файла.<br>
+      Параметр </font><B><FONT COLOR="#008000">flags</font></B><FONT FACE="Times New Roman"> 
+      может принимать одно из следующих трех значений:<br>
+      <br>
+      </font> 
+    <dir> 
+      <p align="JUSTIFY"> <B><FONT COLOR="#008000">O_RDONLY</font></B><FONT FACE="Times New Roman"> 
+        - если над файлом в дальнейшем будут совершаться только операции чтения;<br>
+        </font><B><FONT COLOR="#008000">O_WRONLY</font></B><FONT FACE="Times New Roman"> 
+        - если над файлом в дальнейшем будут осуществляться только операции записи;<br>
+        </font><B><FONT COLOR="#008000">O_RDWR</font></B><FONT FACE="Times New Roman"> 
+        - если над файлом будут осуществляться и операции чтения, и операции записи.<br>
+        <br>
+        </font> 
+    </dir>
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Каждое из этих значений может 
+      быть скомбинировано посредством операции &quot;побитовое или ( | )&quot; 
+      с одним или несколькими следующими флагами: <br>
+      <br>
+      </font> 
+    <dir> 
+      <p align="JUSTIFY"> <B><FONT COLOR="#008000">O_CREAT</font></B><FONT FACE="Times New Roman">- 
+        если файл с указанным именем не существует, он должен быть создан.<br>
+        </font><B><FONT COLOR="#008000">O_EXCL</font></B><FONT FACE="Times New Roman"> 
+        - применяется совместно с флагом </font><B><FONT COLOR="#008000">O_CREAT</font></B><FONT FACE="Times New Roman">. 
+        При совместном их использовании и существовании файла с указанным именем, 
+        открытие файла не производится и констатируется ошибочная ситуация.<br>
+        </font><B><FONT COLOR="#008000">O_NDELAY</font></B><FONT FACE="Times New Roman"> 
+        - запрещает перевод процесса в состояние <b><i>ожидание</i></b> при выполнении 
+        операции открытия и любых последующих операциях над этим файлом.<br>
+        </font><B><FONT COLOR="#008000">O_APPEND</font></B><FONT FACE="Times New Roman"> 
+        - при открытии файла и перед выполнением каждой операции записи (если 
+        она, конечно, разрешена) указатель текущей позиции в файле устанавливается 
+        на конец файла.<br>
+        </font><B><FONT COLOR="#008000">O_TRUNC</font></B><FONT FACE="Times New Roman"> 
+        - если файл существует, уменьшить его размер до 0, с сохранением существующих 
+        атрибутов файла, кроме, быть может, времен последнего доступа к файлу 
+        и его последней модификации.<br>
+        <br>
+        </font> 
+    </dir>
+    <FONT FACE="Times New Roman"> 
+    <p align="JUSTIFY"> Кроме того, в некоторых версиях операционной системы UNIX 
+      могут применяться дополнительные значения флагов:<br>
+      <br>
+    </font> 
+    <dir> 
+      <p align="JUSTIFY"><B><FONT COLOR="#008000">O_SYNC</font></B><FONT FACE="Times New Roman"> 
+        - любая операция записи в файл будет блокироваться (т.&nbsp;е. процесс 
+        будет переведен в состояние <b><i>ожидание</i></b>) до тех пор, пока записанная 
+        информация не будет физически помещена на соответсвующий низлежащий уровень 
+        hardware.<br>
+        </font><B><FONT COLOR="#008000">O_NOCTTY</font></B><FONT FACE="Times New Roman"> 
+        - если имя файла относится к терминальному устройству, оно не становится 
+        управляющим терминалом процесса, даже если до этого процесс не имел управляющего 
+        терминала.<br>
+        <br>
+        </font> 
+    </dir>
+    <p align="JUSTIFY"><a name="open1"></a> <FONT FACE="Times New Roman"> Параметр 
+      </font><B><FONT COLOR="#008000">mode</font></B><FONT FACE="Times New Roman"> 
+      устанавливает атрибуты прав доступа различных категорий пользователей к 
+      новому файлу при его создании. Он обязателен в том случае, если среди заданных 
+      флагов присутствует флаг </font><B><FONT COLOR="#008000">O_CREAT</font></B> 
+    <FONT FACE="Times New Roman"> и может быть опущен в противном случае. Этот 
+    параметр задается как сумма следующих восьмеричных значений:<br>
+    <br>
+    <table align = "center" width="66%" border="0" cellspacing="0" cellpadding="0">
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0400</b></font></td>
+        <td width="89%">&nbsp;- Разрешено чтение для пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0200</b></font></td>
+        <td width="89%">&nbsp;- Разрешена запись для пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0100</b></font></td>
+        <td width="89%">&nbsp;- Разрешено исполнение для пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0040</b></font></td>
+        <td width="89%">&nbsp;- Разрешено чтение для группы пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0020</b></font></td>
+        <td width="89%">&nbsp;- Разрешена запись для группы пользователя, создавшего 
+          файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0010</b></font></td>
+        <td width="89%">&nbsp;- Разрешено исполнение для группы пользователя, 
+          создавшего файл.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0004</b></font></td>
+        <td width="89%">&nbsp;- Разрешено чтение для всех остальных пользователей</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0002</b></font></td>
+        <td width="89%">&nbsp;- Разрешена запись для всех остальных пользователей</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top"><font color="#008000"><b>0001</b></font></td>
+        <td width="89%">&nbsp;- Разрешено исполнение для всех остальных пользователей</td>
+      </tr>
+    </table>
+    <br>
+    <p align="JUSTIFY"> При создании файла реально устанавливаемые права доступа 
+      получаются из стандартной комбинации параметра <font color="#008000"><b>mode</b></font> 
+      и <a href="umask3.htm">маски создания файлов текущего процесса</a><font color="#008000"> 
+      <b>umask</b></font>, а именно - они равны <b> <font color="#008000">mode 
+      &<sup> ~</sup>umask</font></b>. <br>
+      <br>
+      При открытии файлов типа FIFO системный вызов имеет некоторые особенности 
+      поведения по сравнению с открытием файлов других типов. Если FIFO открывается 
+      только для чтения, и не задан флаг <font color="#008000"><b>O_NDELAY</b></font>, 
+      то процесс, осуществивший системный вызов, блокируется до тех пор, пока 
+      какой-либо другой процесс не откроет FIFO на запись. Если флаг <b><font color="#008000">O_NDELAY</font></b> 
+      задан, то возвращается значение файлового дескриптора, ассоциированного 
+      с FIFO. Если FIFO открывается только для записи, и не задан флаг <font color="#008000"><b>O_NDELAY</b></font>, 
+      то процесс, осуществивший системный вызов, блокируется до тех пор, пока 
+      какой-либо другой процесс не откроет FIFO на чтение. Если флаг <font color="#008000"><b>O_NDELAY</b></font> 
+      задан, то констатируется возникновение ошибки и возвращается значение -1.<br>
+      <br>
+    </font></BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение файлового дескриптора для открытого файла при нормальном завершении 
+      и значение -1 при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>
