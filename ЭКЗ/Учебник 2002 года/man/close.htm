@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Системный вызов close</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> close</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;unistd.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>int close(int fd);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Системный вызов</font> <B><FONT COLOR="#008000">close</font></B> 
+    <FONT FACE="Times New Roman">предназначен для корректного завершения работы 
+    с файлами и другими объектами ввода-вывода, которые описываются в операционной 
+    системе через файловые дескрипторы</FONT>: pipe, FIFO, socket. </BLOCKQUOTE>
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">fd</font></B><FONT FACE="Times New Roman"> 
+    является дескриптором соответствующего объекта, т.&nbsp;е. значением, которое 
+    вернул один из системных вызовов <a href="open.htm">open()</a>, <a href="pipe.htm">pipe()</a> 
+    или <a href="socket.htm">socket()</a>.</FONT>.</BLOCKQUOTE>
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Системный вызов возвращает значение 
+    0 при нормальном завершении и значение -1 при возникновении ошибки</font>.</BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

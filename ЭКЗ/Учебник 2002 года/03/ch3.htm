@@ -1,0 +1,2926 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Глава 3</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<basefont face="Times New Roman, sans-serif, Courier, mono" size="3">
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="4">Глава 3. Планирование процессов</FONT></B></P>
+
+<p align="center"><a href="../02/ch2.htm"> Предыдущая глава</a> | 
+<a href="../os.html">Программа курса</a> | 
+<a href="../04/ch4.htm"> Следующая глава</a></p>
+
+<P ALIGN="RIGHT"><I><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">“Я 
+  планов наших люблю громадьё…”<br>
+  В.&nbsp;В.&nbsp;Маяковский</FONT></I></P>
+<P ALIGN="RIGHT"><I><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">“Чем тщательнее мы планируем 
+  свою деятельность,<br>тем меньше времени остается 
+  на ее осуществление.”<br>
+  Из анналов Госплана</FONT></I></P>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Всякий раз, когда нам приходится 
+  иметь дело с ограниченным количеством ресурсов и несколькими их потребителями, 
+  будь то фонд заработной платы в трудовом коллективе или студенческая вечеринка 
+  с несколькими ящиками пива, мы вынуждены заниматься распределением наличных 
+  ресурсов между потребителями или, другими словами, планированием использования 
+  ресурсов. Такое планирование должно иметь четко поставленные критерии (чего 
+  мы хотим добиться распределением ресурсов) и алгоритмы, соответствующие критериям 
+  и опирающиеся на параметры потребителей. Только при правильном выборе критериев 
+  и алгоритмов можно избежать таких вопросов, как “Почему я получаю в десять раз 
+  меньше, чем мой шеф?” или “А где мое пиво?”. Настоящая глава посвящена планированию 
+  исполнения процессов в мультипрограммных вычислительных системах или, кратко 
+  говоря, планированию процессов.</FONT></P>
+  <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"> <a name="l0301"></a>3.1. Уровни планирования</FONT></B>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">В первой главе, рассматривая 
+    эволюцию компьютерных систем, мы говорили о существовании двух видов планирования 
+    в вычислительных системах: планировании заданий и планировании использования 
+    процессора. Планирование заданий появилось в пакетных системах после того, 
+    как для хранения сформированных пакетов заданий начали использоваться магнитные 
+    диски. Магнитные диски, будучи устройствами прямого доступа, позволяют загружать 
+    задания в компьютер в произвольном порядке, а не только в том, в котором они 
+    были записаны на диск. Изменяя порядок загрузки заданий в вычислительную систему, 
+    можно повысить эффективность ее использования. Процедуру выбора очередного 
+    задания для загрузки в машину, т.&nbsp;е. для порождения соответствующего 
+    процесса, мы и назвали планированием заданий. Планирование использования процессора 
+    впервые возникает в мультипрограммных вычислительных системах, где в состоянии 
+    <B><I>готовность</i></B> могут одновременно находиться несколько процессов. 
+    Именно для процедуры выбора из них одного процесса, который получит процессор 
+    в свое распоряжение, т.е. будет переведен
+	в 
+    состояние <B><I>исполнение</i></B>, мы использовали это словосочетание. Теперь, 
+    когда мы познакомились с концепцией процессов в вычислительных системах, оба 
+    этих вида планирования мы будем рассматривать как различные уровни планирования 
+    процессов.</font></P>
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><a name="l0301a"></a>Планирование 
+  заданий выступает в качестве долгосрочного планирования процессов. Оно отвечает 
+  за порождение новых процессов в системе, определяя ее <I>степень мультипрограммирования</I>, 
+  т.&nbsp;е. количество процессов, одновременно находящихся в ней. Если степень 
+  мультипрограммирования системы поддерживается постоянной, т.&nbsp;е. среднее 
+  количество процессов в компьютере не меняется, то новые процессы могут появляться 
+  только после завершения ранее загруженных. Поэтому долгосрочное планирование 
+  осуществляется достаточно редко, между появлением новых процессов могут проходить 
+  минуты и даже десятки минут. Решение о выборе для запуска того или иного процесса 
+  оказывает влияние на функционирование вычислительной системы на протяжении достаточно 
+  длительного интервала времени. Отсюда и проистекает название этого уровня планирования 
+  — долгосрочное. В некоторых операционных системах долгосрочное планирование 
+  сведено к минимуму или совсем отсутствует. Так, например, во многих интерактивных 
+  системах разделения времени порождение процесса происходит сразу после появления 
+  соответствующего запроса. Поддержание разумной степени мультипрограммирования 
+  осуществляется за счет ограничения количества пользователей, которые могут работать 
+  в системе, и человеческой психологии. Если между нажатием на клавишу и появлением 
+  символа на экране проходит 20-30 секунд, то многие пользователи предпочтут прекратить 
+  работу и продолжить ее, когда система будет менее загружена.</font></P>
+   
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><a name="l0301b"></a>Планирование 
+  использования процессора выступает в качестве краткосрочного планирования процессов. 
+  Оно проводится, к примеру, при обращении исполняющегося процесса к устройствам 
+  ввода-вывода или просто по завершении определенного интервала времени. Поэтому 
+  краткосрочное планирование осуществляется весьма часто, как правило, не реже 
+  одного раза в 100 миллисекунд. Выбор нового процесса для исполнения оказывает 
+  влияние на функционирование системы до наступления очередного аналогичного события, 
+  т.&nbsp;е. в течение короткого промежутка времени, что и обусловило название 
+  этого уровня планирования — краткосрочное.</font></P>
+   
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><a name="l0301c"></a>В 
+  некоторых вычислительных системах бывает выгодно для повышения их производительности 
+  временно удалить какой-либо частично выполнившийся процесс из оперативной памяти 
+  на диск, а позже вернуть его обратно для дальнейшего выполнения. Такая процедура 
+  в англоязычной литературе получила название <i>swapping</i>, что можно перевести 
+  на русский язык как перекачка, хотя в профессиональной литературе оно употребляется 
+  без перевода — свопинг. Когда и какой из процессов нужно перекачать на диск 
+  и вернуть обратно, решается дополнительным промежуточным уровнем планирования 
+  процессов — среднесрочным.</font></P>
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><a name="l0302"></a>3.2. Критерии планирования и требования 
+    к алгоритмам</FONT> </b>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Для каждого уровня планирования 
+  процессов можно предложить много различных алгоритмов. Выбор конкретного алгоритма 
+  определяется классом задач, решаемых вычислительной системой, и целями, которых 
+  мы хотим достичь, используя планирование. К числу таких целей можно отнести:</FONT></P>
+<dir><ul type="square">
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Справедливость: гарантировать каждому 
+    заданию или процессу определенную часть времени использования процессора в 
+    компьютерной системе, стараясь не допустить возникновения ситуации, когда 
+    процесс одного пользователя постоянно занимает процессор, в то время как процесс 
+    другого пользователя фактически не приступал к выполнению.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Эффективность: постараться занять процессор 
+    на все 100% рабочего времени, не позволяя ему простаивать в ожидании процессов 
+    готовых к исполнению. В реальных вычислительных системах загрузка процессора 
+    колеблется от 40 до 90 процентов.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сокращение полного времени выполнения 
+    (turnaround time): обеспечить минимальное 
+    время между стартом процесса или постановкой задания в очередь для загрузки 
+    и его завершением.</font></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сокращение времени ожидания 
+    (waiting time): минимизировать 
+    время, которое проводят процессы в состоянии <B><I>готовность</i></B> 
+    и задания в очереди для загрузки.</font></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сокращение времени отклика (response 
+    time): минимизировать время, которое 
+    требуется процессу в интерактивных системах для ответа на запрос пользователя.</font></LI>
+</ul></dir>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Независимо от поставленных 
+  целей планирования желательно также, чтобы алгоритмы обладали следующими свойствами:</FONT></P>
+<dir><ul type="square">
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Были предсказуемыми. Одно и то же задание 
+    должно выполняться приблизительно за одно и то же время. Применение алгоритма 
+    планирования не должно приводить, к примеру, к извлечению корня квадратного 
+    из 4 за сотые доли секунды при одном запуске и за несколько суток при втором 
+    запуске.</FONT></LI>
+ 
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Имели минимальные накладные расходы, 
+    связанные с их работой. Если на каждые 100 миллисекунд, выделенных процессу 
+    для использования процессора, будет приходиться 200 миллисекунд на определение 
+    того, какой именно процесс получит процессор в свое распоряжение, и на переключение 
+    контекста, то такой алгоритм, очевидно, использовать не стоит.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Равномерно загружали ресурсы вычислительной 
+    системы, отдавая предпочтение тем процессам, которые будут занимать малоиспользуемые 
+    ресурсы. </FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Обладали масштабируемостью, т.&nbsp;е. 
+    не сразу теряли работоспособность при увеличении нагрузки. Например, рост 
+    количества процессов в системе в два раза не должен приводить к увеличению 
+    полного времени выполнения процессов на порядок.</FONT></LI>
+</ul></dir>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Многие из приведенных выше 
+  целей и свойств являются противоречивыми. Улучшая работу алгоритма с точки зрения 
+  одного критерия, мы ухудшаем ее с точки зрения другого. Приспосабливая алгоритм 
+  под один класс задач, мы тем самым дискриминируем задачи другого класса. “В 
+  одну телегу впрячь не можно коня и трепетную лань”. Ничего не поделаешь. Такова 
+  жизнь.</FONT></P>
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><a name="l0303"></a>3.3. Параметры планирования</FONT> </b>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Для осуществления поставленных 
+  целей разумные алгоритмы планирования должны опираться на какие-либо характеристики 
+  процессов в системе, заданий в очереди на загрузку, состояния самой вычислительной 
+  системы, иными словами, на параметры планирования. В этом разделе мы опишем 
+  ряд таких параметров, не претендуя на полноту изложения. </FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Все параметры планирования 
+  можно разбить на две большие группы: статические параметры и динамические параметры. 
+  Статические параметры не изменяются в ходе функционирования вычислительной системы, 
+  динамические же, напротив, подвержены постоянным изменениям.</FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">К статическим параметрам 
+  вычислительной системы можно отнести предельные значения ее ресурсов (размер 
+  оперативной памяти, максимальное количество памяти на диске для осуществления 
+  свопинга, количество подключенных устройств ввода-вывода и т.&nbsp;п.). Динамические 
+  параметры системы описывают количество свободных ресурсов в текущий момент времени.</FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">К статическим параметрам 
+  процессов относятся характеристики, как правило, присущие заданиям уже на этапе 
+  загрузки: </FONT></P>
+<dir><ul type="square">
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Каким пользователем запущен процесс 
+    или сформировано задание.</FONT></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Насколько важной является поставленная 
+    задача, т.&nbsp;е. каков приоритет ее выполнения.</FONT></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сколько процессорного времени запрошено 
+    пользователем для решения задачи.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Каково соотношение процессорного времени 
+    и времени, необходимого для осуществления операций ввода-вывода.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Какие ресурсы вычислительной системы 
+    (оперативная память, устройства ввода-вывода, специальные библиотеки и системные 
+    программы и т.&nbsp;д.) и в каком количестве необходимы заданию.</FONT></LI>
+</ul></dir>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Алгоритмы долгосрочного 
+  планирования используют в своей работе статические и динамические параметры 
+  вычислительной системы и статические параметры процессов (динамические параметры 
+  процессов на этапе загрузки заданий еще не известны). Алгоритмы краткосрочного 
+  и среднесрочного планирования дополнительно учитывают и динамические характеристики 
+  процессов. Для среднесрочного планирования в качестве таких характеристик может 
+  выступать следующая информация:</FONT></P>
+<dir><ul type="square">
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сколько времени прошло со времени выгрузки 
+    процесса на диск или его загрузки в оперативную память.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сколько оперативной памяти занимает 
+    процесс.</FONT></LI>
+    
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Сколько процессорного времени было уже 
+    предоставлено процессу.</FONT></LI>
+</ul></dir>
+
+<P ALIGN="center"> <img src="images/sr3-1.gif" width="317" height="231">
+<P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Рис 3.1. Фрагмент деятельности процесса с выделением промежутков непрерывного использования процессора и ожидания ввода-вывода.
+</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+Для 
+  краткосрочного планирования нам понадобится ввести еще два динамических параметра. 
+  Деятельность любого процесса можно представить как последовательность циклов 
+  использования процессора и ожидания завершения операций ввода-вывода. Промежуток 
+  времени непрерывного использования процессора носит на английском языке название 
+  <i>CPU burst</i>, а промежуток времени непрерывного ожидания ввода-вывода – 
+  <i>I/O burst</i>. На рисунке&nbsp;3.1. показан фрагмент деятельности некоторого 
+  процесса на псевдоязыке программирования с выделением указанных промежутков. 
+  Для краткости изложения мы будем использовать термины CPU burst и I/O burst 
+  без перевода. Значения продолжительности последних и очередных CPU burst и I/O 
+  burst являются важными динамическими параметрами процесса.</font></P>
+ 
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+<a name="l0304"></a>   3.4. Вытесняющее и невытесняющее планирование</FONT> </b>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Процесс планирования осуществляется 
+  частью операционной системы, называемой планировщиком. Планировщик может принимать 
+  решения о выборе для исполнения нового процесса, из числа находящихся в состоянии 
+  <B><I>готовность</i></B>, в следующих четырех случаях:</FONT></P>
+<dir><ol>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Когда процесс переводится из состояния 
+    <B><I>исполнение</i></B> в состояние <B><I>завершение</i></B>.</font></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Когда процесс переводится из состояния 
+    <B><I>исполнение</i></B> в состояние <B><I>ожидание</i></B>.</font></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Когда процесс переводится из состояния 
+    <B><I>исполнение</i></B> в состояние <B><I>готовность</i></B> (например, после 
+    прерывания от таймера).</FONT></LI>
+    <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Когда процесс 
+      переводится из состояния <B><I>ожидание</i></B> в состояние <B><I>готовность</i></B> 
+      (завершилась операция ввода-вывода или произошло другое событие). Подробно 
+      процедура такого перевода была рассмотрена нами в <a href="../02/ch2.htm#l020305">разделе&nbsp;2.3.5</a>, 
+      где мы показали, почему при этом возникает возможность смены процесса, находящегося 
+      в состоянии <B><I>исполнение</i></B>.</font></LI>
+</ol></dir>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">В случаях 1 и 2 процесс, 
+  находившийся в состоянии <B><I>исполнение</i></B>, не может дальше исполняться, 
+  и для выполнения всегда необходимо выбрать новый процесс. В случаях 3 и 4 планирование 
+  может не проводиться, процесс, который исполнялся до прерывания, может продолжать 
+  свое выполнение после обработки прерывания. Если планирование осуществляется 
+  только в случаях 1 и 2, говорят, что имеет место <i>невытесняющее (nonpreemptive) 
+  планирование</i>. В противном случае говорят о <i>вытесняющем (preemptive) планировании</i>. 
+  Термин “вытесняющее планирование” возник потому, что исполняющийся процесс помимо 
+  своей воли может быть вытеснен из состояния <B><I>исполнение</i></B> другим 
+  процессом.</font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Невытесняющее планирование 
+  используется, например, в MS Windows 3.1 и ОС Apple Macintosh. При таком режиме 
+  планирования процесс занимает столько процессорного времени, сколько ему необходимо. 
+  При этом переключение процессов возникает только при желании самого исполняющегося 
+  процесса передать управление (для ожидания завершения операции ввода-вывода 
+  или по окончании работы). Этот метод планирования относительно просто реализуем 
+  и достаточно эффективен, так как позволяет использовать большую часть процессорного 
+  времени на работу самих процессов и до минимума сократить затраты на переключение 
+  контекста. Однако при невытесняющем планировании возникает проблема возможности 
+  полного захвата процессора одним процессом, который вследствие каких-либо причин 
+  (например, из-за ошибки в программе) зацикливается и не может передать управление 
+  другому процессу. В такой ситуации спасает только перезагрузка всей вычислительной 
+  системы.</FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Вытесняющее планирование 
+  обычно используется в системах разделения времени. В этом режиме планирования 
+  процесс может быть приостановлен в любой момент своего исполнения. Операционная 
+  система устанавливает специальный таймер для генерации сигнала прерывания по 
+  истечении некоторого интервала времени — <I>кванта</I>. После прерывания процессор 
+  передается в распоряжение следующего процесса. Временные прерывания помогают 
+  гарантировать приемлемые времена отклика процессов для пользователей, работающих 
+  в диалоговом режиме, и предотвращают “зависание” компьютерной системы из-за 
+  зацикливания какой-либо программы.</FONT></P>
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+   <a name="l0305"></a>3.5. Алгоритмы планирования</FONT> </b>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Существует достаточно большой 
+  набор разнообразных алгоритмов планирования, которые предназначены для достижения 
+  различных целей и эффективны для разных классов задач. Многие из них могут быть 
+  использованы на нескольких уровнях планирования. В этом разделе мы рассмотрим 
+  некоторые наиболее употребительные алгоритмы применительно к процессу кратковременного 
+  планирования.</FONT></P>
+ <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+   <a name="l030501"></a>3.5.1. First-Come, First-Served (FCFS)</FONT></b>
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Простейшим 
+  алгоритмом планирования является алгоритм, который принято обозначать аббревиатурой 
+  <i>FCFS</i> по первым буквам его английского названия — First Come, First Served 
+  (первым пришел, первым обслужен). Представим себе, что процессы, находящиеся 
+  в состоянии <B><I>готовность</i></B>, организованы в очередь. Когда процесс 
+  переходит в состояние <B><I>готовность</i></B>, он, а точнее ссылка на его PCB, 
+  помещается в конец этой очереди. Выбор нового процесса для исполнения осуществляется 
+  из начала очереди с удалением оттуда ссылки на его PCB. Очередь подобного типа 
+  имеет в программировании специальное наименование <i>FIFO</i> — сокращение от 
+  First In, First Out (первым вошел, первым вышел). <br>
+  <br>
+  </font><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2"> Надо 
+  отметить, что аббревиатура FCFS используется для этого алгоритма планирования 
+  вместо стандартной аббревиатуры FIFO для механизмов подобного типа для того, 
+  чтобы подчеркнуть, что организация готовых процессов в очередь FIFO возможна 
+  и при других алгоритмах планирования (например, для Round Robin - см. <a href=#l030502>раздел 
+  3.5.2</a>). <br>
+  <br>
+  </font><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"> Такой 
+  алгоритм выбора процесса осуществляет невытесняющее планирование. Процесс, получивший 
+  в свое распоряжение процессор, занимает его до истечения своего текущего CPU 
+  burst. После этого для выполнения выбирается новый процесс из начала очереди.</font></P>
+<a name="l030501a"></a><table align="center" cellpadding=0 cellspacing=0 width="90%" border="2">
+  <tr> 
+    <td width="64%" > 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">Процесс</font> 
+    </td>
+    <td width="12%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font> 
+    </td>
+    <td width="12%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font> 
+    </td>
+    <td width="12%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font> 
+    </td>
+  </tr>
+  <tr> 
+    <td width="64%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">Продолжительность 
+        очередного CPU burst</font> 
+    </td>
+    <td width="12%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">13</font> 
+    </td>
+    <td width="12%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">4</font> 
+    </td>
+    <td width="12%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">1</font> 
+    </td>
+  </tr>
+</table>
+<P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.1.
+</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Преимуществом 
+  алгоритма FCFS является легкость его реализации, в то же время он имеет и много 
+  недостатков. Рассмотрим следующий пример. Пусть в состоянии <B><I>готовность 
+  </i></B>находятся три процесса p<SUB>0</SUB>, p<SUB>1</SUB> и p<SUB>2</SUB>, 
+  для которых известны времена их очередных CPU burst. Эти времена приведены в 
+  таблице&nbsp;3.1. в некоторых условных единицах. Для простоты будем полагать, 
+  что вся деятельность процессов ограничивается использованием только одного промежутка 
+  CPU burst, что процессы не совершают операций ввода-вывода, и что время переключения 
+  контекста пренебрежимо мало.</font></P>
+  
+<P ALIGN="center"> <img src="images/sr3-2.gif" width="482" height="221"><br>
+<FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Рис 3.2. Выполнение процессов при порядке p<sub>0</sub>,p<sub>1</sub>,p<sub>2</sub>
+</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+Если 
+  процессы расположены в очереди процессов готовых к исполнению в порядке p<sub>0</sub>, 
+  p<SUB>1</SUB>, p<SUB>2</SUB>, то картина их выполнения выглядит так, как показано 
+  на рисунке&nbsp;3.2. Первым для выполнения выбирается процесс p<SUB>0</SUB>, 
+  который получает процессор на все время своего CPU burst, т.&nbsp;е. на 13 единиц 
+  времени. После его окончания в состояние <B><I>исполнение</i></B> переводится 
+  процесс p<SUB>1</SUB>, занимая процессор на 4 единицы времени. И, наконец, возможность 
+  работать получает процесс p<SUB>2</SUB>. Время ожидания для процесса p<SUB>0</sub> 
+  составляет 0 единиц времени, для процесса p<sub>1</sub>&nbsp;—&nbsp;13 единиц, 
+  для процесса p<sub>2</sub>&nbsp;—&nbsp;13&nbsp;+&nbsp;4&nbsp;=&nbsp;17 единиц. 
+  Таким образом, среднее время ожидания в этом случае — (0&nbsp;+&nbsp;13&nbsp;+&nbsp;17)/3&nbsp;=&nbsp;10 
+  единиц времени. Полное время выполнения для процесса p<sub>0</sub> составляет 
+  13 единиц времени, для процесса p<sub>1</sub>&nbsp;—&nbsp;13&nbsp;+&nbsp;4&nbsp;=&nbsp;17 
+  единиц, для процесса p<sub>2</sub>&nbsp;—&nbsp;13&nbsp;+&nbsp;4&nbsp;+&nbsp;1&nbsp;=&nbsp;18 
+  единиц. Среднее полное время выполнения оказывается равным (13&nbsp;+&nbsp;17&nbsp;+&nbsp;18)/3&nbsp;=&nbsp;16 
+  единицам времени.</font></P>
+   
+
+<P ALIGN="center"><img src="images/sr3-3.gif" width="482" height="221"><br>
+  <FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2"> Рис 3.3. Выполнение 
+  процессов при порядке p<sub>2</sub>,p<sub>1</sub>,p<sub>0</sub> </font> 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Если те же самые процессы 
+    расположены в порядке p<sub>2</sub>, 
+    p<SUB>1</SUB>, p<SUB>0</SUB>, то 
+    картина их выполнения будет соответствовать рисунку&nbsp;3.3. Время ожидания 
+    для процесса p<sub>0</sub> 
+    равняется 5 единицам времени, для процесса p<sub>1</sub>&nbsp;—&nbsp;1 
+    единице, для процесса p<sub>2</sub>&nbsp;—&nbsp;0 
+    единиц. Среднее время ожидания составит (5&nbsp;+&nbsp;1&nbsp;+&nbsp;0)/3&nbsp;=&nbsp;2 
+    единицы времени. Это в 5 (!) раз меньше, чем в предыдущем случае. Полное время 
+    выполнения для процесса p<sub>0</sub> 
+    получается равным 18 единицам времени, для процесса p<sub>1</sub>&nbsp;—&nbsp;5 
+    единицам, для процесса p<sub>2</sub>&nbsp;—&nbsp;1 
+    единице. Среднее полное время выполнения составляет (18&nbsp;+&nbsp;5&nbsp;+&nbsp;1)/3&nbsp;=&nbsp;6 
+    единиц времени, что почти в 2,7 раза меньше чем при первой расстановке процессов.</font></P>
+   
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Как видим, среднее время 
+    ожидания и среднее полное время выполнения для этого алгоритма существенно 
+    зависят от порядка расположения процессов в 
+    очереди. Если у нас есть процесс с длительным CPU burst, 
+    то короткие процессы, перешедшие в состояние <B><I>готовность</i></B> после 
+    длительного процесса, будут очень долго ждать начала своего выполнения. Поэтому 
+    алгоритм FCFS практически 
+    неприменим для систем разделения времени. Слишком большим получается среднее 
+    время отклика в интерактивных процессах.</font></P>
+   
+  
+<P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+<a name="l030502"></a>3.5.2. Round Robin (RR)</FONT></b>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Модификацией 
+  алгоритма FCFS является алгоритм, получивший название Round Robin (Round Robin 
+  – это вид детской карусели в США) или сокращенно <i>RR</i>. По сути дела это 
+  тот же самый алгоритм, только реализованный в режиме вытесняющего планирования. 
+  Можно представить себе все множество готовых процессов организованным циклически 
+  — процессы сидят на карусели. Карусель вращается так, что каждый процесс находится 
+  около процессора небольшой фиксированный квант времени, обычно 10 - 100 миллисекунд 
+  (см. рисунок&nbsp;3.4.). Пока процесс находится рядом с процессором, он получает 
+  процессор в свое распоряжение и может исполняться.</font></P>
+<P ALIGN="center">  <img src="images/sr3-4.gif" width="756" height="344">
+<P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Рис 3.4. Процессы на карусели.
+</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Реализуется 
+  такой алгоритм так же, как и предыдущий, с помощью организации процессов, находящихся 
+  в состоянии <B><I>готовность</i></B>, в очередь FIFO. Планировщик выбирает для 
+  очередного исполнения процесс, расположенный в начале очереди, и устанавливает 
+  таймер для генерации прерывания по истечении определенного кванта времени. При 
+  выполнении процесса возможны два варианта: </font></P>
+<dir><ul type="square">
+   <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Время непрерывного использования процессора, 
+    требующееся процессу, (остаток текущего CPU burst) меньше 
+    или равно продолжительности кванта времени. Тогда процесс по своей воле освобождает 
+    процессор до истечения кванта времени, на исполнение выбирается новый процесс 
+    из начала очереди и таймер начинает отсчет кванта заново.</font></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Продолжительность остатка текущего CPU 
+    burst процесса 
+    больше, чем квант времени. Тогда 
+    по истечении этого кванта процесс прерывается таймером и помещается в конец 
+    очереди процессов готовых к исполнению, а процессор выделяется для использования 
+    процессу, находящемуся в ее начале.</font></LI>
+ </ul></dir>
+<P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Рассмотрим <a href="#l030501a">
+предыдущий 
+  пример</a> с порядком процессов p<sub>0</sub>, 
+  p<SUB>1</SUB>, p<SUB>2</SUB> и величиной 
+  кванта времени равной 4. Выполнение этих процессов иллюстрируется таблицей&nbsp;3.2. 
+  Обозначение “И” используется в ней для процесса, находящегося в состоянии <B><I>исполнение</i></B>, 
+  обозначение “Г” — для процессов в состоянии <B><I>готовность</i></B>, пустые 
+  ячейки соответствуют завершившимся процессам. Состояния процессов показаны на 
+  протяжении соответствующей единицы времени, т.&nbsp;е. колонка с номером 1 соответствует 
+  промежутку времени от 0 до 1.</font></P>
+  
+     
+<table border=2 cellspacing=0 cellpadding=0 align="center" width=90%>
+  <tr>
+         <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">4</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">8</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">9</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">10</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">11</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">12</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">13</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">14</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">15</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">16</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">17</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">18</font></td>
+      </tr>
+      <tr>
+         <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+         <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+         <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+	   &nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+         
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table>
+
+<P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">  
+Таблица 3.2.</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Первым 
+  для исполнения выбирается процесс p<SUB>0</SUB>. 
+  Продолжительность его CPU burst больше, 
+  чем величина кванта времени, и поэтому процесс исполняется до истечения кванта, 
+  т.&nbsp;е. в течение 4 единиц времени. После этого он помещается в конец очереди 
+  готовых к исполнению процессов, которая принимает вид p<sub>1</sub>, 
+  p<SUB>2</SUB>, p<SUB>0</SUB>. Следующим 
+  начинает выполняться процесс p<SUB>1</SUB>. Время 
+  его исполнения совпадает с величиной выделенного кванта, поэтому процесс работает 
+  до своего завершения. Теперь очередь процессов в состоянии <B><I>готовность</i></B> 
+  состоит из двух процессов p<sub>2</sub>, 
+  p<SUB>0</SUB>. Процессор выделяется 
+  процессу p<SUB>2</SUB>. Он 
+  завершается до истечения отпущенного ему процессорного времени, и очередные 
+  кванты отмеряются процессу p<SUB>0</SUB> — единственному, 
+  не закончившему к этому моменту свою работу. Время 
+  ожидания для процесса p<SUB>0</SUB> (количество 
+  символов “Г” в соответствующей строке) составляет 
+  5 единиц времени, для процесса p<SUB>1</SUB>&nbsp;—&nbsp;4 
+  единицы времени, для процесса p<SUB>2</SUB>&nbsp;—&nbsp;8 
+  единиц времени. Таким образом, 
+  среднее время ожидания для этого алгоритма получается равным (5&nbsp;+&nbsp;4&nbsp;+&nbsp;8)/3&nbsp;=&nbsp;5,6(6) 
+  единицы времени. Полное время выполнения для процесса p<sub>0</sub> 
+  (количество непустых столбцов в соответствующей строке) составляет 18 единиц 
+  времени, для процесса p<sub>1</sub>&nbsp;—&nbsp;8 
+  единиц, для процесса p<sub>2</sub>&nbsp;—&nbsp;9 
+  единиц. Среднее полное время выполнения оказывается равным (18&nbsp;+&nbsp;8&nbsp;+&nbsp;9)/3&nbsp;=&nbsp;11,6(6) 
+  единицам времени.</FONT> </P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Легко видеть, что среднее 
+  время ожидания и среднее полное время выполнения для обратного порядка процессов 
+  не отличаются от соответствующих времен для алгоритма FCFS 
+  и составляют 2 и 6 единиц времени соответственно.</font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">На 
+  производительность алгоритма RR сильно влияет величина кванта времени. Рассмотрим 
+  <a href="#l050301a"> тот же самый пример</a> c порядком процессов p<sub>0</sub>, 
+  p<SUB>1</SUB>, p<SUB>2</SUB> для величины кванта времени равной 1 (см. таблицу&nbsp;3.3.). 
+  Время ожидания для процесса p<SUB>0</SUB> составит 5 единиц времени, для процесса 
+  p<SUB>1</SUB>&nbsp;—&nbsp;тоже 5 единиц, для процесса p<SUB>2</SUB>&nbsp;—&nbsp;2 
+  единицы. В этом случае среднее время ожидания получается равным (5&nbsp;+&nbsp;5&nbsp;+&nbsp;2)/3&nbsp;=&nbsp;4 
+  единицам времени. Среднее полное время исполнения составит (18&nbsp;+&nbsp;9&nbsp;+&nbsp;3)/3&nbsp;=&nbsp;10 
+  единиц времени.</font></P>
+     
+<table cellpadding=0 cellspacing=0 width="90%" align="center" border=2>
+  <tr>
+       <td>
+          <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">4</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">8</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">9</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">10</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">11</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">12</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">13</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">14</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">15</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">16</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">17</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">18</font></td>
+      </tr>
+      <tr>
+       <td>
+          <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       <td>
+          <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       <td>
+          <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+	  </table>
+	    <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.3.</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">При 
+  очень больших величинах кванта времени, когда каждый процесс успевает завершить 
+  свой CPU burst до 
+  возникновения прерывания по времени, алгоритм RR вырождается 
+  в алгоритм FCFS. При очень малых величинах создается иллюзия того, что каждый 
+  из n процессов 
+  работает на своем собственном виртуальном процессоре с производительностью ~&nbsp;1/n 
+  от производительности реального процессора. 
+  Правда, это справедливо лишь при теоретическом анализе при условии пренебрежения 
+  временами переключения контекста процессов. В реальных условиях при слишком 
+  малой величине кванта времени и, соответственно, слишком частом переключении 
+  контекста, накладные расходы на переключение резко снижают производительность 
+  системы.</font></P>
+ 
+
+      <P ALIGN="center"><b><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+<a name="l030503"></a>	 3.5.3. Shortest-Job-First (SJF)</FONT></B>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">При 
+  рассмотрении алгоритмов FCFS и RR мы видели, насколько существенным для них 
+  является порядок расположения процессов в очереди процессов готовых к исполнению. 
+  Если короткие задачи расположены в очереди ближе к ее началу, то общая производительность 
+  этих алгоритмов значительно возрастает. Если бы мы знали время следующих CPU 
+  burst для процессов, находящихся в состоянии <B><I>готовность</i></B>, то могли 
+  бы выбрать для исполнения не процесс из начала очереди, а процесс с минимальной 
+  длительностью CPU burst. Если же таких процессов два или больше, то для выбора 
+  одного из них можно использовать уже известный нам алгоритм FCFS. Квантование 
+  времени при этом не применяется. Описанный алгоритм получил название “кратчайшая 
+  работа первой” или <i>Shortest Job First</i> (<I>SJF</I>). </font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">SJF алгоритм краткосрочного 
+  планирования может быть как вытесняющим, так и невытесняющим. При невытесняющем 
+  SJF планировании 
+  процессор предоставляется избранному процессу на все требующееся ему время, 
+  независимо от событий происходящих в вычислительной системе. При вытесняющем 
+  SJF планировании 
+  учитывается появление новых процессов в очереди готовых к исполнению (из числа 
+  вновь родившихся или разблокированных) во время работы выбранного процесса. 
+  Если CPU burst 
+  нового процесса меньше, чем остаток CPU burst 
+  у исполняющегося, то исполняющийся процесс вытесняется новым.</font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Рассмотрим пример работы 
+  невытесняющего алгоритма SJF. 
+  Пусть в состоянии <B><I>готовность </i></B>находятся четыре процесса p<SUB>0</SUB>, 
+  p<SUB>1</SUB>, p<SUB>2</SUB> и p<sub>3</sub>, 
+  для которых известны времена их очередных 
+  CPU burst. Эти 
+  времена приведены в таблице&nbsp;3.4. Как и прежде, будем полагать, что вся 
+  деятельность процессов ограничивается использованием только одного промежутка 
+  CPU burst, что 
+  процессы не совершают операций ввода-вывода, и что время переключения контекста 
+  пренебрежимо мало. </font></P>
+       
+<table border=2 cellspacing=0 cellpadding=0 width=90% align="center">
+  <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Процесс</font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Продолжительность
+       очередного CPU burst</font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+       
+    <td width="9%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+      </tr>
+     </table>
+	    <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.4.</font>
+
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">При 
+  использовании невытесняющего алгоритма SJF 
+  первым для исполнения будет выбран процесс p<SUB>3</SUB>, 
+  имеющий наименьшее значение очередного 
+  CPU burst. После 
+  его завершения для исполнения выбирается процесс p<SUB>1</SUB>, 
+  затем p<SUB>0</SUB> 
+  и, наконец, p<SUB>2</SUB>. Вся 
+  эта картина изображена в таблице&nbsp;3.5.</font></P>
+       
+<table cellspacing=0 cellpadding=0 align="center" border=2 width="90%">
+  <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">4</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">8</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">9</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">10</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">11</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">12</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">13</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">14</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">15</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">16</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="5%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table>
+    <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.5.</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Как 
+  видим, среднее время ожидания для алгоритма SJF 
+  составляет (4&nbsp;+&nbsp;1&nbsp;+&nbsp;9&nbsp;+&nbsp;0)/4&nbsp;=&nbsp;3,5 
+  единицы времени. Легко посчитать, что для алгоритма FCFS 
+  при порядке процессов p<SUB>0</SUB>, p<SUB>1</SUB>, p<SUB>2</SUB>, 
+  p<SUB>3</SUB> эта 
+  величина будет равняться (0&nbsp;+&nbsp;5&nbsp;+&nbsp;8&nbsp;+&nbsp;15)/4&nbsp;=&nbsp;7 
+  единицам времени, т.&nbsp;е. будет 
+  в 2 раза больше, чем для алгоритма SJF. Можно 
+  показать, что для заданного набора процессов (если в очереди не появляются новые 
+  процессы) алгоритм SJF 
+  является оптимальным с точки зрения минимизации среднего времени ожидания среди 
+  класса всех невытесняющих алгоритмов.</font></P>
+<P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Для 
+  рассмотрения примера вытесняющего SJF планирования мы возьмем ряд процессов 
+  p<SUB>0</SUB>, p<SUB>1</SUB>, p<SUB>2</SUB> и p<sub>3</sub>с различными временами 
+  CPU burst и различными моментами их появления в очереди процессов готовых к 
+  исполнению (см. таблицу&nbsp;3.6.).</font></P>
+   
+<a name="l030503a"></a><table cellspacing=0 cellpadding=0 align="center" border=2 width="90%">
+  <tr>
+       
+    <td valign="top"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Процесс</font>
+    </td>
+       
+    <td width="45%" valign="top"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Время 
+        появления в очереди</font>
+    </td>
+       
+    <td width="45%" valign="top"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Продолжительность 
+        очередного CPU burst</font> 
+    </td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">0</font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">0</font></td>
+       
+    <td width="45%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+      </tr>
+     </table>
+    <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.6.</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">В 
+  начальный момент времени в состоянии <B><I>готовность</i></B> находятся только 
+  два процесса p<SUB>0</SUB> и p<SUB>4</SUB>. Меньшее время очередного CPU burst 
+  оказывается у процесса p<SUB>3</SUB>, поэтому он и выбирается для исполнения 
+  (см. таблицу&nbsp;3.7.). По прошествии 2-х единиц времени в систему поступает 
+  процесс p<SUB>1</SUB>. Время его CPU burst меньше, чем остаток CPU burst у процесса 
+  p<SUB>3</SUB>, который вытесняется из состояния <B><I>исполнение</i></B> и переводится 
+  в состояние <B><I>готовность</i></B>. По прошествии еще 2-х единиц времени процесс 
+  p<SUB>1</SUB> завершается, и для исполнения вновь выбирается процесс p<SUB>3</SUB>. 
+  В момент времени t&nbsp;=&nbsp;6 в очереди процессов готовых к исполнению появляется 
+  процесс p<SUB>2</SUB>, но поскольку ему для работы нужно 7 единиц времени, а 
+  процессу p<SUB>3</SUB> осталось трудиться всего 2 единицы времени, то процесс 
+  p<SUB>3</SUB> остается в состоянии <B><I>исполнение</i></B>. После его завершения 
+  в момент времени t&nbsp;=&nbsp;7 в очереди находятся процессы p<SUB>0</SUB> 
+  и p<SUB>2</SUB>, из которых выбирается процесс p<SUB>0</SUB>. Наконец, последним 
+  получит возможность выполняться процесс p<SUB>2</SUB>.</font></P>
+       
+<table border=2 cellspacing=0 cellpadding=0 width="90%" align="center">
+  <tr>
+       <td width="20%">
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">4</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">8</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">9</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">10</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+      </tr>
+      <tr>
+       <td>
+        <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table><br>
+	 
+	   
+<table border=2 cellspacing=0 cellpadding=0 width="90%" align="center">
+  <tr>
+       
+    <td width="20%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">11</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">12</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">13</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">14</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">15</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">16</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">17</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">18</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">19</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">20</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+     </table>
+    <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.7.</font>
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Основную 
+  сложность при реализации алгоритма SJF представляет невозможность точного знания 
+  времени очередного CPU burst для исполняющихся процессов. В пакетных системах 
+  количество процессорного времени, требующееся заданию для выполнения, указывает 
+  пользователь при формировании задания. Мы можем брать эту величину для осуществления 
+  долгосрочного SJF планирования. Если пользователь укажет больше времени, чем 
+  ему нужно, он будет ждать получения результата дольше, чем мог бы, так как задание 
+  будет загружено в систему позже. Если же он укажет меньшее количество времени, 
+  задача может не досчитаться до конца. Таким образом, в пакетных системах решение 
+  задачи оценки времени использования процессора перекладывается на плечи пользователя. 
+  При краткосрочном планировании мы можем делать только прогноз длительности следующего 
+  CPU burst, исходя из предыстории работы процесса. Пусть <FONT FACE="Symbol">&#116;</FONT>(<I>n</I>) 
+  – величина <i>n</i>-го CPU burst, <FONT FACE="Symbol">&#84;</FONT>(<I>n</I>&nbsp;+&nbsp;1)– 
+  предсказываемое значение для <i>n</i>&nbsp;+&nbsp;1-го CPU burst, <FONT FACE="Symbol">&#97;</FONT> 
+  – некоторая величина в диапазоне от 0 до 1.</font></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Определим 
+  рекуррентное соотношение</FONT></p>
+<p align="center">  <img src="images/sr3-f1.gif" width="206" height="27"  align="top"> 
+<p align="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><FONT FACE="Symbol">&#84;</FONT>(0) 
+  положим произвольной константой. Первое слагаемое учитывает последнее поведение 
+  процесса, тогда как второе слагаемое учитывает его предысторию. При <FONT FACE="Symbol">&#97;</FONT>&nbsp;&nbsp;=&nbsp;0 
+  мы перестаем следить за последним поведением процесса, фактически полагая</font></P>
+<P ALIGN="CENTER"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"> 
+  <img src="images/sr3-f2.gif" width="187" height="29"></FONT></P>
+<P><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">т.е. оценивая все CPU 
+  burst одинаково, исходя из некоторого 
+  начального предположения.</font></P>
+<P ALIGN="JUSTIFY"> <FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Положив 
+  <FONT FACE="Symbol">&#97;</FONT>&nbsp;&nbsp;=&nbsp;1, мы забываем о предыстории 
+  процесса. В этом случае мы полагаем, что время очередного CPU burst будет совпадать 
+  со временем последнего CPU burst:</font></P>
+<P ALIGN="CENTER"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"> 
+  <img src="images/sr3-f3.gif" width="108" height="32"> </FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Обычно выбирают</FONT></P>
+<P ALIGN="CENTER"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><img src="images/sr3-f4.gif" width="53" height="41"></FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">для 
+  равноценного учета последнего поведения и предыстории. Надо отметить, что такой 
+  выбор <FONT FACE="Symbol">&#97;</FONT> удобен и для быстрой организации вычисления 
+  оценки <FONT FACE="Symbol">&#84;</FONT>(<I>n</I>&nbsp;+&nbsp;1). Для подсчета 
+  новой оценки нужно взять старую оценку, сложить с измеренным временем CPU burst 
+  и полученную сумму разделить на 2, например, с помощью ее сдвига на 1 бит вправо. 
+  Полученные оценки <FONT FACE="Symbol">&#84;</FONT>(<I>n</I>&nbsp;+&nbsp;1) применяются 
+  как продолжительности очередных промежутков времени непрерывного использования 
+  процессора для краткосрочного SJF планирования.</font></P>
+ 
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+   <a name="l030504"></a>3.5.4. Гарантированное планирование</FONT></b>
+   
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"> 
+  При интерактивной работе <FONT FACE="Symbol">N</font>
+   пользователей в вычислительной системе можно применить
+    алгоритм планирования, который гарантирует,
+	что каждый из пользователей будет иметь в своем распоряжении <FONT FACE="Symbol">
+	~ 1/N</font>
+	 часть процессорного времени. Пронумеруем всех пользователей от 
+	 <FONT FACE="Symbol">1</font> до <FONT FACE="Symbol">N</font>. 
+	 Для каждого пользователя с номером i введем две величины: 
+	 <FONT FACE="Symbol">T</font><sub>i</sub>
+	  - время нахождения пользователя в системе, или, другими словами
+	  длительность сеанса его общения с машиной, и 
+	  <FONT FACE="Symbol">t</font><sub>i</sub>
+	   - суммарное процессорное время уже выделенное всем 
+	   его процессам в течение сеанса. Справедливым
+	    для пользователя было бы получение <FONT FACE="Symbol">
+		T</font><sub>i</sub>/<FONT FACE="Symbol">N</font>
+		 процессорного времени. Если 
+  </FONT></P>
+  
+<P ALIGN="CENTER"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><img src="images/sr3-f5.gif" width="78" height="49"></FONT></P>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">то <i>i</i>&nbsp;-&nbsp;й 
+    пользователь несправедливо обделен процессорным временем. Если же </font></P>
+  
+<P ALIGN="CENTER"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><img src="images/sr3-f6.gif" width="89" height="46"></FONT></P>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">то система явно благоволит 
+    к пользователю с номером <i>i</i>. 
+    Вычислим для каждого пользовательского 
+    процесса значение коэффициента справедливости</font></P>
+  
+<P ALIGN="CENTER"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><img src="images/sr3-f7.gif" width="62" height="56"></FONT></P>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">и будем предоставлять 
+    очередной квант времени процессу с наименьшей величиной этого отношения. Предложенный 
+    алгоритм называют алгоритмом гарантированного планирования. К недостаткам 
+    этого алгоритма можно отнести невозможность предугадать поведение пользователей. 
+    Если некоторый пользователь отправится на пару часов пообедать и поспать, 
+    не прерывая сеанса работы, то по возвращении его процессы будут получать неоправданно 
+    много процессорного времени.</FONT></P>
+
+      <P ALIGN="CENTER"> 
+   <FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"><B>
+<a name="l030505"></a>   3.5.5. Приоритетное планирование</B></FONT>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Алгоритмы SJF и гарантированного 
+    планирования представляют собой частные случаи приоритетного планирования. 
+    При приоритетном планировании каждому процессу присваивается определенное 
+    числовое значение — приоритет, в соответствии с которым ему выделяется процессор. 
+    Процессы с одинаковыми приоритетами планируются в порядке FCFS. Для алгоритма 
+    SJF в качестве 
+    такого приоритета выступает оценка продолжительности следующего CPU 
+    burst. Чем меньше значение этой 
+    оценки, тем более высокий приоритет имеет процесс. Для алгоритма гарантированного 
+    планирования приоритетом служит вычисленный коэффициент справедливости. Чем 
+    он меньше, тем больше приоритет у процесса.</font></P>
+   
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Принципы назначения приоритетов 
+    могут опираться как на внутренние критерии вычислительной системы, так и на 
+    внешние по отношению к ней. Внутренние используют различные количественные 
+    и качественные характеристики процесса для вычисления его приоритета. Это 
+    могут быть, например, определенные ограничения по времени использования процессора, 
+    требования к размеру памяти, число открытых файлов и используемых устройств 
+    ввода-вывода, отношение средних продолжительностей I/O 
+    burst к CPU burst и т.&nbsp;д. 
+    Внешние критерии исходят из таких параметров, как важность процесса для достижения 
+    каких-либо целей, стоимость оплаченного процессорного времени и других политических 
+    факторов. Высокий внешний приоритет может быть присвоен задаче лектора или 
+    того, кто заплатил $100 за работу в течение одного часа.</font></P>
+   
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Планирование с использованием 
+    приоритетов может быть как вытесняющим, так и невытесняющим. При вытесняющем 
+    планировании процесс с более высоким приоритетом, появившийся в очереди готовых 
+    процессов, вытесняет исполняющийся процесс с более низким приоритетом. В случае 
+    невытесняющего планирования он просто становится в начало очереди готовых 
+    процессов. Давайте рассмотрим примеры использования различных режимов приоритетного 
+    планирования.</FONT></P>
+   
+  
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Пусть 
+  в очередь процессов, находящихся в состоянии <B><I>готовность</i></B>, поступают 
+  те же процессы, что и в <a href="#l030503a">примере из раздела&nbsp;3.5.3.</a> 
+  для вытесняющего алгоритма SJF, только им дополнительно еще присвоены приоритеты 
+  (см. таблицу&nbsp;3.8.). В вычислительных системах не существует определенного 
+  соглашения, какое значение приоритета - 1 или 4 считать более приоритетным. 
+  Во избежание путаницы, во всех наших примерах мы будем предполагать, что большее 
+  значение соответствует меньшему приоритету, т.е. наиболее приоритетным в нашем 
+  примере является процесс p<SUB>3</SUB>, а наименее приоритетным — процесс p<SUB>0</SUB>.</font></P>
+ 
+<table border=2 cellspacing=0 cellpadding=0 align="center" width="90%">
+  <tr> 
+    <td valign="top"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">Процесс</font>
+    </td>
+    <td width="35%" valign="top"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">Время 
+        появления в очереди</font>
+    </td>
+    <td width="35%" valign="top"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">Продолжительность 
+        очередного CPU burst</font>
+    </td>
+    <td width="15%" valign="top"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">Приоритет</font>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">0</font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">6</font>
+    </td>
+    <td width="15%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">4</font>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">2</font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">2</font>
+    </td>
+    <td width="15%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">3</font>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">6</font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">7</font>
+    </td>
+    <td width="15%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">2</font>
+    </td>
+  </tr>
+  <tr> 
+    <td> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">0</font>
+    </td>
+    <td width="35%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">5</font>
+    </td>
+    <td width="15%"> 
+      <p align="center"><font face="Times New Roman, sans-serif, Courier, mono" size="3">1</font>
+    </td>
+  </tr>
+</table>
+ <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.8.</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3"> 
+  Как будут вести себя процессы при использовании невытесняющего приоритетного 
+  планирования? Первым для выполнения в момент времени t = 0 выбирается процесс 
+  p<sub>3</sub>, как обладающий наивысшим приоритетом. После его завершения в 
+  момент времени t = 5 в очереди процессов готовых к исполнению окажутся два процесса 
+  p<sub>0</sub> и p<sub>1</sub>. Больший приоритет из них у процесса p<sub>1</sub> 
+  он и начнет выполняться (см. таблицу 3.9.). Затем в момент времени t = 8 для 
+  исполнения будет избран процесс p<sub>2</sub> и лишь потом процесс p<sub>0</sub>.</font><br>
+  <br>
+  
+       
+<table border=2 cellspacing=0 cellpadding=0 align="center" width="90%">
+  <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">4</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">8</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">9</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">10</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       
+    <td height="20"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td height="20" width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table><br>
+	 	     
+<table border=2 cellspacing=0 cellpadding=0 align="center" width="90%">
+  <tr>
+       
+    <td width="20%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">11</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">12</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">13</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">14</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">15</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">16</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">17</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">18</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">19</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">20</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       
+    <td width="19%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table>
+
+ <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.9.</font>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Иным будет предоставление 
+    процессора процессам в случае вытесняющего приоритетного планирования (см. 
+    таблицу&nbsp;3.10.). Первым, как и в предыдущем случае, исполняться начнет 
+    процесс p<SUB>3</SUB>, а 
+    по его окончании процесс p<SUB>1</SUB>. 
+    Однако в момент времени t&nbsp;=&nbsp;6 
+    он будет вытеснен процессом p<SUB>2</SUB> и 
+    продолжит свое выполнение только в момент времени t&nbsp;=&nbsp;13. 
+    Последним, как и раньше будет исполнен 
+    процесс p<SUB>0</SUB>.</font></P>
+  
+<table border=2 cellspacing=0 cellpadding=0 align="center" width="90%">
+  <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">1</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">2</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">3</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">4</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">5</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">6</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">7</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">8</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">9</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">10</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table>
+     <br>
+     
+<table border=2 cellspacing=0 cellpadding=0 align="center" width="90%">
+  <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">время</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">11</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">12</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">13</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">14</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">15</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">16</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">17</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">18</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">19</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">20</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>0</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>1</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Г</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>2</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">И</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+      <tr>
+       <td>
+       <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">p<sub>3</sub></font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+       
+    <td width="8%"> 
+      <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">&nbsp;</font></td>
+      </tr>
+     </table>
+
+    <P ALIGN="center"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Таблица 3.10.</font>
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">В рассмотренном выше 
+    примере приоритеты процессов не изменялись с течением временем. Такие приоритеты 
+    принято называть статическими. Механизмы статической приоритетности легко 
+    реализовать, и они сопряжены с относительно небольшими издержками на выбор 
+    наиболее приоритетного процесса. Однако статические приоритеты не реагируют 
+    на изменения ситуации в вычислительной системе, которые могут сделать желательной 
+    корректировку порядка исполнения процессов. Более гибкими являются динамические 
+    приоритеты процессов, изменяющие свои значения по ходу исполнения процессов. 
+    Начальное значение динамического приоритета, присвоенное процессу, действует 
+    в течение лишь короткого периода времени, после чего ему назначается новое, 
+    более подходящее значение. Изменение динамического приоритета процесса является 
+    единственной операцией над процессами, которую мы до сих пор не рассмотрели. 
+    Как правило, изменение приоритета процессов проводится согласованно с совершением 
+    каких-либо других операций: при рождении нового процесса, при разблокировке 
+    или блокировании процесса, по истечении определенного кванта времени или по 
+    завершении процесса. Примерами алгоритмов с динамическими приоритетами являются 
+    алгоритм SJF 
+    и алгоритм гарантированного планирования. Схемы с динамической приоритетностью 
+    гораздо сложнее в реализации и связанны с большими издержками по сравнению 
+    со статическими схемами. Однако их использование предполагает, что эти издержки 
+    оправдываются улучшением поведения системы.</font></P>
+   
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Главная проблема приоритетного 
+    планирования заключается в том, что при ненадлежащем выборе механизма назначения 
+    и изменения приоритетов низкоприоритетные процессы могут быть не запущены 
+    неопределенно долгое время. Обычно случается одно из двух. Или они все же 
+    дожидаются своей очереди на исполнение (в девять часов утра в воскресенье, 
+    когда все приличные программисты ложатся спать). Или вычислительную систему 
+    приходится выключать, и они теряются (при остановке IBM 7094 в Массачусетском 
+    технологическом институте в 1973 году были найдены процессы, запущенные в 
+    1967 году и ни разу с тех пор не исполнявшиеся). Решение этой проблемы может 
+    быть достигнуто с помощью увеличения со временем значения приоритета процесса, 
+    находящегося в состоянии <B><I>готовность</i></B>. Пусть изначально процессам 
+    присваиваются приоритеты от 128 до 255. Каждый раз, по истечении определенного 
+    промежутка времени, значения приоритетов готовых процессов уменьшаются на 
+    1. Процессу, побывавшему в состоянии <B><I>исполнение</i></B>, восстанавливается 
+    первоначальное значение приоритета. Даже такая грубая схема гарантирует, что 
+    любому процессу в разумные сроки будет предоставлено право на исполнение.</FONT></P>
+   
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+   <a name="l030506"></a>3.5.6. Многоуровневые очереди (Multilevel 
+    Queue)</FONT></b>
+  
+  <P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Для систем, в которых 
+    процессы могут быть легко рассортированы на разные группы, был разработан 
+    другой класс алгоритмов планирования. Для каждой группы процессов создается 
+    своя очередь процессов, находящихся в состоянии <B><I>готовность</i></B> (см. 
+    рисунок&nbsp;3.5). Этим очередям приписываются фиксированные приоритеты. Например, 
+    приоритет очереди системных процессов устанавливается больше, чем приоритет 
+    очередей пользовательских процессов. А приоритет очереди процессов, запущенных 
+    студентами, — ниже, чем для очереди процессов, запущенных преподавателями. 
+    Это значит, что ни один пользовательский процесс не будет выбран для исполнения, 
+    пока есть хоть один готовый системный процесс, и ни один студенческий процесс 
+    не получит в свое распоряжение процессор, если есть процессы преподавателей, 
+    готовые к исполнению. Внутри этих очередей для планирования могут применяться 
+    самые разные алгоритмы. Так, например, для больших счетных процессов, не требующих 
+    взаимодействия с пользователем (<I>фоновых</I> процессов), может использоваться 
+    алгоритм FCFS, а для интерактивных процессов – алгоритм RR. Подобный подход, 
+    получивший название многоуровневых очередей, повышает гибкость планирования: 
+    для процессов с различными характеристиками применяется наиболее подходящий 
+    им алгоритм.</FONT></P>
+<P align="center"><img src="images/sr3-5.gif" width="212" height="259"><br>
+	<FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Рис. 3.5. Несколько очередей планирования.</font>
+   
+  
+       <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+<a name="l030507"></a>3.5.7. Многоуровневые очереди с обратной 
+        связью (Multilevel Feedback Queue)</FONT> </b>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Дальнейшим развитием алгоритма 
+  многоуровневых очередей является добавление к нему механизма обратной связи. 
+  Здесь процесс не постоянно приписан к определенной очереди, а может мигрировать 
+  из очереди в очередь, в зависимости от своего поведения. </FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Для 
+  простоты рассмотрим ситуацию, когда процессы в состоянии <B><I>готовность</i></B> 
+  организованы в 4 очереди, как на рисунке&nbsp;3.6. Планирование процессов между 
+  очередями осуществляется на основе вытесняющего приоритетного механизма. Чем 
+  выше на рисунке располагается очередь, тем выше ее приоритет. Процессы в очереди 
+  1 не могут исполняться, если в очереди 0 есть хотя бы один процесс. Процессы 
+  в очереди 2 не будут выбраны для выполнения, пока есть хоть один процесс в очередях 
+  0 и 1. И, наконец, процесс в очереди 3 может получить процессор в свое распоряжение 
+  только тогда, когда очереди 0, 1 и 2 пусты. Если при работе процесса появляется 
+  другой процесс в какой-либо более приоритетной очереди, исполняющийся процесс 
+  вытесняется появившимся. Планирование процессов внутри очередей 0—2 осуществляется 
+  с использованием алгоритма RR, 
+  планирование процессов в очереди 3 основывается на алгоритме FCFS.</font></P>
+<P align="center"><img src="images/sr3-6.gif" width="651" height="480"><br>
+	<FONT FACE="Times New Roman, sans-serif, Courier, mono" size="2">
+Рис. 3.6.Схема миграции процессов в многоуровневых очередях планирования
+ с обратной связью. Вытеснение процессов более приоритетными процессами
+  и завершение процессов на схеме не показано.</font>
+
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Родившийся процесс 
+  поступает в очередь 0. При выборе 
+  на исполнение он получает в свое распоряжение квант времени размером 8 единиц. 
+  Если продолжительность его CPU burst 
+  меньше этого кванта времени, процесс остается в очереди 0. В противном случае, 
+  он переходит в очередь 1. Для процессов из очереди 1 квант времени имеет величину 
+  16. Если процесс не укладывается в это время, он переходит в очередь 2. Если 
+  укладывается — остается в очереди 1. В очереди 2 величина кванта времени составляет 
+  32 единицы. Если и этого мало для непрерывной работы процесса, процесс поступает 
+  в очередь 3, для которой квантование времени не применяется, и, 
+  при отсутствии готовых процессов 
+  в других очередях, он может исполняться до окончания своего CPU 
+  burst. Чем больше значение продолжительности 
+  CPU burst, тем в менее приоритетную очередь попадает процесс, но тем на большее 
+  процессорное время он может рассчитывать для своего выполнения. Таким образом, 
+  через некоторое время все процессы, требующие малого времени работы процессора 
+  окажутся размещенными в высокоприоритетных очередях, а все процессы, требующие 
+  большого счета и с низкими запросами к времени отклика,&nbsp;—&nbsp;в низкоприоритетных.</font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Миграция процессов в обратном 
+  направлении может осуществляться по различным принципам. Например, после завершения 
+  ожидания ввода с клавиатуры процессы из очередей 1, 2 и 3 могут помещаться в 
+  очередь 0, после завершения дисковых операций ввода-вывода процессы из очередей 
+  2 и 3 могут помещаться в очередь 1, а после завершения ожидания всех других 
+  событий из очереди 3 в очередь 2. Перемещение процессов из очередей с низкими 
+  приоритетами в очереди с большими приоритетами позволяет более полно учитывать 
+  изменение поведения процессов с течением времени.</FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Многоуровневые очереди 
+  с обратной связью представляют собой наиболее общий подход к планированию процессов 
+  из числа подходов, рассмотренных нами. Они наиболее трудоемки в реализации, 
+  но в то же время они обладают наибольшей гибкостью. Понятно, что существует 
+  много других разновидностей такого способа планирования помимо варианта, приведенного 
+  выше. Для полного описания их конкретного воплощения необходимо указать:</FONT></P>
+<dir><ul type="square">
+    <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Количество очередей для процессов, находящихся 
+    в состоянии <B><I>готовность</i></B>.</font></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Алгоритм планирования, действующий между 
+    очередями.</FONT></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Алгоритмы планирования, действующие 
+    внутри очередей.</FONT></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Правила помещения родившегося процесса 
+    в одну из очередей.</FONT></LI>
+  <LI><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Правила перевода процессов из одной 
+    очереди в другую.</FONT></LI>
+</ul></dir>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Изменяя какой-либо из перечисленных 
+  пунктов, мы можем существенно менять поведение вычислительной системы.</FONT></P>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">На этом мы прекращаем рассмотрение 
+  различных алгоритмов планирования процессов, ибо как было сказано: “Никто не 
+  обнимет необъятного”.</FONT></P>
+ 
+   <P ALIGN="CENTER"><B><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+   <a name="l0306"></a>3.6. Резюме</FONT> </b>
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Одним из наиболее ограниченных 
+  ресурсов вычислительной системы является процессорное время. Для его распределения 
+  между многочисленными процессами в системе приходится применять процедуру планирования 
+  процессов. По степени длительности влияния планирования на поведение вычислительной 
+  системы различают <a href="#l0301b">краткосрочное</a>, <a href="#l0301c">среднесрочное</a> и 
+  <a href="#l0301a">долгосрочное</a> планирование процессов. 
+  Конкретные <a href="#l0305">алгоритмы планирования процессов</a> зависят от <a href="#l0302">поставленных целей, класса 
+  решаемых задач</a> и опираются на <a href="#l0303">статические и динамические
+   параметры процессов 
+  и компьютерных систем</a>. Различают <a href="#l0304">
+  вытесняющий и невытесняющий режимы планирования</a>. 
+  При невытесняющем планировании исполняющийся процесс уступает процессор другому 
+  процессу только по своему собственному желанию, при вытесняющем планировании 
+  исполняющийся процесс может быть вытеснен из состояния исполнения помимо собственной 
+  воли.</FONT></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Простейшим алгоритмом планирования 
+  является <a href="#l030501">невытесняющий алгоритм FCFS</a>, который, 
+  однако, может существенно задерживать короткие процессы, не вовремя перешедшие 
+  в состояние <B><I>готовность</i></B>. В системах разделения времени широкое 
+  распространение получила <a href="#l030502">вытесняющего версия этого алгоритма — 
+  RR</a>. </font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">Среди всех невытесняющих 
+  алгоритмов оптимальным с точки зрения среднего времени ожидания процессов является 
+  <a href="#l030503">алгоритм SJF</a>. Существует 
+  и вытесняющий вариант этого алгоритма. В интерактивных системах часто используется 
+  <a href="#l030504">алгоритм гарантированного планирования</a>, обеспечивающий пользователям равные 
+  части процессорного времени. 
+  </font></P>
+ 
+<P ALIGN="JUSTIFY"><FONT FACE="Times New Roman, sans-serif, Courier, mono" size="3">
+<a href="#l030503">Алгоритм SJF</a>
+  и <a href="#l030504">алгоритм гарантированного планирования</a> являются частными случаями 
+  <a href="#l030505">планирования 
+  с использованием приоритетов</a>. В более общих методах приоритетного планирования 
+  применяются <a href="#l030506">многоуровневые очереди процессов готовых к исполнению</a>
+   и<a href="#l030507"> многоуровневые 
+  очереди с обратной связью</a>. Будучи 
+  наиболее сложными в реализации, эти способы планирования обеспечивают гибкое 
+  поведение вычислительных систем и их адаптивность к решению задач разных классов.
+  </font></P>
+  <p align="center"><a href="../02/ch2.htm"> Предыдущая глава</a> | 
+<a href="../os.html">Программа курса</a> | 
+<a href="../04/ch4.htm"> Следующая глава</a></p>
+</BODY>
+</HTML>

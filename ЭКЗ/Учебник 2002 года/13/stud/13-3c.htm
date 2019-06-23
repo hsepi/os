@@ -1,0 +1,35 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>3c-s13-14s</title>
+</head>
+
+<body>
+ <basefont face="Times New Roman, sans-serif, Courier, mono" size="3">
+<p><font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><font color="#000000">/* 
+  Программа, игнорирующая сигнал SIGINT */</font><b><br>
+  <br>
+  #include &lt;signal.h&gt;<br>
+  <br>
+  int main(void){ </b></font> <br>
+<dir> <font face="Times New Roman, sans-serif, Courier, mono" size="3" color="#000000"> 
+  /* Выставляем реакцию процесса на сигнал</font><font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><b> 
+  SIGINT </b><font color="#000000">на игнорирование */ </font><b><br>
+  <br>
+  (void)<a href="../../man/signal.htm">signal</a>(SIGINT, SIG_IGN);<br>
+  <br>
+  </b> <font color="#000000">/*Начиная с этого места, процесс будет игнорировать 
+  возникновение сигнала</font><b> SIGINT </b><font color="#000000">*/</font><b> 
+  <br>
+  <br>
+  while(1);<br>
+  return 0;<br>
+  </b></font> </dir>
+   <font  face="Times New Roman, sans-serif, Courier, mono" size="3"  color="#008000"><b>
+}
+</b></font> 
+
+</body>
+
+</html>

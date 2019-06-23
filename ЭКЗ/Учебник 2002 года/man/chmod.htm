@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>chmod</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Команда chmod</font> </H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Синтаксис команды</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>chmod [who] { + | - | = } [perm] файл1 файл2 ... файлN</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание команды</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><font face="Times New Roman">Команда </font> <B><font color="#008000">chmod</font></B> 
+    <FONT FACE="Times New Roman">предназначена для изменения прав доступа к одному 
+    или нескольким файлам. Настоящее описание не является полным описанием команды, 
+    а адаптировано применительно к настоящему курсу. Для получения полного описания 
+    обращайтесь к UNIX Manual. Права доступа к файлу может менять только собственник 
+    (хозяин) файла или системный администратор.<br>
+    <br>
+    Параметр <b><font color="#008000">who </font></b>определяет для каких категорий 
+    пользователей устанавливаются права доступа. Он может представлять собой один 
+    или несколько нижеследующих символов:<br>
+    <br>
+    <table width="80%" align = "center" border="0" cellspacing="1" cellpadding="1">
+      <tr> 
+        <td width="11%" valign="top" align="center"><font color="#008000"><b>a</b></font></td>
+        <td width="89%">Установка прав доступа для всех категорий пользователей. 
+          Если параметр <b><font color="#008000">who</font></b> не задан, то по 
+          умолчанию применяется <b><font color="#008000">a</font></b>. При определении 
+          прав доступа с этим значением, заданные права устанавливаются с учетом 
+          значения <font face="Times New Roman"><a href="umask3.htm">маски создания 
+          файлов</a>.</font></td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top" align="center"><font color="#008000"><b>u</b></font></td>
+        <td width="89%">Установка прав доступа для собственника файла.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top" align="center"><font color="#008000"><b>g</b></font></td>
+        <td width="89%">Установка прав доступа для пользователей, входящих в группу 
+          собственников файла.</td>
+      </tr>
+      <tr> 
+        <td width="11%" valign="top" align="center"><font color="#008000"><b>o</b></font></td>
+        <td width="89%">Установка прав доступа для всех остальных пользователей.</td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    Операция, выполняемая над правами доступа для заданной категории пользователей, 
+    определяется одним из следующих символов:<br>
+    <br>
+    <table width="80%" align="center" border="0" cellspacing="1" cellpadding="1">
+      <tr> 
+        <td width="10%" align="center" valign="top"><font color="#008000"><b>+</b></font></td>
+        <td width="90%">Добавление прав доступа.</td>
+      </tr>
+      <tr> 
+        <td width="10%" align="center" valign="top"><font color="#008000"><b>-</b></font></td>
+        <td width="90%">Отмена прав доступа.</td>
+      </tr>
+      <tr> 
+        <td width="10%" align="center" valign="top"><font color="#008000"><b>=</b></font></td>
+        <td width="90%">Замена прав доступа, т.е. отмена всех существовавших и 
+          добавление перечисленных. Если параметр <b><font color="#008000">perm</font></b> 
+          не определен, то отменяются все существовавшие права доступа.</td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    Параметр <b><font color="#008000">perm</font></b> определяет права доступа, 
+    которые будут добавлены, отменены или установлены взамен соответствующей командой, 
+    и представляет собой комбинацию одного или нескольких следующих символов:<br>
+    <br>
+    <table width="80%" border="0" align="center" cellspacing="1" cellpadding="1">
+      <tr> 
+        <td width="10%" align="center" valign="top"><font color="#008000"><b>r</b></font></td>
+        <td width="90%">Право на чтение.</td>
+      </tr>
+      <tr> 
+        <td width="10%" align="center" valign="top"><font color="#008000"><b>w</b></font></td>
+        <td width="90%">Право на модификацию.</td>
+      </tr>
+      <tr> 
+        <td width="10%" align="center" valign="top"><font color="#008000"><b>x</b></font></td>
+        <td width="90%">Право на исполнение.</td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    Параметры <b><font color="#008000">файл1, файл2, ... файлN</font></b> - это 
+    имена файлов, для которых производится изменение прав доступа. Вместо имен 
+    могут использоваться их <a href="shablon.htm">шаблоны</a>.</font></BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

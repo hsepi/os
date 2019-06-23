@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Msgctl</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> msgctl</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/msg.h&gt;<br>
+    <br>
+    int msgctl(int msqid, int cmd, struct msqid_ds *buf); </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">msgctl 
+      </font></B>предназначен для получения информации об очереди сообщений, изменения 
+      ее атрибутов и удаления ее из системы. Данное описание не является полным 
+      описанием системного вызова, а ограничивается рамками текущего курса. Для 
+      изучения полного описания обращайтесь к UNIX man.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">В нашем курсе мы будем пользоваться 
+      системным вызовом <b><font color="#008000">msgctl</font></b> только для 
+      удаления очереди сообщений из системы. Параметр <B><font color="#008000">msqid 
+      </font></B> является дескриптором System V IPC для очереди сообщений, т.е. 
+      значением, которое вернул системный вызов <b><a href="msgget.htm">msgget()</a></b> 
+      при создании очереди или при ее поиске по ключу.<br>
+      В качестве параметра <B><FONT COLOR="#008000">cmd</font></B> в рамках нашего</font><FONT FACE="Times New Roman"> 
+      курса мы всегда будем передавать значение <b><font color="#008000">IPC_RMID</font></b> 
+      - команду для удаления очереди сообщений с заданным идентификатором. Параметр 
+      <b><font color="#008000">buf</font></b> для этой команды не используется, 
+      поэтому мы всегда будем подставлять туда значение <b><font color="#008000">NULL</font></b>. 
+      <br>
+      </font><br>
+  </BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение <b><font color="#008000">0</font></b> при нормальном завершении 
+      и значение <b><font color="#008000">-1 </font></b> при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

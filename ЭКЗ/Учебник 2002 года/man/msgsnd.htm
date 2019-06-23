@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Msgsnd</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> msgsnd</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT  FACE="Times New Roman" SIZE=3 COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/msg.h&gt;<br>
+    <br>
+    int msgsnd(int msqid, struct msgbuf *ptr, int length,  int flag); </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">msgsnd 
+      </font></B> предназначен для помещения сообщения в очередь сообщений, т.&nbsp;е. 
+      является реализацией примитива <b><font color="#008000">send</font></b>.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> 
+    <FONT FACE="Times New Roman">Параметр <B><font color="#008000">msqid</font></B> 
+    является дескриптором System V IPC для очереди, в которую отправляется сообщение, 
+    т.е. значением, которое вернул системный вызов <b><a href="msgget.htm">msgget()</a></b> 
+    при создании очереди или при ее поиске по ключу.<br>
+    <br>
+    Структура <b><font color="#008000">struct msgbuf</font></b> описана в файле 
+    <b> <font color="#008000">sys/msg.h</font></b> как<br>
+    <font color="#008000"><b><br>
+    </b></font> 
+    <dir> 
+      <dir> 
+        <dir><b><font color="#008000"> struct msgbuf {<br>
+          </font> </b> 
+          <dir><b><font color="#008000"> long mtype;<br>
+            char mtext[1];<br>
+            </font></b></dir>
+          <b><font color="#008000">}; </font></b> </dir>
+      </dir>
+    </dir>
+    <br>
+    <p align="JUSTIFY"> Она представляет собой некоторый шаблон структуры сообщения 
+      пользователя. Сообщение пользователя – это структура, первый элемент которой 
+      обязательно имеет тип <b><font color="#008000">long</font></b> и содержит 
+      тип сообщения, а далее следует информация теоретически произвольной длины 
+      (практически в Linux ограничена размером 4080 байт, которая может быть еще 
+      уменьшена системным администратором), содержащая собственно суть сообщения. 
+      Например: <br>
+      <font color="#008000"><b><br>
+      </b></font> 
+    <dir> 
+      <dir> 
+        <dir><b><font color="#008000">struct mymsgbuf {<br>
+          </font> </b> 
+          <dir><b><font color="#008000"> long mtype;<br>
+            char mtext[1024];<br>
+            </font></b></dir>
+          <b><font color="#008000">} mybuf;</font></b><br>
+          <br>
+        </dir>
+      </dir>
+    </dir>
+    <p align="JUSTIFY"> При этом информация вовсе не обязана быть текстовой, например: 
+      <br>
+      <br>
+    <dir> 
+      <dir> 
+        <dir> <b><font color="#008000">struct mymsgbuf {</font> </b> 
+          <dir><b><font color="#008000"> long mtype;<br>
+            struct {</font> </b> 
+            <dir><b><font color="#008000"> int iinfo;<br>
+              float finfo;</font></b></dir>
+            <b><font color="#008000">} info;</font></b></dir>
+          <b><font color="#008000">} mybuf; </font></b></dir>
+      </dir>
+    </dir>
+    <br>
+    <p align="JUSTIFY"> Тип сообщения обязан быть строго положительным числом. 
+      Действительная длина полезной информации (т.&nbsp;е. информации, расположенной 
+      в структуре после типа сообщения) должна быть передана системному вызову 
+      в качестве параметра<b><font color="#008000"> length</font></b>. Этот параметр 
+      может быть равен и <b><font color="#008000">0</font></b>, если вся полезная 
+      информация заключается в сfмом факте наличия сообщения. Системный вызов 
+      копирует сообщение, расположенное по адресу, на который указывает параметр 
+      <font color="#008000"><b>ptr</b></font>, в очередь сообщений, заданную дескриптором 
+      <b><font color="#008000">msqid</font></b>.<br>
+      <br>
+      Параметр<b><font color="#008000"> flag</font></b> может принимать два значения: 
+      <b> <font color="#008000">0</font></b> и <b><font color="#008000">IPC_NOWAIT</font></b>. 
+      Если значение флага равно <b><font color="#008000">0</font></b> и в очереди 
+      не хватает места для того, чтобы поместить сообщение, то системный вызов 
+      блокируется до тех пор, пока не освободится место. При значении флага <b><font color="#008000">IPC_NOWAIT</font></b> 
+      системный вызов в этой ситуации не блокируется, а констатирует возникновение 
+      ошибки с установлением значения переменной <b><font color="#008000">errno</font></b>, 
+      описанной в файле <b><font color="#008000">errno.h</font></b>, равным <b><font color="#008000">EAGAIN</font></b>. 
+    </font> </BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> </FONT></B><B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение <b><font color="#008000">0 </font></b>при нормальном завершении 
+      и значение <b><font color="#008000">-1</font></b> при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

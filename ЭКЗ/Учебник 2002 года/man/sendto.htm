@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Системные вызовы sendto и recvfrom</TITLE>
+<META NAME="Template" CONTENT="D:\MSOFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системные вызовы </font>sendto <FONT FACE="Times New Roman">и </FONT>recvfrom</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототипы системных вызовов</P></FONT></B><DIR><B><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;sys/types.h&gt;<BR>
+#include &lt;sys/socket.h&gt; </BLOCKQUOTE>
+</font></b><BLOCKQUOTE><FONT COLOR="#008000"><B>int sendto(int sockd, char *buff, int nbytes, int flags, </b></font><A HREF="SockAddr.htm"><U><FONT COLOR="#008000">struct sockaddr</font></U></A><B><FONT COLOR="#008000"> *to, int addrlen);<BR>
+int recvfrom(int sockd, char *buff, int nbytes, int flags, </font></B><A HREF="SockAddr.htm"><U><FONT COLOR="#008000">struct sockaddr</font></U></A><B><FONT COLOR="#008000"> *from, int *addrlen);</font></b></BLOCKQUOTE></DIR><B>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системных вызовов</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">sockd 
+    </font></B><FONT FACE="Times New Roman">является дескриптором созданного ранее 
+    коммуникационного узла, т.&nbsp;е. значением, которое вернул системный вызов 
+    </FONT><A HREF="socket.htm"><I>socket()</I></A><FONT FACE="Times New Roman">, 
+    через который будет отсылаться или получаться информация.</font></BLOCKQUOTE>
+  <BLOCKQUOTE> <FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">buff</font></B><FONT FACE="Times New Roman"> 
+    представляет собой адрес области памяти, начиная с которого будет браться 
+    информация для передачи или размещаться принятая информация.</font></BLOCKQUOTE>
+  <BLOCKQUOTE> <FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">nbytes</font></B><FONT FACE="Times New Roman"> 
+    для системного вызова </FONT><B><FONT COLOR="#008000">sendto</font></B><FONT FACE="Times New Roman"> 
+    определяет количество байт, которое должно быть передано, начиная с адреса 
+    памяти </FONT><B><FONT COLOR="#008000">buff</font></B><FONT FACE="Times New Roman">. 
+    Параметр </FONT><B><FONT COLOR="#008000">nbytes</font></B><FONT FACE="Times New Roman"> 
+    для системного вызова </FONT><B><FONT COLOR="#008000">recvfrom</font></B><FONT FACE="Times New Roman"> 
+    определяет максимальное количество байт, которое может быть размещено в приемном 
+    буфере, начиная с адреса </FONT><B><FONT COLOR="#008000">buff</font></B>. 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">to 
+    </font></B><FONT FACE="Times New Roman">для системного вызова </FONT><B><FONT COLOR="#008000">sendto</font></B><FONT FACE="Times New Roman"> 
+    определяет ссылку на </FONT><A HREF="sockaddr.htm"><U><FONT FACE="Times New Roman" COLOR="#0000ff">адрес 
+    socket'а</font></U></A><FONT FACE="Times New Roman"> получателя информации 
+    и должен быть заполнен перед вызовом. Если параметр </FONT><B><FONT COLOR="#008000">from 
+    </font></B><FONT FACE="Times New Roman">для системного вызова </FONT><B><FONT COLOR="#008000">recvfrom</font></B><FONT FACE="Times New Roman"> 
+    не равен </FONT>NULL<FONT FACE="Times New Roman">, то для случая установления 
+    связи через пакеты данных он определяет ссылку на структуру, в которую будет 
+    занесен </FONT><A HREF="sockaddr.htm"><U><FONT FACE="Times New Roman" COLOR="#0000ff">адрес 
+    socket'а</font></U></A><FONT FACE="Times New Roman"> отправителя информации 
+    после завершения вызова. В этом случае перед вызовом эту структуру необходимо 
+    обнулить.</font></BLOCKQUOTE>
+  <BLOCKQUOTE> <FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">addrlen</font></B> 
+    <FONT FACE="Times New Roman">для системного вызова </FONT><B><FONT COLOR="#008000">sendto</font></B> 
+    <FONT FACE="Times New Roman">должен содержать фактическую длину структуры, 
+    адрес которой передается в качестве параметра</FONT> <B><FONT COLOR="#008000">to</font></B><FONT FACE="Times New Roman">. 
+    Для системного вызова </FONT><B><FONT COLOR="#008000">recvfrom</font></B><FONT FACE="Times New Roman"> 
+    параметр </FONT><B><FONT COLOR="#008000">addrlen</font></B><FONT FACE="Times New Roman"> 
+    является <B><U>ссылкой</u></B> на переменную, в которую будет занесена фактическая 
+    длина структуры </FONT><A HREF="sockaddr.htm"><U><FONT FACE="Times New Roman" COLOR="#0000ff">адреса 
+    socket'а</font></U></A><FONT FACE="Times New Roman"> отправителя, если это 
+    определено параметром </FONT><B><FONT COLOR="#008000">from</font></B> <FONT FACE="Times New Roman">и 
+    способом установления связи. 
+	<img border="0" src="../images/znak.gif" align="left" vspace="8" alt="Nota bene" hspace="10"> 
+    <u>Заметим, что перед вызовом этот параметр должен указывать на переменную, 
+    содержащую максимально допустимое значение такой длины.</u> Если параметр 
+    </FONT><B><FONT COLOR="#008000">from</font></B> <FONT FACE="Times New Roman">имеет 
+    значение</FONT> NULL<FONT FACE="Times New Roman">, то и параметр </FONT><B><FONT COLOR="#008000">addrlen</font></B><FONT FACE="Times New Roman"> 
+    может иметь значение </FONT>NULL.</BLOCKQUOTE>
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">flags</font></B> 
+    <FONT FACE="Times New Roman">определяет режимы использования системных вызовов. 
+    Его использование выходит за рамки нашего курса и поэтому мы всегда будем 
+    полагать его значение равным 0.</font></BLOCKQUOTE>
+  <FONT FACE="Times New Roman"> 
+  <BLOCKQUOTE>В случае успешного завершения системный вызов возвращает количество 
+    реально отосланных или принятых байт. При возникновении какой-либо ошибки 
+    возвращается отрицательное значение.</BLOCKQUOTE>
+  </font></DIR>
+</BODY>
+</HTML>

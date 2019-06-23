@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>mkfifo</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Функция mkfifo</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип функции</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/stat.h&gt;<br>
+  #include &lt;unistd.h&gt;<br>
+    <br>
+    int mkfifo(char *path, int mode);
+	</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание функции</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Функция mkfifo
+    предназначена для создания FIFO в
+    операционной системе.</font> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">
+    Параметр </font><B><FONT COLOR="#008000">path</font></B><FONT FACE="Times New Roman"> 
+      является указателем на строку, содержащую полное или относительное имя файла,
+      который будет являться меткой FIFO на
+      диске. Для успешного создания FIFO файла с
+      таким именем перед вызовом функции не должно
+      существовать.<br>
+     Параметр 
+      </font><B><FONT COLOR="#008000">mode</font></B><FONT FACE="Times New Roman"> 
+      устанавливает атрибуты прав доступа различных категорий пользователей к
+    FIFO. Этот 
+    параметр задается как некоторая сумма следующих восьмеричных значений:<br>
+    <br>
+    <table align = "center" width="66%" border="0" cellspacing="0" cellpadding="0">
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0400</b></font></td>
+        <td width="89%">- Разрешено чтение для пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0200</b></font></td>
+        <td width="89%">- Разрешена запись для пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0040</b></font></td>
+        <td width="89%">- Разрешено чтение для группы пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0020</b></font></td>
+        <td width="89%">- Разрешена запись для группы пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0004</b></font></td>
+        <td width="89%">- Разрешено чтение для всех остальных пользователей</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0002</b></font></td>
+        <td width="89%">- Разрешена запись для всех остальных пользователей</td>
+      </tr>
+    </table>
+    <br>
+ 
+ При создании FIFO реально устанавливаемые права доступа 
+      получаются из стандартной комбинации параметра <font color="#008000"><b>mode</b></font> 
+      и <a href="umask3.htm">маски создания файлов текущего процесса</a><font color="#008000"> 
+      <b>umask</b></font>, а именно - они равны&nbsp;<font color="#008000"><b>
+    mode 
+      &<sup> ~</sup>umask</b></font>. <br>
+      <br>
+    При успешном создании FIFO функция
+    возвращает значение 0, при неуспешном -
+    отрицательное значение. </font>
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

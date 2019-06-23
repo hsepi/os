@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>mknod для FIFO</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Использование
+системного вызова mknod для создания FIFO</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/stat.h&gt;<br>
+  #include &lt;unistd.h&gt;<br>
+    <br>
+    int mknod(char *path, int mode, int dev);
+	</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Нашей целью
+    является не полное описание системного
+    вызова <font color="#008000"><b>mknod</b></font>, а только описание его
+    использования для создания FIFO. Поэтому мы
+    будем рассматривать не все возможные
+    варианты задания параметров, а только те
+    из них, которые соответствуют этой
+    специфической деятельности.</font> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр <font color="#008000"><b>dev
+    </b></font>является несущественным в нашей
+    ситуации и мы будем всегда полагать его
+    равным 0.<br>
+    Параметр </font><B><FONT COLOR="#008000">path</font></B><FONT FACE="Times New Roman"> 
+      является указателем на строку, содержащую полное или относительное имя файла,
+      который будет являться меткой FIFO на
+      диске. Для успешного создания FIFO файла с
+      таким именем перед вызовом не должно
+      существовать.<br>
+     Параметр 
+      </font><B><FONT COLOR="#008000">mode</font></B><FONT FACE="Times New Roman"> 
+      устанавливает атрибуты прав доступа различных категорий пользователей к
+    FIFO. Этот 
+    параметр задается как результат
+    побитовой операции &quot;или&quot; значения <font color="#008000"><b>S_IFIFO</b></font>,
+    указывающего, что системный вызов должен
+    создать FIFO, и некоторой суммы следующих восьмеричных значений:<br>
+    <br>
+    <table align = "center" width="66%" border="0" cellspacing="0" cellpadding="0">
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0400</b></font></td>
+        <td width="89%">- Разрешено чтение для пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0200</b></font></td>
+        <td width="89%">- Разрешена запись для пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0040</b></font></td>
+        <td width="89%">- Разрешено чтение для группы пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0020</b></font></td>
+        <td width="89%">- Разрешена запись для группы пользователя, создавшего
+          FIFO.</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0004</b></font></td>
+        <td width="89%">- Разрешено чтение для всех остальных пользователей</td>
+      </tr>
+      <tr> 
+        <td width="11%"><font color="#008000"><b>0002</b></font></td>
+        <td width="89%">- Разрешена запись для всех остальных пользователей</td>
+      </tr>
+    </table>
+    <br>
+    <br>
+ При создании FIFO реально устанавливаемые права доступа 
+      получаются из стандартной комбинации параметра <font color="#008000"><b>mode</b></font> 
+      и <a href="umask3.htm">маски создания файлов текущего процесса</a><font color="#008000"> 
+      <b>umask</b></font>, а именно - они равны <font color="#008000"><b>(0777
+    &amp; mode) 
+      &<sup> ~</sup>umask</b></font>. <br>
+      <br>
+    При успешном создании FIFO системный вызов
+    возвращает значение 0, при неуспешном -
+    отрицательное значение. </font>
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

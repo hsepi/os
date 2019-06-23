@@ -1,0 +1,112 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>1b.c-s7s</title>
+</head>
+
+<body>
+
+<p>
+<font face="Times New Roman, Times, serif"  color="#008000"><b>/* Программа 2 
+для иллюстрации работы с очередями сообщений */</b> 
+<p>&nbsp; 
+<p><font size="3" color="#008000"><b>/* Эта программа получает доступ к очереди 
+  сообщений,<br>
+  и читает из нее сообщения с любым типом в порядке FIFO до тех пор,</b></font><font face="Times New Roman, Times, serif"  color="#008000"><font size="3" color="#008000"><b><br>
+  </b></font></font><font size="3" color="#008000"><b> пока не получит сообщение 
+  с типом 255, которое будет служить</b></font><font face="Times New Roman, Times, serif"  color="#008000"><font size="3" color="#008000"><b><br>
+  </b></font></font><font size="3" color="#008000"><b> сигналом прекращения работы. 
+  */</b></font> 
+<p>
+<font size="3" color="#008000"><b>#include &lt;sys/types.h><br>
+#include &lt;sys/ipc.h><br>
+#include &lt;sys/msg.h><br>
+#include &lt;string.h&gt;</b></font><font face="Times New Roman, Times, serif"  color="#008000"><font size="3" color="#008000"><b><br>
+</b></font></font><font size="3" color="#008000"><b> #include &lt;stdio.h><br>
+<br>
+#define LAST_MESSAGE 255 /* Тип сообщения для прекращения работы
+ */ <br>
+<br>
+int main()<br>
+{<br>
+</b> 
+<dir><b> int msqid; /* IPC дескриптор для очереди сообщений */<br>
+  <br>
+  char pathname[] = "09-1a.c"; /* Имя файла, использующееся для генерации ключа. 
+  <br>
+  Файл с таким именем должен существовать в текущей директории */<br>
+  <br>
+  key_t key; /* IPC ключ */ <br>
+  <br>
+  int len, maxlen; /* Реальная длина и максимальная длина информативной части 
+  сообщения */<br>
+  <br>
+  /* Ниже следует пользовательская структура для сообщения */<br>
+  <br>
+  struct mymsgbuf<br>
+  {</b> 
+  <dir> <b> long mtype;<br>
+    char mtext[81]; </b> </dir>
+  } <b>mybuf;<br>
+  <br>
+  /* Генерируем IPC ключ из имени файла 09-1a.c в текущей директории<br>
+  и номера экземпляра очереди сообщений 0 */<br>
+  <br>
+  if((key = <a href="../../man/ftok.htm">ftok</a>(pathname,0)) &lt; 0){<br>
+  </b> 
+  <dir><b>printf("Can\'t generate key\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  /* Пытаемся получить доступ по ключу к очереди сообщений, если она существует,<br>
+  или создать ее, если она еще не существует, с правами доступа<br>
+  read &amp; write для всех пользователей */ <br>
+  <br>
+  if((msqid = <a href="../../man/msgget.htm">msgget</a>(key, 0666 | IPC_CREAT)) 
+  &lt; 0){<br>
+  </b> 
+  <dir><b> printf(&quot;Can\'t get msqid\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>} <br>
+  </b> <br>
+  <b>while(1){<br>
+  <br>
+  </b> 
+  <dir><b> /* В бесконечном цикле принимаем сообщения любого типа в порядке FIFO 
+    с максимальной длиной информативной части 81 символ до тех пор, пока не поступит 
+    сообщение с типом LAST_MESSAGE*/ <br>
+    <br>
+    maxlen = 81;<br>
+    <br>
+    if(( len = <a href="../../man/msgrcv.htm">msgrcv</a>(msqid, (struct msgbuf 
+    *) &mybuf, maxlen, 0, 0) < 0){<br>
+    </b> 
+    <dir><b> printf("Can\'t receive message from queue\n");<br>
+      <a href="../../man/exit.htm">exit</a>(-1);<br>
+      </b></dir>
+    <b> }<br>
+    <br>
+    /* Если принятое сообщение имеет тип LAST_MESSAGE, прекращаем работу и удаляем 
+    очередь сообщений из системы.<br>
+    В противном случае печатаем текст принятого сообщения. */<br>
+    <br>
+    if (mybuf.mtype == LAST_MESSAGE){<br>
+    </b> 
+    <dir><b> <a href="../../man/msgctl.htm">msgctl</a>(msqid, IPC_RMID, (struct 
+      msqid_ds *) NULL);<br>
+      <a href="../../man/exit.htm"> exit(</a>0);<br>
+      </b></dir>
+    <b> }<br><br>
+	  printf("message type = %ld, info = %s\n", mybuf.mtype, mybuf.mtext);<br>
+    </b></dir>
+  <b> }<br>
+  <br>
+  return 0; /* Исключительно для отсутствия warning'ов при компиляции. */<br>
+  </b></dir>
+<b>}</b></font> </FONT> 
+</body>
+
+</html>

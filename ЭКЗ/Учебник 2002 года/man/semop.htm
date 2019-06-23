@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Semop</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> semop</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT  FACE="Times New Roman" SIZE=3 COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/sem.h&gt;<br>
+    <br>
+    int semop(int semid, struct sembuf *sops, int nsops); </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">semop 
+      </font></B>предназначен для выполнения операций <a href="../08/prep/sem8.htm#s0801a">A, 
+      D и Z</a> над семафорами из массива IPC семафоров. Данное описание не является 
+      полным описанием системного вызова, а ограничивается рамками текущего курса. 
+      Для полного описания обращайтесь к UNIX man. </FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> 
+    <FONT FACE="Times New Roman">Параметр <B><font color="#008000">semid</font></B> 
+    является дескриптором System V IPC для набора семафоров, т.е. значением, которое 
+    вернул системный вызов <a href="semget.htm">semget()</a> при создании набора 
+    семафоров или при его поиске по ключу.<br>
+    Каждый из <B><FONT COLOR="#008000">nsops</font></B> элементов массива, на 
+    который указывает параметр <b><font color="#008000"> sops</font></b>, определяет 
+    операцию, которая должна быть совершена над каким-либо семафоров из массива 
+    IPC семафоров и имеет тип структуры <b><font color="#008000">struct sembuf</font></b>, 
+    в которую входят следующие переменные:<br>
+    <br>
+    <table align = "center"  width="85%" border="0">
+      <tr> 
+        <td valign="top" width="35%"><font color="#008000"><b>short&nbsp;sem_num</b></font></td>
+        <td width="65%">- номер семафора в массиве IPC семафоров (нумеруются, 
+          начиная с 0);</td>
+      </tr>
+      <tr> 
+        <td width="35%" valign="top"><font color="#008000"><b>short sem_op</b></font></td>
+        <td width="65%">- выполняемая операция;</td>
+      </tr>
+      <tr> 
+        <td width="35%" valign="top"><font color="#008000"><b>short sem_flg</b></font></td>
+        <td width="65%">- флаги для выполнения операции. В нашем курсе всегда 
+          будем полагать равной 0.</td>
+      </tr>
+    </table>
+    <br>
+    </font> 
+    <p align="JUSTIFY"> 
+    <FONT FACE="Times New Roman">Значение элемента структуры <b><font color="#008000">sem_op</font></b> 
+    определяется следующим образом:<br>
+    <br>
+    <dir> Для выполнения операции <b><font color="#008000">A(S,n)</font></b> значение 
+      должно быть равно<b><font color="#008000"> n</font></b>.<br>
+      Для выполнения операции <b><font color="#008000">D(S,n)</font></b> значение 
+      должно быть равно <b><font color="#008000">-n</font></b>.<br>
+      Для выполнения операции <b><font color="#008000">Z(S)</font></b> значение 
+      должно быть равно<b><font color="#008000"> 0</font></b>.<br>
+    </dir>
+    </font><br>
+    <FONT FACE="Times New Roman">Семантика системного вызова подразумевает, что 
+    все операции будут в реальности выполнены над семафорами только перед успешным 
+    возвращением из системного вызова. Если при выполнении операций<b><font color="#008000"> 
+    D</font></b> или<b><font color="#008000"> Z</font></b> процесс перешел в состояние 
+    ожидания, то он может быть выведен из этого состояния и при возникновении 
+    следующих форсмажорных ситуаций:<br>
+	<br>
+	<dir> - Массив семафоров был удален из системы.<br>
+      - Процесс получил сигнал, который должен быть обработан.<br>
+      <br>
+    </dir>
+	В этом случае происходит возврат из системного вызова с констатацией ошибочной ситуации.
+	
+	
+	</font><br>
+  </BLOCKQUOTE>
+    <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение  0 при нормальном завершении 
+      и значение -1 при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

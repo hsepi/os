@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Системный вызов listen</TITLE>
+<META NAME="Template" CONTENT="D:\MsOffice\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> listen</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;sys/types.h&gt;<BR>
+#include &lt;sys/socket.h&gt; </BLOCKQUOTE>
+<BLOCKQUOTE>int listen(int sockd, int backlog);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B><DIR><FONT FACE="Times New Roman" SIZE=5><B>
+
+</b></font><BLOCKQUOTE><FONT FACE="Times New Roman">Системный вызов </font><B><FONT COLOR="#008000">listen</font></B><FONT FACE="Times New Roman"> используется сервером, ориентированным на установление связи путем виртуального соединения, для перевода </FONT>socket'<FONT FACE="Times New Roman">а в пассивный режим и установления глубины очереди для соединений.</font></BLOCKQUOTE>
+  <BLOCKQUOTE> <FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">sockd 
+    </font></B><FONT FACE="Times New Roman">является дескриптором созданного ранее 
+    коммуникационного узла, который должен быть переведен в пассивный режим, т.&nbsp;е. 
+    значением, которое вернул системный вызов </FONT><A href="socket.htm"><I>socket()</I></A><FONT FACE="Times New Roman">Системный 
+    вызов </FONT><B><FONT COLOR="#008000">listen</font></B><FONT FACE="Times New Roman"> 
+    требует предварительной настройки адреса </FONT>socket'<FONT FACE="Times New Roman">а 
+    с помощью системного вызова </FONT><A href="bind.htm"><U><FONT COLOR="#0000ff"><I>bind()</I></font></U></A>.</BLOCKQUOTE>
+<BLOCKQUOTE><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">backlog</font></B><FONT FACE="Times New Roman"> определяет максимальный размер очереди для клиентов ожидающих соединения с сервером. На многих системах ограничен значением 5.</font></BLOCKQUOTE><FONT FACE="Times New Roman">
+<BLOCKQUOTE>Системный вызов возвращает значение 0 при нормальном завершении и значение -1 при возникновении ошибки.</BLOCKQUOTE></font></DIR>
+</BODY>
+</HTML>

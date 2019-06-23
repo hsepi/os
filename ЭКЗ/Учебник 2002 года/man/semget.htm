@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Semget</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> semget</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT  FACE="Times New Roman" SIZE=3 COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/sem.h&gt;<br>
+    <br>
+    int semget(key_t key, int nsems, int semflg); </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">semget 
+      </font></B> предназначен для выполнения операции 
+      доступа к массиву IPC семафоров и, в случае ее успешного завершения, возврашает 
+      дескриптор System V IPC для этого массива (целое неотрицательное число, 
+      однозначно характеризующее массив семафоров внутри вычислительной системы 
+      и использующееся в дальнейшем для других операций с ним).</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр <B><font color="#008000">key</font></B> 
+      является ключом System V IPC для массива семафоров, т.е. фактически его 
+      именем из пространства имен System V IPC. В качестве значения этого параметра 
+      может быть использовано значение ключа, полученное с помощью функции <b><font color="#008000"><a href="ftok.htm">ftok()</a></font></b>, 
+      или специальное значение<b><font color="#008000"> IPC_PRIVATE</font></b>. 
+      Использование значения<b><font color="#008000"> IPC_PRIVATE</font></b> <b><u>всегда</u></b> 
+      приводит к попытке создания нового массива семафоров с ключом, который не 
+      совпадает со значением ключа ни одного из уже существующих массивов и который 
+      не может быть получен с помощью функции <a href="ftok.htm"><b>ftok()</b></a> 
+      ни при одной комбинации ее параметров.<br>
+      Параметр <B><FONT COLOR="#008000">nsems</font></B> определяет количество 
+      семафоров в создаваемом или уже существующем массиве. В случае, если массив 
+      с указанным ключом уже существует, но его размер не совпадает с указанным 
+      в параметре <b><font color="#008000">nsems</font></b>, констатируется возникновение 
+      ошибки.</font><FONT FACE="Times New Roman"><br>
+      Параметр<b><font color="#008000"> semflg</font></b> - флаги - играет роль 
+      только при создании нового массива семафоров и определяет права различных 
+      пользователей при доступе к массиву, а также необходимость создания нового 
+      массива и поведение системного вызова при попытке создания. Он является 
+      некоторой комбинацией (с помощью операции побитовое или - &quot;|&quot;) 
+      следующих предопределенных значений и восьмеричных прав доступа:<br>
+      <br>
+      </font> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <dir><FONT FACE="Times New Roman"> </FONT><FONT FACE="Times New Roman"> 
+      <table width="77%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="24%" valign="top"><b><font color="#008000">IPC_CREAT</font></b></td>
+          <td width="76%"> 
+            <p align="JUSTIFY"> <font face="Times New Roman">- если массив для 
+              указанного ключа не существует, он должен быть создан.</font> 
+          </td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><b><font color="#008000">IPC_EXCL</font></b><font face="Times New Roman"></font></td>
+          <td width="76%"><font face="Times New Roman">- применяется совместно 
+            с флагом </font><b><font color="#008000">IPC_CREAT</font></b><font face="Times New Roman">. 
+            При совместном их использовании и существовании массива с указанным 
+            ключом, доступ к массиву не производится и констатируется ошибочная 
+            ситуация, при этом переменная <font color="#008000"><b>errno</b></font>, 
+            описанная в файле <font color="#008000"><b>errno.h</b></font>, примет 
+            значение <font color="#008000"><b>EEXIST</b></font>.</font></td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><font color="#008000"><b>0400</b></font></td>
+          <td width="76%">- Разрешено чтение для пользователя, создавшего <font face="Times New Roman">массив</font>.</td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><font color="#008000"><b>0200</b></font></td>
+          <td width="76%">- Разрешена запись для пользователя, создавшего <font face="Times New Roman">массив</font>.</td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><font color="#008000"><b>0040</b></font></td>
+          <td width="76%">- Разрешено чтение для группы пользователя, создавшего 
+            <font face="Times New Roman">массив</font>.</td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><font color="#008000"><b>0020</b></font></td>
+          <td width="76%">- Разрешена запись для группы пользователя, создавшего 
+            <font face="Times New Roman">массив</font>.</td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><font color="#008000"><b>0004</b></font></td>
+          <td width="76%">- Разрешено чтение для всех остальных пользователей</td>
+        </tr>
+        <tr> 
+          <td width="24%" valign="top"><font color="#008000"><b>0002</b></font></td>
+          <td width="76%">- Разрешена запись для всех остальных пользователей</td>
+        </tr>
+      </table>
+      </FONT> </dir>
+    <br>
+	 <p align="JUSTIFY"><FONT FACE="Times New Roman">Вновь созданные семафоры 
+	  инициируются нулевым значением.</font>
+	<br>
+  </BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      значение дескриптора System V IPC для массива семафоров при нормальном завершении 
+      и значение -1 при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

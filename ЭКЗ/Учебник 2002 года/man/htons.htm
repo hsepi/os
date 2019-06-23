@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Функции преобразования порядка байт</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<FONT FACE="Times New Roman"><H1 ALIGN="CENTER">Функции преобразования порядка байт</H1>
+</FONT><B><FONT FACE="Times New Roman" SIZE=5><P>Прототипы функций</P><DIR>
+
+</FONT><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;netinet/in.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>unsigned long int htonl(unsigned long int hostlong);<BR>
+unsigned short int htons(unsigned short int hostshort);<BR>
+unsigned long int ntohl(unsigned long int netlong);<BR>
+unsigned short int ntohs(unsigned short int netshort);</BLOCKQUOTE></DIR>
+
+</FONT><FONT FACE="Times New Roman" SIZE=5><P>Описание функций</P><DIR>
+
+</B></FONT><FONT FACE="Times New Roman"><BLOCKQUOTE>Функция </FONT><B><FONT COLOR="#008000">htonl</B></FONT><FONT FACE="Times New Roman"> осуществляет перевод целого длинного числа из порядка байт, принятого на компьютере, в сетевой порядок байт.<BR>
+Функция </FONT><B><FONT COLOR="#008000">htons</B></FONT><FONT FACE="Times New Roman"> осуществляет перевод целого короткого числа из порядка байт, принятого на компьютере, в сетевой порядок байт.<BR>
+Функция </FONT><B><FONT COLOR="#008000">ntohl</FONT> </B><FONT FACE="Times New Roman">осуществляет перевод целого длинного числа из сетевого порядка байт в порядок байт, принятый на компьютере. <BR>
+Функция </FONT><B><FONT COLOR="#008000">ntohs</B></FONT><FONT FACE="Times New Roman"> осуществляет перевод целого короткого числа из сетевого порядка байт в порядок байт, принятый на компьютере. </BLOCKQUOTE>
+<BLOCKQUOTE>В архитектуре компьютеров </FONT><B>i80x86</B><FONT FACE="Times New Roman"> принят порядок байт, при котором младшие байты целого числа имеют младшие адреса. При сетевом порядке байт, принятом в Internet, младшие адреса имеют старшие байты числа</FONT>.</BLOCKQUOTE></DIR>
+</BODY>
+</HTML>

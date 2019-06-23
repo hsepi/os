@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Команда ln</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Команда ln</font> </H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Синтаксис команды</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>ln [options]  source [dest]<br>
+  ln [options]  source ... directory
+  </b></BLOCKQUOTE>
+   </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание команды</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><font face="Times New Roman">Настоящее описание не является 
+      полным описанием команды <b><font color="#008000">ln</font></b>, а описывает 
+      только ее опции, используемые в данном курсе. Для получения полного описания 
+      обращайтесь к UNIX manual (команда <b><font color="#008000">man</font></b>). 
+      <br>
+      <br>
+      Команда </font> <B><font color="#008000">ln</font></B> <FONT FACE="Times New Roman">предназначена 
+      для реализации операции создания связи в файловой системе. В нашем курсе 
+      мы будем использовать две формы этой команды.<br>
+      <br>
+      Первая форма команды, когда в качестве параметра <b><font color="#008000">source</font></b> 
+      задается имя только одного файла, а параметр <b><font color="#008000">dest</font></b> 
+      отсутствует, или когда в качестве параметра <b><font color="#008000">dest</font></b> 
+      задается имя файла, не существующего в файловой системе, создает связь к 
+      файлу, указанному в качестве параметра <b><font color="#008000">source</font></b>, 
+      в текущей директории с его именем (если параметр <b><font color="#008000">dest</font></b> 
+      отсутствует) или с именем <b><font color="#008000">dest</font></b> (полным 
+      или относительным) в случае наличия параметра <b><font color="#008000">dest</font></b>.<br>
+      <br>
+      Вторая форма команды, когда в качестве параметра <b><font color="#008000">source</font></b> 
+      задаются имена одного или нескольких файлов, разделенные между собой пробелами, 
+      а в качестве параметра <b><font color="#008000">directory</font></b> задается 
+      имя уже существующей в файловой системе директории, создает связи к каждому 
+      из файлов, перечисленных в параметре <b><font color="#008000">source</font></b>, 
+      в директории <b> <font color="#008000">directory</font></b> с именами, совпадающими 
+      с именами перечисленных файлов.<br>
+      <br>
+      Команда <b><font color="#008000">ln</font></b> без опций служит для создания 
+      жестких связей (hard link), а команда <b><font color="#008000">ln</font></b> 
+      с опцией <b><font color="#008000">-s</font></b> - для создания мягких (soft 
+      link) или символических (symbolic) связей.<br>
+      <br>
+      <b><u>Примечание:</u></b> во всех существующих версиях UNIX (несмотря на 
+      стандарт POSIX) запрещено создание жестких связей к директориям. Операционная 
+      система Linux запрещает также, по непонятным причинам, создание жестких 
+      связей к специальным файлам устройств.</font> 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

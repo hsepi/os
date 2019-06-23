@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Pthread_exit</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Функция для  завершения нити исполнения</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5>
+<P>Прототип функции</P>
+</FONT></B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;pthread.h&gt;<BR>
+    &nbsp;<br>
+    </b><FONT COLOR="#008000"><B>void pthread_exit(void *status);</font></b></BLOCKQUOTE>
+  </font></DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Описание функции</P>
+</font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p ALIGN="JUSTIFY"> 
+    <font face="Times New Roman">Функция <B><FONT COLOR="#008000">pthread_exit</font></B> 
+    служит для завершения нити исполнения (thread'а) текущего процесса. 
+    <br>
+    <br>
+    Функция никогда не возвращается в вызвавший ее thread. Объект, на который указывает параметр 
+    <b><font color="#008000">status</font></b>, может быть впоследствии изучен в другой нити исполнения, например, 
+    в породившей завершившуюся нить. Поэтому он не 
+    должен указывать на динамический
+    объект завершившегося thread'а.<br>
+    </font>
+  </blockquote>
+</dir>
+</BODY>
+</HTML>

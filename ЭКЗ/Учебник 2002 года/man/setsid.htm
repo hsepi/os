@@ -1,0 +1,48 @@
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1251">
+<title>setsid</title>
+</head>
+
+
+<BODY bgcolor="#FFFFFF">
+  <basefont face="Times New Roman, sans-serif, Courier, mono" size="3">
+
+
+<h1 align="center"><FONT face="Times New Roman, sans-serif, Courier, mono">Системный 
+  вызов setpgrp()</font></h1>
+
+  <P ><B><FONT face="Times New Roman, sans-serif, Courier, mono" SIZE = 5>Прототип системного вызова</font></b></p>
+
+<DIR><FONT   face="Times New Roman, sans-serif, Courier, mono" SIZE = "3" COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;unistd.h&gt;<br>
+    &nbsp;<br>
+    int setsid(void);</b></blockquote>
+  </font></dir>
+
+  <P ><B><FONT face="Times New Roman, sans-serif, Courier, mono" SIZE = 5>Описание системных вызовов</font></b></p>
+
+<DIR> 
+  <BLOCKQUOTE> 
+    <p align="justify"><font face="Times New Roman, Times, serif" size="3"> Этот 
+      системный вызов может применять только процесс, не являющийся лидером группы, 
+      т.е. процесс, идентификатор которого не совпадает с идентификатором его 
+      группы. Использование системного вызова <b><font color="#008000">setsid</font></b> 
+      приводит к созданию новой группы, состоящий только из процесса, который 
+      его выполнил (он становится лидером новой группы), и нового сеанса, идентификатор 
+      которого совпадает с идентификатором процесса, сделавшего вызов.  
+      <br>
+      <br>
+      Системный вызов возвращает значение 0 при нормальном завершении и значение 
+      -1 при возникновении ошибки. <br>
+      <br></font>
+      
+  </blockquote>
+</dir>
+
+
+
+
+</body>
+
+</html>

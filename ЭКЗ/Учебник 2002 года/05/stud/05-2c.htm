@@ -1,0 +1,93 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>2.c-s4s</title>
+</head>
+
+<body>
+
+<p><font size="3" color="#008000"><b><font color="#000000">/* Программа, иллюстрирующая 
+  работу с pip'ом в рамках одного процесса */</font></b></font> 
+<p><font size="3" color="#008000"><b><br>
+  #include &lt;sys/types.h&gt;<br>
+#include &lt;unistd.h&gt;<br>
+#include &lt;stdio.h&gt;<br>
+  <br>
+int main(){<br>
+</b>
+<dir><b> int fd[2]; <br>
+  size_t size;<br>
+  char string[] = &quot;Hello, world!&quot;;<br>
+  char resstring[14]; <br>
+  <br>
+  <font color="#000000">/* Попытаемся создать pipe */</font><br>
+  <br>
+  if(<a href="../../man/pipe.htm">pipe</a>(fd) &lt; 0){<br>
+  </b> 
+  <dir><b> <br>
+    <font color="#000000">/* Если создать pipe не удалось, печатаем об этом сообщение 
+    и прекращаем работу */</font><br>
+    <br>
+    printf(&quot;Can\'t create pipe\n&quot;);<br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+  <b>} <br>
+  <br>
+  <font color="#000000">/* Пробуем записать в pipe 14 байт из нашего массива, 
+  т.е. всю строку </font>"Hello, world!" <br>
+  <font color="#000000">вместе с признаком конца строки */</font><br>
+  <br>
+  size = <a href="../../man/read.htm">write</a>(fd[1], string, 14);<br>
+  <br>
+  if(size != 14){<br>
+  </b> 
+  <dir><b><br>
+    <font color="#000000">/* Если записалось меньшее количество байт, сообщаем 
+    об ошибке */</font><br>
+    <br>
+    printf(&quot;Can\'t write all string\n&quot;); <br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+  <b>} <br>
+  <br>
+  <font color="#000000">/* Пробуем прочитать из pip'а 14 байт в другой массив, 
+  т.е. всю записанную строку */</font><br>
+  <br>
+  size = <a href="../../man/read.htm">read</a>(fd[0], resstring, 14);<br>
+  <br>
+  if(size &lt; 0){<br>
+  </b> 
+  <dir><b><br>
+    <font color="#000000">/* Если прочитать не смогли, сообщаем об ошибке */</font><br>
+    <br>
+    printf(&quot;Can\'t read string\n&quot;); <br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+  <b>} <br>
+    <br>
+  <font color="#000000">/* Печатаем прочитанную строку */</font><br>
+	<br>
+	printf("%s\n",resstring);<br>
+	<br>
+  <font color="#000000">/* Закрываем входной поток*/</font><br>
+  <br>
+  if(<a href="../../man/close.htm">close</a>(fd[0]) &lt; 0){ <br>
+  </b> 
+  <dir><b> printf(&quot;Can\'t close input stream\n&quot;);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  <font color="#000000">/* Закрываем выходной поток*/</font><br>
+  <br>
+  if(<a href="../../man/close.htm">close</a>(fd[1]) &lt; 0){ <br>
+  </b> 
+  <dir><b> printf(&quot;Can\'t close output stream\n&quot;);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  return 0; </b></dir>
+<b>} </b></font> 
+</body>
+
+</html>

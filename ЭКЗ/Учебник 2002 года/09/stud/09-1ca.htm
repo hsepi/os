@@ -1,0 +1,123 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>1a.c-s7s</title>
+</head>
+
+<body>
+
+<p>
+<font face="Times New Roman, Times, serif"  color="#008000"><b>/* Программа 1 
+для иллюстрации работы с очередями сообщений */</b> 
+<p>&nbsp; 
+<p><font size="3" color="#008000"><b>/* Эта программа получает доступ к очереди 
+  сообщений,<br>
+  отправляет в нее 5 текстовых сообщений с типом 1</b></font><font face="Times New Roman, Times, serif"  color="#008000"><font size="3" color="#008000"><b><br>
+  </b></font></font><font size="3" color="#008000"><b> и одно пустое сообщение 
+  с типом 255, которое будет служить</b></font><font face="Times New Roman, Times, serif"  color="#008000"><font size="3" color="#008000"><b><br>
+  </b></font></font><font size="3" color="#008000"><b> для <a href="09-1cb.htm">программы 
+  2</a> сигналом прекращения работы. */</b></font> 
+<p>
+<font size="3" color="#008000"><b>#include &lt;sys/types.h><br>
+#include &lt;sys/ipc.h><br>
+#include &lt;sys/msg.h><br>
+#include &lt;string.h&gt;</b></font><font face="Times New Roman, Times, serif"  color="#008000"><font size="3" color="#008000"><b><br>
+</b></font></font><font size="3" color="#008000"><b> #include &lt;stdio.h><br>
+<br>
+#define LAST_MESSAGE 255 /* Тип сообщения для прекращения работы
+<a href="09-1cb.htm">программы 2</a> */ <br>
+<br>
+int main()<br>
+{<br>
+</b> 
+<dir><b> int msqid; /* IPC дескриптор для очереди сообщений */<br>
+  <br>
+  char pathname[] = "09-1a.c"; /* Имя файла, использующееся для генерации ключа. 
+  <br>
+  Файл с таким именем должен существовать в текущей директории */<br>
+  <br>
+  key_t key; /* IPC ключ */ <br>
+  <br>
+  int i,len; /* Cчетчик цикла и длина информативной части сообщения */<br>
+  <br>
+  /* Ниже следует пользовательская структура для сообщения */<br>
+  <br>
+  struct mymsgbuf<br>
+  {</b> 
+  <dir> <b> long mtype;<br>
+    char mtext[81]; </b> </dir>
+  } <b>mybuf;<br>
+  <br>
+  /* Генерируем IPC ключ из имени файла 09-1a.c в текущей директории<br>
+  и номера экземпляра очереди сообщений 0. */<br>
+  <br>
+  if((key = <a href="../../man/ftok.htm">ftok</a>(pathname,0)) &lt; 0){<br>
+  </b> 
+  <dir><b>printf("Can\'t generate key\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  /* Пытаемся получить доступ по ключу к очереди сообщений, если она существует,<br>
+  или создать ее, если она еще не существует, с правами доступа<br>
+  read &amp; write для всех пользователей */ <br>
+  <br>
+  if((msqid = <a href="../../man/msgget.htm">msgget</a>(key, 0666 | IPC_CREAT)) 
+  &lt; 0){<br>
+  </b> 
+  <dir><b> printf(&quot;Can\'t get msqid\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>} <br>
+  </b> <br>
+  <b> /* Посылаем в цикле 5 сообщений с типом 1 в очередь сообщений, идентифицируемую 
+  msqid.*/<br>
+  <br>
+  for (i = 1; i <= 5; i++){<br>
+  <br>
+  </b> 
+  <dir><b> /* Сначала заполняем структуру для нашего сообщения и определяем длину 
+    информативной части */ <br>
+    <br>
+    mybuf.mtype = 1;<br>
+    strcpy(mybuf.mtext, "This is text message");<br>
+    len = strlen(mybuf.mtext)+1;<br>
+    <br>
+    /* Отсылаем сообщение. В случае ошибки сообщаем об этом и удаляем очередь 
+    сообщений из системы. */ <br>
+    <br>
+    if (<a href="../../man/msgsnd.htm">msgsnd</a>(msqid, (struct msgbuf *) &mybuf, 
+    len, 0) < 0){<br>
+    </b> 
+    <dir><b> printf("Can\'t send message to queue\n");<br>
+      <a href="../../man/msgctl.htm">msgctl</a>(msqid, IPC_RMID, (struct msqid_ds 
+      *) NULL);<br>
+      <a href="../../man/exit.htm">exit</a>(-1);<br>
+      </b></dir>
+    <b> }<br>
+    </b></dir>
+  <b> }<br>
+  <br>
+  /* Отсылаем сообщение, которое заставит получающий процесс прекратить работу, 
+  с типом LAST_MESSAGE и длиной 0 */ <br>
+  <br>
+  mybuf.mtype = LAST_MESSAGE;<br>
+  len = 0;<br>
+  <br>
+  if (<a href="../../man/msgsnd.htm">msgsnd</a>(msqid, (struct msgbuf *) &mybuf, 
+  len, 0) < 0){<br>
+  </b> 
+  <dir><b> printf("Can\'t send message to queue\n");<br>
+    <a href="../../man/msgctl.htm">msgctl</a>(msqid, IPC_RMID, (struct msqid_ds 
+    *) NULL);<br>
+    <a href="../../man/exit.htm"> exit(</a>-1);<br>
+    </b></dir>
+  <b> }<br>
+  <br>
+  return 0;<br>
+  </b></dir>
+<b>}</b></font> </FONT> 
+</body>
+
+</html>

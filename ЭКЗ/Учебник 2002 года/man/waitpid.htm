@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>waitpid()</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системные вызовы wait() и waitpid()</font></H1>
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Прототипы системных вызовов</b></P>
+</FONT>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;wait.h&gt;</b></BLOCKQUOTE>
+  <BLOCKQUOTE><b>pid_t waitpid(pid_t pid, int *status, int options);<br>
+  pid_t wait(int *status);</b></BLOCKQUOTE>
+  </font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P><b>Описание системных вызовов</b></P>
+</font>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Это описание не является полным 
+      описанием системных вызовов, а адаптировано применительно к нашему курсу. 
+      Для получения полного описания обращайтесь к UNIX Manual. <br>
+      <br>
+      Системный вызов</font> <B><font color="#008000"> waitpid()</font></B> 
+    <font face="Times New Roman">блокирует выполнение текущего процесса до тех 
+    пор, пока либо не завершится порожденный им процесс, определяемый значением 
+    параметра <b><font color="#008000">pid</font></b>, либо пока текущий процесс 
+    не получит сигнал, для которого установлена реакция по умолчанию &quot;завершить 
+    процесс&quot; или реакция обработки пользовательской функцией. Если порожденный 
+    процесс, заданный параметром <b><font color="#008000">pid</font></b>, к моменту 
+    системного вызова находится в состоянии <b><i>закончил исполнение</i></b>, 
+    системный вызов возвращается немедленно без блокирования текущего процесса.<br>
+    <br>
+    <font face="Times New Roman, Times, serif" size="3"> 
+    <p align="JUSTIFY"><font face="Times New Roman, sans-serif, Courier, mono">Параметр 
+      </font><FONT face="Times New Roman, sans-serif, Courier, mono" size="3"><b><font color="#008000">pid</font></b><i> 
+      </i>определяет порожденный процесс, завершения которого дожидается процесс-родитель, 
+      следующим образом:</font></P>
+    <UL type="square">
+      <LI> 
+        <p align="JUSTIFY"><FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+          <b><font color="#008000">pid &gt; 0 </font></b> ожидаем завершения процесса 
+          с идентификатором <b><font color="#008000">pid</font></b><i>.</i></font> 
+      </LI>
+      <LI> 
+        <p align="JUSTIFY"><FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если<font color="#008000"><b> 
+          pid = 0</b></font>, то ожидаем завершения любого порожденного процесса 
+          в группе, к которой принадлежит процесс-родитель.</font> 
+      </LI>
+      <LI> 
+        <p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+          <b><font color="#008000">pid = -1</font></b>, то ожидаем завершения 
+          любого порожденного процесса.</font> 
+      </LI>
+      <LI> 
+        <p align="JUSTIFY"> <FONT face="Times New Roman, sans-serif, Courier, mono" size="3">Если 
+          <b><font color="#008000">pid &lt; 0</font></b>, но не <b><font color="#008000">–1</font></b>, 
+          то ожидаем завершения любого порожденного процесса<b> </b>из группы, 
+          идентификатор которой равен абсолютному значению параметра<font color="#008000"><b> 
+          pid</b></font>.</font><br>
+          <br>
+      </LI>
+    </UL>
+    <p align="JUSTIFY"> <font face="Times New Roman, sans-serif, Courier, mono">Параметр 
+      <b> <font color="#008000">options</font></b> в нашем курсе может принимать 
+      два значения: <b><font color="#008000">0</font></b> и <b><font color="#008000">WNOHANG</font></b>. 
+      Значение <b><font color="#008000">WNOHANG</font></b> требует немедленного 
+      возврата из вызова без блокировки текущего процесса в любом случае. <br>
+      <br>
+      Если системный вызов обнаружил завершившийся порожденный процесс, из числа 
+      специфицированных параметром <b><font color="#008000">pid</font></b>, то 
+      этот процесс удаляется из вычислительной системы, а по адресу, указанному 
+      в параметре <b><font color="#008000">status</font></b>, заносится информация 
+      о статусе его завершения. </font><font face="Times New Roman, sans-serif, Courier, mono" size="3">Параметр 
+      <b> <font color="#008000">status</font></b> может быть задан равным <b><font color="#008000">NULL</font></b>, 
+      если эта информация не имеет для нас значения.<br>
+      <br>
+      При обнаружении завершившегося процесса системный вызов возвращает его идентификатор. 
+      Если вызов был сделан с установленной опцией <b><font color="#008000">WNOHANG</font></b>, 
+      порожденный процесс, специфицированный параметром <b><font color="#008000">pid</font></b> 
+      существует, но еще не завершился, то системный вызов вернет значение <b><font color="#008000">0</font></b>. 
+      Во всех остальных случаях он возвращает отрицательное значение. Возврат 
+      из вызова, связанный с возникновением обработанного пользователем сигнала, 
+      может быть в этом случае идентифицирован по значению системной переменной 
+      <b> <font color="#008000">errno == EINTR</font></b>, и вызов может быть 
+      сделан снова.<br><br>
+      Системный вызов <b><font color="#008000">wait</font></b> является синонимом 
+      для системного вызова <b><font color="#008000">waitpid</font></b> с значениями 
+      параметров <b><font color="#008000">pid = -1</font></b>, <b><font color="#008000">options 
+      = 0</font></b>. 
+</font></P>
+    </font></font> </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

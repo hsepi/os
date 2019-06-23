@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>munmap</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов munmap</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+  #include &lt;unistd.h&gt;<br>
+    #include &lt;sys/mman.h&gt; </b></BLOCKQUOTE>
+  <BLOCKQUOTE><b>int munmap (void *start, size_t length);</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов</font> <B><font color="#008000">munmap</font></B><FONT FACE="Times New Roman"> 
+      служит для прекращения отображения memory mapped файла в адресное пространство 
+      вычислительной системы. Если при системном вызове<a href="mmap.htm"> mmap()</a> 
+      было задано значение параметра <b><font color="#008000">flags</font></b> 
+      равное <b><font color="#008000">MAP_SHARED</font></b> и в отображении файла 
+      была разрешена операция записи (в параметре <b><font color="#008000">prot</font></b> 
+      использовалось значение<b><font color="#008000"> PROT_WRITE</font></b>), 
+      то <b><font color="#008000">munmap</font></b> синхронизирует содержимое 
+      отображения с содержимым файла во вторичной памяти. После его выполнения 
+      области памяти, использованные для отображения файла, становятся недоступны 
+      текущему процессу.</FONT>
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Параметр <b><font color="#008000">addr 
+      </font></b> является адресом начала области памяти, выделенной для отображения 
+      файла, т.е. значением, которое вернул системный вызов <a href="mmap.htm">mmap()</a>.<br>
+      <br>
+      Параметр<b><font color="#008000"> length</font></b> определяет ее длину 
+      и его значение должно совпадать со значением соответствующего параметра 
+      в системном вызове <a href="mmap.htm">mmap()</a>.</font> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">При нормальном завершении 
+      системный вызов возвращает значение 0, при возникновении ошибки - значение 
+      -1.</font> 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

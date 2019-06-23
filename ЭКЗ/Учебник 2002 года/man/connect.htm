@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Connect</TITLE>
+<META NAME="Template" CONTENT="D:\MsOffice\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов </font>connect</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT></B><DIR><B><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;sys/types.h&gt;<BR>
+#include &lt;sys/socket.h&gt;</BLOCKQUOTE>
+</font></b><BLOCKQUOTE><FONT COLOR="#008000"><B>int connect(int sockd, </b></font><A href="sockaddr.htm"><FONT COLOR="#008000">struct sockaddr</FONT></A><B><FONT COLOR="#008000"> *servaddr, int addrlen);</font></b></BLOCKQUOTE></DIR><B>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B><DIR><FONT FACE="Times New Roman" SIZE=5><B>
+
+</b></font><BLOCKQUOTE><FONT FACE="Times New Roman">Системный вызов </font><B><FONT COLOR="#008000">connect</font></B><FONT FACE="Times New Roman"> служит для организации связи клиента с сервером. Наиболее часто используется для установления виртуального соединения (connection), хотя может быть применен и при connectionless связи.</font></BLOCKQUOTE><BLOCKQUOTE>
+<FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">sockd </font></B><FONT FACE="Times New Roman">является дескриптором созданного ранее коммуникационного узла, т.&nbsp;е. значением, которое вернул системный вызов </FONT><A href="socket.htm"><I>socket()</I></A>.</BLOCKQUOTE>
+<BLOCKQUOTE><FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">servaddr</font></B><FONT FACE="Times New Roman"> представляет собой адрес структуры, содержащей информацию об </FONT><A href="sockaddr.htm"><FONT FACE="Times New Roman" COLOR="#008000">адресе socket'а</FONT></A><FONT FACE="Times New Roman"> сервера. Он имеет тип указателя на структуру-шаблон </FONT><A href="sockaddr.htm"><FONT COLOR="#008000">struct sockaddr</FONT></A><FONT FACE="Times New Roman">, которая должна быть конкретизирована в зависимости от используемого семейства протоколов и заполнена перед вызовом. </font></BLOCKQUOTE><BLOCKQUOTE>
+<FONT FACE="Times New Roman">Параметр </font><B><FONT COLOR="#008000">addrlen </font></B><FONT FACE="Times New Roman">должен содержать фактическую длину структуры, адрес которой передается в качестве второго параметра. Эта длина меняется от семейства протоколов к семейству и даже в пределах одного семейства протоколов (например, для UNIX Domain).</font></BLOCKQUOTE><FONT FACE="Times New Roman">
+<BLOCKQUOTE>При установлении виртуального соединения системный вызов не возвращается до его установления или до истечения установленного в системе времени timeout. При использовании его в connectionless связи вызов возвращается немедленно.</BLOCKQUOTE>
+<BLOCKQUOTE>Системный вызов возвращает значение 0 при нормальном завершении и отрицательное значение, если в процессе его выполнения наблюдалась ошибка </BLOCKQUOTE></font></DIR>
+</BODY>
+</HTML>

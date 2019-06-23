@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Системный вызов umask</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов umask</font> </H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;unistd.h&gt;</b></BLOCKQUOTE>
+  <BLOCKQUOTE><b>int umask(int cmask);</b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><FONT FACE="Times New Roman">Системный вызов</font> <B><font color="#008000">umask</font></B> 
+    <FONT FACE="Times New Roman">предназначен для изменения <a href="umask3.htm">маски 
+    создания файлов</a> текущего процесса. Младшие 9 бит параметра</font> <b><font color="#008000">cmask</font></b><FONT FACE="Times New Roman"> 
+    являются новым значением маски создания файлов. Системный вызов всегда выполняется 
+    безошибочно и возвращает старое значение маски создания файлов.</font></BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

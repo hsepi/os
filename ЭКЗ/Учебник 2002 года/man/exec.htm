@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Exec</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><font face="Times New Roman">Функции изменения пользовательского
+  контекста процесса</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5>
+<P>Прототипы функций</P>
+</FONT></B>
+<DIR><FONT COLOR="#008000">
+  <BLOCKQUOTE><b>
+    #include &lt;unistd.h&gt;<BR>
+    &nbsp;<br>
+    <FONT COLOR="#008000"></font>int execlp(const char *file, const char *arg0, ... const char *argN,(char *)NULL)<br>
+	int execvp(const char *file,  char *argv[])<br>
+    int execl(const char *path, const char *arg0, ... const char *argN,(char *)NULL)<br>
+	int execv(const char *path,  char *argv[])<br>
+    int execle(const char *path, const char *arg0, ... const char *argN,(char *)NULL,  char  * envp[] )<br>
+	int execve(const char *path,  char *argv[], char *envp[])
+	</b></BLOCKQUOTE>
+  </font></DIR>
+<B>
+
+<FONT FACE="Times New Roman" SIZE=5>
+<P>Описание функций</P>
+</font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font>
+  <BLOCKQUOTE><p ALIGN="JUSTIFY"><font face="Times New Roman">Для
+    загрузки новой программы в системный
+    контекст текущего процесса используется
+    семейство взаимосвязанных функций,
+    отличающихся друг от друга формой
+    представления параметров.&nbsp;</font><p ALIGN="JUSTIFY"><font face="Times New Roman">Аргумент
+    </font><b><font color="#008000">file</font></b><font face="Times New Roman"> является
+    указателем на имя файла, который должен
+    быть загружен. Аргумент</font><font color="#008000"><b> path</b></font><font face="Times New Roman">
+    - это указатель на полный путь к файлу,
+    который должен быть загружен.<br>
+    Аргументы </font><font color="#008000"><b>arg0, ..., argN</b></font><font face="Times New Roman">
+    представляют собой указатели на
+    аргументы командной строки. Заметим, что
+    аргумент </font><font color="#008000"><b>arg0</b></font> <font face="Times New Roman">должен
+    указывать на имя загружаемого файла.
+    Аргумент </font><font color="#008000"><b>argv </b></font><font face="Times New Roman">представляет
+    собой массив из указателей на аргументы
+    командной строки. Начальный элемент
+    массива должен указывать на имя
+    загружаемой программы, а заканчиваться
+    массив должен элементом, содержащим
+    указатель </font><font color="#008000"><b>NULL</b></font>.&nbsp;<br><font face="Times New Roman">
+    Аргумент </font><font color="#008000"><b>envp</b></font> <font face="Times New Roman">является
+    массивом указателей на параметры
+    окружающей среды, заданные в виде строк
+    &quot;переменная=строка&quot;. Последний
+    элемент этого массива должен содержать
+    указатель NULL.<p ALIGN="JUSTIFY">Поскольку вызов
+    функции не изменяет системный контекст
+    текущего процесса, то загруженная
+    программа унаследует от загрузившего ее
+    процесса следующие атрибуты:</font></BLOCKQUOTE>
+  <ul type="disc">
+    <dir>
+      <li><font face="Times New Roman, Times, serif">идентификатор процесса;</font></li>
+      <li><font face="Times New Roman, Times, serif">идентификатор родительского
+        процесса;</font></li>
+      <li><font face="Times New Roman, Times, serif">групповой
+        идентификатор процесса;</font></li>
+      <li><font face="Times New Roman, Times, serif">идентификатор
+        терминальной группы;</font></li>
+      <li><font face="Times New Roman, Times, serif">время
+        оставшееся до возникновения сигнала <font color="#008000"><b>SIGALRM</b></font>;</font></li>
+      <li><font face="Times New Roman, Times, serif">текущую
+        рабочую директорию;</font></li>
+      <li><font face="Times New Roman, Times, serif"><a href="umask3.htm">маску 
+        создания файлов</a>;</font></li>
+      <li><font face="Times New Roman, Times, serif">идентификатор
+        пользователя;</font></li>
+      <li><font face="Times New Roman, Times, serif">групповой
+        идентификатор пользователя;</font></li>
+      <li><font face="Times New Roman, Times, serif">игнорирование
+        сигналов;</font></li>
+      <li><font face="Times New Roman, Times, serif">таблицу открытых файлов (если 
+        для файлового дескриптора не устанавливался признак&nbsp; &quot;закрыть 
+        файл при выполнении exec()&quot;).</font></li>
+      <br>
+      &nbsp; </dir>
+  </ul>
+  <blockquote><p ALIGN="JUSTIFY"><font face="Times New Roman, Times, serif">В случае успешного
+    выполнения возврата из функций в
+    программу, осуществившую вызов, не
+    происходит, а управление передается
+    загруженной программе. В случае
+    неудачного выполнения в программу,
+    инициировавшую вызов, возвращается
+    отрицательное значение. <br>
+    <br></font>
+  </blockquote>
+</DIR>
+</BODY>
+</HTML>

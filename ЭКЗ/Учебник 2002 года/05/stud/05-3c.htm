@@ -1,0 +1,125 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>3.c-s4s</title>
+</head>
+
+<body>
+
+<p><font size="3" color="#008000"><b><font color="#000000">/* Программа, осуществляющая 
+  однонаправленную связь через pipe между процессом-родителем и процессом-ребенком 
+  */</font></b></font> 
+<p><font size="3" color="#008000"><b><br>
+  #include &lt;sys/types.h&gt;<br>
+#include &lt;unistd.h&gt;<br>
+#include &lt;stdio.h&gt;<br>
+  <br>
+int main(){<br>
+</b>
+<dir><b> int fd[2], result;<br>
+  size_t size;<br>
+  char resstring[14]; <br>
+  <br>
+  <font color="#000000">/* Попытаемся создать pipe */</font><br>
+  <br>
+  if(<a href="../../man/pipe.htm">pipe</a>(fd) &lt; 0){<br>
+  </b> 
+  <dir><b> <br>
+    <font color="#000000">/* Если создать pipe не удалось, печатаем об этом сообщение 
+    и прекращаем работу */<br>
+    </font><br>
+    printf(&quot;Can\'t create pipe\n&quot;);<br>
+    <a href="../../man/exit.htm">exit</a>(-1); <br>
+    </b></dir>
+  <b>} <br>
+  <br>
+  <font color="#000000">/* Порождаем новый процесс */ </font><br>
+  <br>
+  result = <a href="../../man/fork.htm">fork</a>(); <br>
+  <br>
+  if(result <0){ <br>
+  <font color="#000000"><br>
+  </font></b> 
+  <dir> <font color="#000000"><b>/* Если создать процесс не удалось, сообщаем 
+    об этом и завершаем работу */</b></font><b><br>
+    <br>
+    printf("Can\'t fork child\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b><br>
+  </dir>
+  <b> } else if (result &gt; 0) {<br>
+  </b> <font color="#000000"><br>
+  </font>
+  <dir><font color="#000000"><b> /* Мы находимся в родительском процессе, который 
+    будет передавать информацию процессу-ребенку . В этом процессе выходной поток 
+    данных нам не понадобится, поэтому закрываем его.*/</b></font><b><br>
+    <br>
+    <a href="../../man/close.htm">close</a>(fd[0]);<br>
+    <br>
+    <font color="#000000">/* Пробуем записать в pipe 14 байт, т.е. всю строку</font> 
+    "Hello, world!" <br>
+    <font color="#000000">вместе с признаком конца строки */</font><br>
+    <br>
+    size = <a href="../../man/read.htm">write</a>(fd[1], "Hello, world!", 14);<br>
+    <br>
+    if(size != 14){<br>
+    </b> 
+    <dir><b><br>
+      <font color="#000000">/* Если записалось меньшее количество байт, сообщаем 
+      об ошибке и завершаем работу */</font><br>
+      <br>
+      printf(&quot;Can\'t write all string\n&quot;); <br>
+      <a href="../../man/exit.htm">exit</a>(-1); <br>
+      </b></dir>
+    <b>} <br>
+    <br>
+    <font color="#000000">/* Закрываем входной поток данных и на этом родитель 
+    прекращает работу */</font><br>
+    <br>
+    <a href="../../man/close.htm">close</a>(fd[1]);<br>
+    printf("Parent exit\n");<br>
+    <br>
+    </b> </dir>
+  <b>} else {<br>
+  </b> <font color="#000000"><br>
+  </font>
+  <dir><font color="#000000"><b> /* Мы находимся в порожденном процессе, который 
+    будет получать информацию от процесса-родителя. Он унаследовал от родителя 
+    таблицу открытых файлов и, зная файловые дескрипторы, соответствующие pip'у, 
+    может его использовать. В этом процессе входной поток данных нам не понадобится, 
+    поэтому закрываем его.*/</b></font><b><br>
+    <br>
+    <a href="../../man/close.htm">close</a>(fd[1]);<br>
+    <br>
+    <font color="#000000">/* Пробуем прочитать из pip'а 14 байт в массив, т.е. 
+    всю записанную строку */</font><br>
+    <br>
+    size = <a href="../../man/read.htm">read</a>(fd[0], resstring, 14);<br>
+    <br>
+    if(size &lt; 0){<br>
+    </b> 
+    <dir><b><br>
+      <font color="#000000">/* Если прочитать не смогли, сообщаем об ошибке и 
+      завершаем работу */<br>
+      </font><br>
+      printf(&quot;Can\'t read string\n&quot;); <br>
+      <a href="../../man/exit.htm">exit</a>(-1); <br>
+      </b></dir>
+    <b>} <br>
+    <br>
+    <font color="#000000">/* Печатаем прочитанную строку */</font><br>
+    <br>
+    printf("%s\n",resstring);<br>
+    <br>
+    <font color="#000000">/* Закрываем входной поток и завершаем работу */</font><br>
+    <br>
+    <a href="../../man/close.htm">close</a>(fd[0]);<br>
+    </b></dir>
+  <br><b>
+  }<br>
+<br>
+   return 0; </b></dir>
+<b>} </b></font> 
+</body>
+</html>

@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>unlink</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов unlink</font></H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT><DIR><FONT FACE="Times New Roman" SIZE=5>
+
+</font><FONT COLOR="#008000"><BLOCKQUOTE>#include &lt;unistd.h&gt;</BLOCKQUOTE>
+<BLOCKQUOTE>int unlink(char *pathname);</BLOCKQUOTE></font></DIR>
+
+<FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE><p align="JUSTIFY"><FONT FACE="Times New Roman"> 
+    Системный вызов</font> <B><FONT COLOR="#008000">unlink</font></B> 
+      <font face="Times New Roman">служит для удаления имени, на которое указывает 
+      параметр<b><font color="#008000"> pathname</font></b>, из файловой системы.<br><br>
+	   
+      Если после удаления имени счетчик числа жестких связей у данного файла стал 
+      равным 0, то возможны следующие ситуации:</font></BLOCKQUOTE>
+	  <ul type="square">
+	  <li>
+      <p align="JUSTIFY"><FONT FACE="Times New Roman"> Если в операционной системе 
+        нет процессов, держащих данный файл открытым, то файл полностью удаляется 
+        с физического носителя. </font>
+    </li>
+	  <li><p align="JUSTIFY"><FONT FACE="Times New Roman"> 
+     Если удаляемое имя было последней жесткой связью для регулярного файла, 
+      но какой-либо процесс держит его открытым, то файл продолжает существовать 
+      до тех пор, пока не будет закрыт последний файловый дескриптор, ссылающийся 
+      на данный файл. 
+	  </font></li>
+	  <li>
+      <p align="JUSTIFY"><FONT FACE="Times New Roman"> Если имя относится к файлу 
+        типа socket, FIFO или к специальному файлу устройства, то файл удаляется 
+        независимо от наличия процессов, держащих его открытым, но процессы, открывшие 
+        данный объект, могут продолжать пользоваться им. </font> 
+    </li>
+	  <li><p align="JUSTIFY"><FONT FACE="Times New Roman"> 
+      Если имя относится к файлу 
+      типа &quot;связь&quot;, то он удаляется, и мягкая связь оказывается разорванной.
+	  </font></li>
+ </ul><br>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов возвращает 
+      значение 0 при нормальном завершении и значение -1 при возникновении ошибки</font>.
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

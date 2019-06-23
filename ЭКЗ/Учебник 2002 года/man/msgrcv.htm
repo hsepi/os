@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>Msgrcv</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Системный вызов</font> msgrcv</H1>
+<B><FONT FACE="Times New Roman" SIZE=5><P>Прототип системного вызова</P></FONT>
+</B>
+<DIR><FONT  FACE="Times New Roman" SIZE=3 COLOR="#008000"> 
+  <BLOCKQUOTE><b>#include &lt;sys/types.h&gt;<br>
+    #include &lt;sys/ipc.h&gt;<br>
+    #include &lt;sys/msg.h&gt;<br>
+    <br>
+    int msgrcv(int msqid, struct msgbuf *ptr, int length, long type, int flag); 
+    </b></BLOCKQUOTE>
+  </font></DIR>
+
+<B><FONT FACE="Times New Roman" SIZE=5><P>Описание системного вызова</P></font></B>
+<DIR><FONT FACE="Times New Roman" SIZE=5><B> </b></font> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"><FONT FACE="Times New Roman">Системный вызов <B><FONT COLOR="#008000">msgrcv</font></B> 
+      предназначен для получения сообщения из очереди сообщений, т.&nbsp;е. является 
+      реализацией примитива <b><font color="#008000">receive</font></b>.</FONT> 
+  </BLOCKQUOTE>
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman">Параметр <B><font color="#008000">msqid</font></B> 
+      является дескриптором System V IPC для очереди, из которой должно быть получено 
+      сообщение, т.е. значением, которое вернул системный вызов <b><a href="msgget.htm">msgget()</a></b> 
+      при создании очереди или при ее поиске по ключу.<br>
+      <br>
+      Параметр <b><font color="#008000">type</font></b> определяет способ выборки 
+      сообщения из очереди следующим образом:<br>
+      </font> <br>
+    <FONT FACE="Times New Roman" size=3> 
+    <table width="80%" border="1" cellspacing="1" cellpadding="1">
+      <tr> 
+        <td align="center">Способ выборки</td>
+        <td valign="middle" align="center">Значение параметра<b><font color="#008000"> 
+          type</font></b></td>
+      </tr>
+      <tr> 
+        <td> В порядке FIFO, независимо от типа сообщения. </td>
+        <td align="center"><font color="#008000"><b>0</b></font></td>
+      </tr>
+      <tr> 
+        <td>В порядке FIFO для сообщений c типом <b><font color="#008000">n</font></b>. 
+        </td>
+        <td align="center"><b><font color="#008000">n</font></b></td>
+      </tr>
+      <tr> 
+        <td>Первым выбирается сообщение с минимальным типом, не превышающим значения 
+          <b><font color="#008000">n</font></b>, пришедшее ранее всех других сообщений 
+          с тем же типом.</td>
+        <td align="center"><font color="#008000"><b>-n</b></font></td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    Структура <b><font color="#008000">struct msgbuf</font></b> описана в файле 
+    <b> <font color="#008000">sys/msg.h</font></b> как<br>
+    <font color="#008000"><b><br>
+    </b></font> </font> <FONT FACE="Times New Roman"> 
+    <dir> 
+      <dir> 
+        <dir><b><font color="#008000"> struct msgbuf {<br>
+          </font> </b> 
+          <dir><b><font color="#008000"> long mtype;<br>
+            char mtext[1];<br>
+            </font></b></dir>
+          <b><font color="#008000">}; </font></b> </dir>
+      </dir>
+    </dir>
+    <br>
+    <p align="JUSTIFY"> Она представляет собой некоторый шаблон структуры сообщения 
+      пользователя. Сообщение пользователя – это структура, первый элемент которой 
+      обязательно имеет тип <b><font color="#008000">long</font></b> и содержит 
+      тип сообщения, а далее следует информация теоретически произвольной длины 
+      (практически в Linux ограничена размером 4080 байт, которая может быть еще 
+      уменьшена системным администратором), содержащая собственно суть сообщения. 
+      Например: <br>
+      <font color="#008000"><b><br>
+      </b></font> 
+    <dir> 
+      <dir> 
+        <dir><b><font color="#008000">struct mymsgbuf {<br>
+          </font> </b> 
+          <dir><b><font color="#008000"> long mtype;<br>
+            char mtext[1024];<br>
+            </font></b></dir>
+          <b><font color="#008000">} mybuf;</font></b><br>
+          <br>
+        </dir>
+      </dir>
+    </dir>
+    <p align="JUSTIFY"> При этом информация вовсе не обязана быть текстовой, например: 
+      <br>
+      <br>
+    <dir> 
+      <dir> 
+        <dir> <b><font color="#008000">struct mymsgbuf {</font> </b> 
+          <dir><b><font color="#008000"> long mtype;<br>
+            struct {</font> </b> 
+            <dir><b><font color="#008000"> int iinfo;<br>
+              float finfo;</font></b></dir>
+            <b><font color="#008000">} info;</font></b></dir>
+          <b><font color="#008000">} mybuf; </font></b></dir>
+      </dir>
+    </dir>
+    <br>
+    <p align="JUSTIFY"> Параметр <b><font color="#008000">length</font></b> должен 
+      содержать максиамальную длину полезной информации (т.&nbsp;е. информации, 
+      расположенной в структуре после типа сообщения), которая может быть размещена 
+      в сообщении. <br>
+      <br>
+      В случае удачи, системный вызов копирует выбранное сообщение из очереди 
+      сообщений по адресу, указанному в параметре <font color="#008000"><b>ptr</b></font>, 
+      одновременно удаляя его из очереди сообщений.<br>
+      <br>
+      Параметр<b><font color="#008000"> flag</font></b> может принимать значение<b> 
+      <font color="#008000">0</font></b> или быть какой-либо комбинацией флагов 
+      <b><font color="#008000">IPC_NOWAIT</font></b> и <b><font color="#008000">MSG_NOERROR</font></b>. 
+      Если флаг <b><font color="#008000">IPC_NOWAIT</font></b> не установлен, 
+      и очередь сообщений пуста или в ней нет сообщений с заказанным типом, то 
+      системный вызов блокируется до появления запрошенного сообщения. При установлении 
+      флага <b><font color="#008000">IPC_NOWAIT</font></b> системный вызов в этой 
+      ситуации не блокируется, а констатирует возникновение ошибки с установлением 
+      значения переменной <b><font color="#008000">errno</font></b>, описанной 
+      в файле <b><font color="#008000">errno.h</font></b>, равным <b><font color="#008000">EAGAIN</font></b>. 
+      Если действительная длина полезной информации в выбранном сообщении превышает 
+      значение, указанное в параметре <b><font color="#008000">length</font></b> 
+      и флаг <b><font color="#008000">MSG_NOERROR</font></b> не установлен, то 
+      выборка сообщения не производится, и фиксируется наличие ошибочной ситуации. 
+      Если флаг <b><font color="#008000">MSG_NOERROR</font></b> установлен, то 
+      в этом случае ошибки не возникает, а сообщение копируется в обрезанном виде. 
+    </font> </BLOCKQUOTE>
+  <B><FONT FACE="Times New Roman" SIZE=5> </FONT></B><B><FONT FACE="Times New Roman" SIZE=5> 
+  </FONT></B><B><FONT FACE="Times New Roman" SIZE=5> 
+  <P>Возвращаемое значение</P>
+  </FONT> </B> 
+  <BLOCKQUOTE> 
+    <p align="JUSTIFY"> <FONT FACE="Times New Roman"> Системный вызов возвращает 
+      при нормальном завершении действительную длину полезной информации (т.&nbsp;е. 
+      информации, расположенной в структуре после типа сообщения), скопированной 
+      из очереди сообщений, и значение <b><font color="#008000">-1</font></b> 
+      при возникновении ошибки</font>. 
+  </BLOCKQUOTE>
+</DIR>
+</BODY>
+</HTML>

@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<TITLE>shablon</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff" topmargin="30" leftmargin="30">
+
+<H1 ALIGN="CENTER"><FONT FACE="Times New Roman">Шаблоны имен файлов</font></H1>
+<BLOCKQUOTE> 
+  <p align="JUSTIFY"><FONT FACE="Times New Roman"> Шаблоны имен файлов могут применяться 
+    в качестве параметра для задания набора имен файлов во многих командах операционной 
+    системы. При использовании шаблона просматривается вся совокупность имен файлов, 
+    находящихся в файловой системе, и те имена, которые удовлетворяют шаблону, 
+    включаются в набор. В общем случае шаблоны могут задаваться с использованием 
+    следующих метасимволов:</font> <br><br>
+  <p align="JUSTIFY"><FONT FACE="Times New Roman">
+  <table width="80%" border="0" align="center" cellspacing="1" cellpadding="1">
+    <tr>
+      <td width="9%" valign="top"><font color="#008000"><b>*</b></font></td>
+      <td width="91%">Соответствует всем цепочкам литер, включая пустую.</td>
+  </tr>
+  <tr>
+      <td width="9%" valign="top"><font color="#008000"><b>?</b></font></td>
+      <td width="91%">Соответствует всем одиночным литерам.</td>
+  </tr>
+  <tr>
+      <td width="9%" valign="top"><font color="#008000"><b>[...]</b></font></td>
+      <td width="91%">Соответствует любой литере заключенной в скобки. Пара литер, 
+        разделенных знаком минус, задает диапазон литер.</td>
+  </tr>
+</table>
+</font>
+  <p align="JUSTIFY"><FONT FACE="Times New Roman"> Так, например, шаблону <b><font color="#008000">*.c</font></b> 
+    удовлетворяют все файлы текущей директории, чьи имена заканчиваются на <b><font color="#008000">.c</font></b>. 
+    Шаблону <b><font color="#008000">[a-d]*</font></b> удовлетворяют все файлы 
+    текущей директории, чьи имена начинаются на буквы <b><font color="#008000">a</font></b>, 
+    <b> <font color="#008000">b</font></b>, <b><font color="#008000">c</font></b>, 
+    <b> <font color="#008000">d</font></b>. Существует одно ограничение на использование 
+    метасимвола <b><font color="#008000">*</font></b> в начале имени файла, например, 
+    в случае шаблона <b><font color="#008000">*c</font></b>. Для таких шаблонов, 
+    имена файлов, начинающиеся с символа точка, считаются не удовлетворяющими 
+    шаблону.</font> 
+</BLOCKQUOTE>
+</BODY>
+</HTML>

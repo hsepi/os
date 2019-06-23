@@ -1,0 +1,79 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>1b.c-s6s</title>
+</head>
+
+<body>
+
+<p><font face="Times New Roman, Times, serif"  color="#008000"><b>/* Программа 2 для
+иллюстрации работы с  семафорами */</b>
+
+<p>&nbsp;
+<p><font size="3" color="#008000"><b>/* Эта программа получает доступ к одному 
+  системному семафору<br>
+и увеличивает его значение на 1, чтобы разблокировать 
+ <a href="08-1ca.htm">программу 1</a> */</b></font> 
+<p><font size="3" color="#008000"><b>#include &lt;sys/types.h><br>
+#include &lt;sys/ipc.h><br>
+#include &lt;sys/sem.h><br>
+#include &lt;stdio.h><br>
+<br>
+int main()<br>
+{<br>
+</b>
+<dir><b> int semid; /* IPC дескриптор для массива IPC семафоров */<br>
+  <br>
+  char pathname[] = "08-1a.c"; /* Имя файла, использующееся для генерации ключа. 
+  Файл с таким именем должен существовать в текущей директории */<br>
+  <br>
+  key_t key; /* IPC ключ */ <br>
+  <br>
+  struct sembuf mybuf; /* Структура для задания операции над семафором */<br>
+  <br>
+  /* Генерируем IPC ключ из имени файла 08-1a.c в текущей директории<br>
+  и номера экземпляра области разделяемой памяти 0 */<br>
+  <br>
+  if((key = <a href="../../man/ftok.htm">ftok</a>(pathname,0)) &lt; 0){<br>
+  </b> 
+  <dir><b>printf("Can\'t generate key\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>}<br>
+  <br>
+  /* Пытаемся получить доступ по ключу к массиву семафоров, если он существует,<br>
+  или создать его из одного семафора, если он еще не существует, с правами доступа<br>
+  read &amp; write для всех пользователей */ <br>
+  <br>
+  if((semid = <a href="../../man/semget.htm">semget</a>(key, 1, 0666 | IPC_CREAT)) 
+  &lt; 0){<br>
+  </b> 
+  <dir><b> printf(&quot;Can\'t get semid\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+    </b></dir>
+  <b>} <br>
+  </b> <br>
+  <br>
+  <b> /* Выполним операцию A(semid<sub>1</sub>,1) для нашего массива семафоров.<br>
+  Для этого сначала заполним нашу структуру. Флаг, как обычно, полагаем равным 
+  0. <br>
+  Наш массив семафоров состоит из одного семафора с номером 0. Код операции 1.*/<br>
+  <br>
+  mybuf.sem_op = 1;<br>
+  mybuf.sem_flg = 0;<br>
+  mybuf.sem_num = 0;<br>
+  <br>
+  if(<a href="../../man/semop.htm">semop</a>(semid, &mybuf, 1) < 0){<br>
+  <dir>printf("Can\'t wait for condition\n");<br>
+    <a href="../../man/exit.htm">exit</a>(-1);<br>
+  </dir>
+  }<br>
+  <br>
+  printf("Set condition\n");<br>
+  return 0;<br>
+  </b></dir>
+<b>}</b></font> </FONT>
+</body>
+
+</html>
